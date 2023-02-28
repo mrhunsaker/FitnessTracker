@@ -159,7 +159,17 @@ def main():
 if __name__ == '__main__':
     main()
 
-
+class MyBrowser(wx.Dialog):
+  def __init__(self, *args, **kwds):
+    wx.Dialog.__init__(self, *args, **kwds)
+    sizer = wx.BoxSizer(wx.VERTICAL)
+    self.browser = wx.html2.WebView.New(self)
+    sizer.Add(self.browser, 1, wx.EXPAND, 10)
+    self.SetSizer(sizer)
+    self.SetSize((1600, 1200))
+    #dialog = MyBrowser(None, -1)
+    #dialog.browser.LoadURL(f"URL")
+    #dialog.Show()
 class upperBody(scrolled.ScrolledPanel):
     """
 
@@ -471,6 +481,46 @@ class upperBody(scrolled.ScrolledPanel):
                 )
             self
             self.dial.ShowModal()
+            conn = sqlite3.connect(dataBasePath)
+            dfSQL = pd.read_sql_query("SELECT * FROM UPPERBODY", conn)
+            conn.close()
+            df = dfSQL.drop(columns = ['ID'])
+            df = df.rename(
+                columns = {
+                        'frontline': 'Frontline POW Raise',
+                        'shoulderpress': 'Shoulder Press',
+                        'chairrow': 'Chair Side Row',
+                        'supinecurl': 'Supine Curl',
+                        'reardeltfly': 'Rear Delt Fly',
+                        'sidebend': 'Standing Side Bend',
+                        'lateralraise': 'Lateral Raise'
+                        }
+                )
+            dfAsStringU = df.to_html(index = False)
+            Find = '<th>'
+            Replace = '<th style="width:12.5%">'
+            dfAsStringU = dfAsStringU.replace(Find, Replace)
+            Find = '<tr style="text-align: right;">'
+            Replace = '<tr style="text-align: center;">'
+            dfAsStringU = dfAsStringU.replace(Find, Replace)
+            Find = '<table border="1" class="dataframe">'
+            Replace = '<table border="1" class="dataframe" style="width:1000px">'
+            dfAsStringU = dfAsStringU.replace(Find, Replace)
+            Find = '<td>'
+            Replace = '<td align="center">'
+            dfAsStringU = dfAsStringU.replace(Find, Replace)
+            html = wx.html2.WebView.New(
+                    self,
+                    -1,
+                    size = (
+                            1200,
+                            800
+                            )
+                    )
+            #html.SetPage(dfAsStringU, "")
+            dialog = MyBrowser(None, -1)
+            dialog.browser.SetPage(dfAsStringU, "")
+            dialog.Show()
         data_entry()
 
 
@@ -718,269 +768,20 @@ class lowerBody(scrolled.ScrolledPanel):
                 wx.OK
                 )
             self.dial.ShowModal()
-        data_entry()
-
-
-class upperBodyTable(scrolled.ScrolledPanel):
-    """
-
-    """
-
-    def __init__(
-            self,
-            parent
-            ):
-        scrolled.ScrolledPanel.__init__(
-                self,
-                parent,
-                -1
-                )
-        vbox = wx.BoxSizer(wx.VERTICAL)
-        vbox.Add(
-                wx.StaticLine(
-                        self,
-                        -1,
-                        size=(1500,
-                              -1)
-                        ),
-                0,
-                wx.ALL,
-                5
-                )
-        vbox.Add(
-                wx.StaticLine(
-                        self,
-                        -1,
-                        size=(-1,
-                              1500)
-                        ),
-                0,
-                wx.ALL,
-                5
-                )
-        vbox.Add(
-                (20,
-                 20)
-                )
-        self.SetSizer(vbox)
-        self.SetupScrolling()
-        self.SetBackgroundColour(
-                wx.Colour(
-                        255,
-                        153,
-                        153
-                        )
-                )
-        self.SetFont(
-                wx.Font(
-                    12,
-                    wx.MODERN,
-                    wx.NORMAL,
-                    wx.NORMAL,
-                    False,
-                    u'JetBrains Mono NL'
-                    )
-                )
-        wx.StaticText(
-                self,
-                -1,
-                "UPPER BODY TABLE",
-                pos=(170,
-                     20)
-                )
-        self.btn1 = wx.Button(
-                self,
-                202,
-                "EXIT",
-                pos=(450,
-                     830),
-                size=(70,
-                      30)
-                )
-        self.Bind(
-                wx.EVT_BUTTON,
-                self.exit,
-                id=202
-                )
-        self.btn2 = wx.Button(
-                self,
-                203,
-                "REFRESH",
-                pos=(550,
-                     830),
-                size=(70,
-                      30)
-                )
-        self.Bind(
-                wx.EVT_BUTTON,
-                self.refresh,
-                id=203
-                )
-
-    def refresh(self, event):
-        try:
-            html
-        except NameError:
-            html = None
-
-        if html is None:
-            conn = sqlite3.connect(dataBasePath)
-            dfSQL = pd.read_sql_query("SELECT * FROM UPPERBODY", conn)
-            conn.close()
-            df = dfSQL.drop(columns=['ID'])
-            df = df.rename(columns={'frontline':'Frontline POW Raise', 'shoulderpress':'Shoulder Press', 'chairrow':'Chair Side Row','supinecurl':'Supine Curl','reardeltfly':'Rear Delt Fly','sidebend':'Standing Side Bend', 'lateralraise':'Lateral Raise'})
-            dfAsStringU = df.to_html(index=False)
-            Find = '<th>'
-            Replace = '<th style="width:12.5%">'
-            dfAsStringU = dfAsStringU.replace(Find, Replace)
-            Find = '<tr style="text-align: right;">'
-            Replace = '<tr style="text-align: center;">'
-            dfAsStringU = dfAsStringU.replace(Find, Replace)
-            Find = '<table border="1" class="dataframe">'
-            Replace = '<table border="1" class="dataframe" style="width:1000px">'
-            dfAsStringU = dfAsStringU.replace(Find, Replace)
-            Find = '<td>'
-            Replace = '<td align="center">'
-            dfAsStringU = dfAsStringU.replace(Find, Replace)
-            html = wx.html2.WebView.New(
-                    self,
-                    -1,
-                    size=(
-                        1200,
-                        800
-                        )
-                    )
-            html.SetPage(dfAsStringU, "")
-        else:
-            html.Reload(wx.html2.WEBVIEW_RELOAD_NO_CACHE)
-
-    @staticmethod
-    def exit(event):
-        """
-
-        :param event:
-        :type event:
-        """
-        wx.Exit()
-
-
-class lowerBodyTable(scrolled.ScrolledPanel):
-    """
-
-    """
-
-    def __init__(
-            self,
-            parent
-            ):
-        scrolled.ScrolledPanel.__init__(
-                self,
-                parent,
-                -1
-                )
-
-        vbox = wx.BoxSizer(wx.VERTICAL)
-        vbox.Add(
-                wx.StaticLine(
-                        self,
-                        -1,
-                        size=(750,
-                              -1)
-                        ),
-                0,
-                wx.ALL,
-                5
-                )
-        vbox.Add(
-                wx.StaticLine(
-                        self,
-                        -1,
-                        size=(-1,
-                              750)
-                        ),
-                0,
-                wx.ALL,
-                5
-                )
-        vbox.Add(
-                (20,
-                 20)
-                )
-        self.SetSizer(vbox)
-        self.SetupScrolling()
-        self.SetBackgroundColour(
-                wx.Colour(
-                        255,
-                        153,
-                        153
-                        )
-                )
-        self.SetFont(
-                wx.Font(
-                    12,
-                    wx.MODERN,
-                    wx.NORMAL,
-                    wx.NORMAL,
-                    False,
-                    u'JetBrains Mono NL'
-                    )
-                )
-        wx.StaticText(
-                self,
-                -1,
-                "LOWER BODY TABLE",
-                pos=(170,
-                     20)
-                )
-        self.btn1 = wx.Button(
-                self,
-                202,
-                "EXIT",
-                pos=(450,
-                     830),
-                size=(70,
-                      30)
-                )
-        self.Bind(
-                wx.EVT_BUTTON,
-                self.exit,
-                id=202
-                )
-        self.btn2 = wx.Button(
-                self,
-                203,
-                "REFRESH",
-                pos=(550,
-                     830),
-                size=(70,
-                      30)
-                )
-        self.Bind(
-                wx.EVT_BUTTON,
-                self.refresh,
-                id=203
-                )
-
-    def refresh(self, event):
-        try:
-            html
-        except NameError:
-            html = None
-
-        if html is None:
             conn = sqlite3.connect(dataBasePath)
             dfSQL = pd.read_sql_query("SELECT * FROM LOWERBODY", conn)
             conn.close()
 
-            df = dfSQL.drop(columns=['ID'])
-            df = df.rename(columns={
-                'stifflegrdl': 'Stiff Leg RDL',
-                'hipthruster': 'Hip Thruster',
-                'forwardsquat': 'Forward Squat',
-                'forwardlunge': 'Forward lunge'
-                }
-                           )
-            dfAsStringL = df.to_html(index=False)
+            df = dfSQL.drop(columns = ['ID'])
+            df = df.rename(
+                    columns = {
+                            'stifflegrdl':  'Stiff Leg RDL',
+                            'hipthruster':  'Hip Thruster',
+                            'forwardsquat': 'Forward Squat',
+                            'forwardlunge': 'Forward lunge'
+                            }
+                    )
+            dfAsStringL = df.to_html(index = False)
             Find = '<th>'
             Replace = '<th style="width:20%">'
             dfAsStringL = dfAsStringL.replace(Find, Replace)
@@ -993,20 +794,299 @@ class lowerBodyTable(scrolled.ScrolledPanel):
             Find = '<td>'
             Replace = '<td align="center">'
             dfAsStringL = dfAsStringL.replace(Find, Replace)
+            html = wx.html2.WebView.New(self, -1, size = (1200, 800))
+            dialog = MyBrowser(None, -1)
+            dialog.browser.SetPage(dfAsStringL, "")
+            dialog.Show()
+        data_entry()
 
-            html = wx.html2.WebView.New(self, -1, size=(1200, 800))
-            html.SetPage(dfAsStringL, "")
-        else:
-            html.Reload(wx.html2.WEBVIEW_RELOAD_NO_CACHE)
 
-    @staticmethod
-    def exit(event):
-        """
-
-        :param event:
-        :type event:
-        """
-        wx.Exit()
+# class upperBodyTable(scrolled.ScrolledPanel):
+#     """
+#
+#     """
+#
+#     def __init__(
+#             self,
+#             parent
+#             ):
+#         scrolled.ScrolledPanel.__init__(
+#                 self,
+#                 parent,
+#                 -1
+#                 )
+#         vbox = wx.BoxSizer(wx.VERTICAL)
+#         vbox.Add(
+#                 wx.StaticLine(
+#                         self,
+#                         -1,
+#                         size=(1500,
+#                               -1)
+#                         ),
+#                 0,
+#                 wx.ALL,
+#                 5
+#                 )
+#         vbox.Add(
+#                 wx.StaticLine(
+#                         self,
+#                         -1,
+#                         size=(-1,
+#                               1500)
+#                         ),
+#                 0,
+#                 wx.ALL,
+#                 5
+#                 )
+#         vbox.Add(
+#                 (20,
+#                  20)
+#                 )
+#         self.SetSizer(vbox)
+#         self.SetupScrolling()
+#         self.SetBackgroundColour(
+#                 wx.Colour(
+#                         255,
+#                         153,
+#                         153
+#                         )
+#                 )
+#         self.SetFont(
+#                 wx.Font(
+#                     12,
+#                     wx.MODERN,
+#                     wx.NORMAL,
+#                     wx.NORMAL,
+#                     False,
+#                     u'JetBrains Mono NL'
+#                     )
+#                 )
+#         wx.StaticText(
+#                 self,
+#                 -1,
+#                 "UPPER BODY TABLE",
+#                 pos=(170,
+#                      20)
+#                 )
+#         self.btn1 = wx.Button(
+#                 self,
+#                 202,
+#                 "EXIT",
+#                 pos=(450,
+#                      830),
+#                 size=(70,
+#                       30)
+#                 )
+#         self.Bind(
+#                 wx.EVT_BUTTON,
+#                 self.exit,
+#                 id=202
+#                 )
+#         self.btn2 = wx.Button(
+#                 self,
+#                 203,
+#                 "REFRESH",
+#                 pos=(550,
+#                      830),
+#                 size=(70,
+#                       30)
+#                 )
+#         self.Bind(
+#                 wx.EVT_BUTTON,
+#                 self.refresh,
+#                 id=203
+#                 )
+#
+#     def refresh(self, event):
+#         try:
+#             html
+#         except NameError:
+#             html = None
+#
+#         if html is None:
+#             conn = sqlite3.connect(dataBasePath)
+#             dfSQL = pd.read_sql_query("SELECT * FROM UPPERBODY", conn)
+#             conn.close()
+#             df = dfSQL.drop(columns=['ID'])
+#             df = df.rename(columns={'frontline':'Frontline POW Raise', 'shoulderpress':'Shoulder Press', 'chairrow':'Chair Side Row','supinecurl':'Supine Curl','reardeltfly':'Rear Delt Fly','sidebend':'Standing Side Bend', 'lateralraise':'Lateral Raise'})
+#             dfAsStringU = df.to_html(index=False)
+#             Find = '<th>'
+#             Replace = '<th style="width:12.5%">'
+#             dfAsStringU = dfAsStringU.replace(Find, Replace)
+#             Find = '<tr style="text-align: right;">'
+#             Replace = '<tr style="text-align: center;">'
+#             dfAsStringU = dfAsStringU.replace(Find, Replace)
+#             Find = '<table border="1" class="dataframe">'
+#             Replace = '<table border="1" class="dataframe" style="width:1000px">'
+#             dfAsStringU = dfAsStringU.replace(Find, Replace)
+#             Find = '<td>'
+#             Replace = '<td align="center">'
+#             dfAsStringU = dfAsStringU.replace(Find, Replace)
+#             html = wx.html2.WebView.New(
+#                     self,
+#                     -1,
+#                     size=(
+#                         1200,
+#                         800
+#                         )
+#                     )
+#             html.SetPage(dfAsStringU, "")
+#         else:
+#             html.Reload(wx.html2.WEBVIEW_RELOAD_NO_CACHE)
+#
+#     @staticmethod
+#     def exit(event):
+#         """
+#
+#         :param event:
+#         :type event:
+#         """
+#         wx.Exit()
+#
+#
+# class lowerBodyTable(scrolled.ScrolledPanel):
+#     """
+#
+#     """
+#
+#     def __init__(
+#             self,
+#             parent
+#             ):
+#         scrolled.ScrolledPanel.__init__(
+#                 self,
+#                 parent,
+#                 -1
+#                 )
+#
+#         vbox = wx.BoxSizer(wx.VERTICAL)
+#         vbox.Add(
+#                 wx.StaticLine(
+#                         self,
+#                         -1,
+#                         size=(750,
+#                               -1)
+#                         ),
+#                 0,
+#                 wx.ALL,
+#                 5
+#                 )
+#         vbox.Add(
+#                 wx.StaticLine(
+#                         self,
+#                         -1,
+#                         size=(-1,
+#                               750)
+#                         ),
+#                 0,
+#                 wx.ALL,
+#                 5
+#                 )
+#         vbox.Add(
+#                 (20,
+#                  20)
+#                 )
+#         self.SetSizer(vbox)
+#         self.SetupScrolling()
+#         self.SetBackgroundColour(
+#                 wx.Colour(
+#                         255,
+#                         153,
+#                         153
+#                         )
+#                 )
+#         self.SetFont(
+#                 wx.Font(
+#                     12,
+#                     wx.MODERN,
+#                     wx.NORMAL,
+#                     wx.NORMAL,
+#                     False,
+#                     u'JetBrains Mono NL'
+#                     )
+#                 )
+#         wx.StaticText(
+#                 self,
+#                 -1,
+#                 "LOWER BODY TABLE",
+#                 pos=(170,
+#                      20)
+#                 )
+#         self.btn1 = wx.Button(
+#                 self,
+#                 202,
+#                 "EXIT",
+#                 pos=(450,
+#                      830),
+#                 size=(70,
+#                       30)
+#                 )
+#         self.Bind(
+#                 wx.EVT_BUTTON,
+#                 self.exit,
+#                 id=202
+#                 )
+#         self.btn2 = wx.Button(
+#                 self,
+#                 203,
+#                 "REFRESH",
+#                 pos=(550,
+#                      830),
+#                 size=(70,
+#                       30)
+#                 )
+#         self.Bind(
+#                 wx.EVT_BUTTON,
+#                 self.refresh,
+#                 id=203
+#                 )
+#
+#     def refresh(self, event):
+#         try:
+#             html
+#         except NameError:
+#             html = None
+#
+#         if html is None:
+#             conn = sqlite3.connect(dataBasePath)
+#             dfSQL = pd.read_sql_query("SELECT * FROM LOWERBODY", conn)
+#             conn.close()
+#
+#             df = dfSQL.drop(columns=['ID'])
+#             df = df.rename(columns={
+#                 'stifflegrdl': 'Stiff Leg RDL',
+#                 'hipthruster': 'Hip Thruster',
+#                 'forwardsquat': 'Forward Squat',
+#                 'forwardlunge': 'Forward lunge'
+#                 }
+#                            )
+#             dfAsStringL = df.to_html(index=False)
+#             Find = '<th>'
+#             Replace = '<th style="width:20%">'
+#             dfAsStringL = dfAsStringL.replace(Find, Replace)
+#             Find = '<tr style="text-align: right;">'
+#             Replace = '<tr style="text-align: center;">'
+#             dfAsStringL = dfAsStringL.replace(Find, Replace)
+#             Find = '<table border="1" class="dataframe">'
+#             Replace = '<table border="1" class="dataframe" style="width:1000px">'
+#             dfAsStringL = dfAsStringL.replace(Find, Replace)
+#             Find = '<td>'
+#             Replace = '<td align="center">'
+#             dfAsStringL = dfAsStringL.replace(Find, Replace)
+#
+#             html = wx.html2.WebView.New(self, -1, size=(1200, 800))
+#             html.SetPage(dfAsStringL, "")
+#         else:
+#             html.Reload(wx.html2.WEBVIEW_RELOAD_NO_CACHE)
+#
+#     @staticmethod
+#     def exit(event):
+#         """
+#
+#         :param event:
+#         :type event:
+#         """
+#         wx.Exit()
 
 
 class WorkoutLogBook(
@@ -1061,18 +1141,18 @@ class WorkoutLogBook(
                 lowerBody(nb),
                 "LOWER BODY"
                 )
-        nb.AddPage(
-                lowerBodyTable(nb),
-                "LOWER BODY TABLE"
-                )
+        #nb.AddPage(
+                #lowerBodyTable(nb),
+                #"LOWER BODY TABLE"
+                #)
         nb.AddPage(
                 upperBody(nb),
                 "UPPER BODY"
                 )
-        nb.AddPage(
-                upperBodyTable(nb),
-                "UPPER BODY TABLE"
-                )
+        #nb.AddPage(
+                #upperBodyTable(nb),
+                #"UPPER BODY TABLE"
+                #)
         self.Centre()
         self.Show(True)
 
