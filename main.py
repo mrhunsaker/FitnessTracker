@@ -763,7 +763,7 @@ class lowerBody(scrolled.ScrolledPanel):
                             )
                     )
             conn.commit()
-            conn.close
+            conn.close()
 
             self.dial = wx.MessageDialog(
                     None,

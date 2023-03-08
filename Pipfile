@@ -13,6 +13,7 @@ pandas = "*"
 plotly = "*"
 wxpython = "*"
 jinja2 = "*"
+psycopg = {extras = ["pool"], version = "*"}
 
 [dev-packages]
 
