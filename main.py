@@ -82,9 +82,7 @@ def create_connection(db_file):
             conn.close()
 
 
-dataBasePath = Path(USER_DIR).joinpath('Fitness/workoutLog.db')
 if __name__ == '__main__':
-    dataBasePath = Path(USER_DIR).joinpath('Fitness/workoutLog.db')
     create_connection(dataBasePath)
 
 
@@ -761,14 +759,6 @@ class upperBody(scrolled.ScrolledPanel):
         Find = '<td>'
         Replace = '<td align="center">'
         dfAsStringU = dfAsStringU.replace(Find, Replace)
-        html = wx.html2.WebView.New(
-                self,
-                -1,
-                size = (
-                        1200,
-                        800
-                        )
-                )
         dialog = MyBrowser(None, -1)
         dialog.browser.SetPage(dfAsStringU, "")
         dialog.Show()
@@ -788,7 +778,6 @@ class upperBody(scrolled.ScrolledPanel):
         frontlineRaiseWeight = self.frontlineRaiseReps.GetValue()
         downdogPushupReps = self.downdogPushupReps.GetValue()
         downdogPushupSets = self.downdogPushupSets.GetValue()
-        downdogPushupWeight = self.downdogPushupWeight.GetValue()
         shoulderPressReps = self.shoulderPressReps.GetValue()
         shoulderPressSets = self.shoulderPressSets.GetValue
         shoulderPressWeight = self.shoulderPressWeight.GetValue()
@@ -885,7 +874,6 @@ class upperBody(scrolled.ScrolledPanel):
                                 frontlineRaiseWeight,
                                 downdogPushupReps,
                                 downdogPushupSets,
-                                downdogPushupWeight,
                                 shoulderPressReps,
                                 shoulderPressSets,
                                 shoulderPressWeight,
@@ -1463,7 +1451,7 @@ class lowerBody(scrolled.ScrolledPanel):
                         'CYCLISTSQUAT_SETS':        'Cyclist Squat sets',
                         'SINGLELEGCALFRAISE_REPS':  'Calf Raise reps',
                         'SINGLELEGCALFRAISE_SETS':  'Calf Raise sets',
-                        'LONGLEVERCRUNCHES_REPS':   'Long Lever Crunshes reps',
+                        'LONGLEVERCRUNCHES_REPS':   'Long Lever Crunches reps',
                         'LONGLEVERCRUNCHES_SETS':   'Long Lever Crunches sets'
                         }
                 )
@@ -1481,7 +1469,6 @@ class lowerBody(scrolled.ScrolledPanel):
         Find = '<td>'
         Replace = '<td align="center">'
         dfAsStringL = dfAsStringL.replace(Find, Replace)
-        html = wx.html2.WebView.New(self, -1, size = (1200, 800))
         dialog = MyBrowser(None, -1)
         dialog.browser.SetPage(dfAsStringL, "")
         dialog.Show()
@@ -1499,7 +1486,6 @@ class lowerBody(scrolled.ScrolledPanel):
         singleLegBridgeSets = self.singleLegBridgeSets.GetValue()
         worldsGreatestReps = self.worldsGreatestReps.GetValue()
         worldsGreatestSets = self.worldsGreatestSets.GetValue()
-        worldsGreatestWeight = self.worldsGreatestWeight.GetValue()
         stiffLegRDLReps = self.stiffLegRDLReps.GetValue()
         stiffLegRDLSets = self.stiffLegRDLSets.GetValue()
         stiffLegRDLWeight = self.stiffLegRDLWeight.GetValue()
@@ -1516,13 +1502,10 @@ class lowerBody(scrolled.ScrolledPanel):
         forwardLungeWeight = self.forwardLungeWeight.GetValue()
         cyclistSquatReps = self.cyclistSquatReps.GetValue()
         cyclistSquatSets = self.cyclistSquatSets.GetValue()
-        cyclistSquatWeight = self.cyclistSquatWeight.GetValue()
         calfRaiseReps = self.calfRaiseReps.GetValue()
         calfRaiseSets = self.calfRaiseSets.GetValue()
-        calfRaiseWeight = self.calfRaiseWeight.GetValue()
         longLeverReps = self.longLeverReps.GetValue()
         longLeverSets = self.longLeverSets.GetValue()
-        longLeverWeight = self.longLeverWeight.GetValue()
 
         def data_entry():
             """
@@ -1592,7 +1575,6 @@ class lowerBody(scrolled.ScrolledPanel):
                             singleLegBridgeSets,
                             worldsGreatestReps,
                             worldsGreatestSets,
-                            worldsGreatestWeight,
                             stiffLegRDLReps,
                             stiffLegRDLSets,
                             stiffLegRDLWeight,
@@ -1609,13 +1591,10 @@ class lowerBody(scrolled.ScrolledPanel):
                             forwardLungeWeight,
                             cyclistSquatReps,
                             cyclistSquatSets,
-                            cyclistSquatWeight,
                             calfRaiseReps,
                             calfRaiseSets,
-                            calfRaiseWeight,
                             longLeverReps,
-                            longLeverSets,
-                            longLeverWeight
+                            longLeverSets
                             )
                     )
             conn.commit()
