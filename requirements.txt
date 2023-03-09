@@ -1,3 +1,4 @@
+# coding=utf-8
 -i https://pypi.org/simple
 datetime==5.0
 docutils==0.19 ; python_version >= '3.7'
