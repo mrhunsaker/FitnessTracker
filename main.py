@@ -747,7 +747,6 @@ class upperBody(scrolled.ScrolledPanel):
                         }
                 )
         dfAsStringU = df.to_html(index = False)
-
         Find = '<table border="1" class="dataframe">'
         Replace = '<table border="1" class="dataframe">\n<colgroup>\n<col span="1" style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col span="2" ' \
                   'style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col span="3" style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col ' \
@@ -762,6 +761,7 @@ class upperBody(scrolled.ScrolledPanel):
         dialog = MyBrowser(None, -1)
         dialog.browser.SetPage(dfAsStringU, "")
         dialog.Show()
+        self.panel.Layout()
 
     def save(
             self,
@@ -779,7 +779,7 @@ class upperBody(scrolled.ScrolledPanel):
         downdogPushupReps = self.downdogPushupReps.GetValue()
         downdogPushupSets = self.downdogPushupSets.GetValue()
         shoulderPressReps = self.shoulderPressReps.GetValue()
-        shoulderPressSets = self.shoulderPressSets.GetValue
+        shoulderPressSets = self.shoulderPressSets.GetValue()
         shoulderPressWeight = self.shoulderPressWeight.GetValue()
         elbowOutRowReps = self.elbowOutRowReps.GetValue()
         elbowOutRowSets = self.elbowOutRowSets.GetValue()
@@ -788,7 +788,7 @@ class upperBody(scrolled.ScrolledPanel):
         bicepCurlSets = self.bicepCurlSets.GetValue()
         bicepCurlWeight = self.bicepCurlWeight.GetValue()
         closeGripPushupReps = self.closeGripPushupReps.GetValue()
-        closeGripPushupSets = self.frontlineRaiseReps.GetValue
+        closeGripPushupSets = self.frontlineRaiseReps.GetValue()
         closeGripPushupWeight = self.closeGripPushupWeight.GetValue()
         rearDeltFlyReps = self.rearDeltFlyReps.GetValue()
         rearDeltFlySets = self.rearDeltFlySets.GetValue()
@@ -1456,7 +1456,6 @@ class lowerBody(scrolled.ScrolledPanel):
                         }
                 )
         dfAsStringL = df.to_html(index = False)
-        print(dfAsStringL)
         Find = '<table border="1" class="dataframe">'
         Replace = '<table border="1" class="dataframe">\n<colgroup>\n<col span="1" style="background-color:white">\n<col span="2" style="background-color:LightGrey">\n<col span="2" ' \
                   'style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col span="2" style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col ' \
@@ -1472,6 +1471,7 @@ class lowerBody(scrolled.ScrolledPanel):
         dialog = MyBrowser(None, -1)
         dialog.browser.SetPage(dfAsStringL, "")
         dialog.Show()
+        self.panel.Layout()
 
     def save(
             self,
@@ -1677,6 +1677,7 @@ frame = WorkoutLogBook(
         None,
         'Workout Logs'
         )
+
 frame.Centre()
 frame.Show()
 app.MainLoop()
