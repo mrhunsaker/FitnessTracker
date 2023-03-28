@@ -18,6 +18,7 @@
 
 import datetime
 import os
+import random
 import sqlite3
 from pathlib import Path
 from sqlite3 import Error
@@ -207,6 +208,11 @@ class MyBrowser(wx.Dialog):
         sizer = wx.BoxSizer(wx.VERTICAL)
         self.browser = wx.html2.WebView.New(self)
         sizer.Add(self.browser, 1, wx.EXPAND, 10)
+        self.SetBackgroundColour(
+                random.choice(
+                        colorList
+                        )
+                )
         self.SetSizer(sizer)
         self.SetSize((1600, 1200))
 
@@ -255,10 +261,8 @@ class upperBody(scrolled.ScrolledPanel):
         self.SetSizer(vbox)
         self.SetupScrolling()
         self.SetBackgroundColour(
-                wx.Colour(
-                        255,
-                        153,
-                        153
+                random.choice(
+                        colorList
                         )
                 )
         self.SetFont(
@@ -913,6 +917,17 @@ class upperBody(scrolled.ScrolledPanel):
         data_entry()
 
 
+justRight = wx.Colour(239, 214, 192)
+whiteRock = wx.Colour(241, 240, 226)
+khaki = wx.Colour(238, 231, 142)
+poloBlue = wx.Colour(136, 150, 198)
+downy = wx.Colour(107, 205, 156)
+twilight = wx.Colour(224, 199, 215)
+coral = wx.Colour(255, 140, 85)
+heather = wx.Colour(191, 202, 214)
+colorList = [justRight, whiteRock, khaki, poloBlue, downy, twilight, coral, heather]
+
+
 class lowerBody(scrolled.ScrolledPanel):
     """
 
@@ -957,10 +972,8 @@ class lowerBody(scrolled.ScrolledPanel):
         self.SetSizer(vbox)
         self.SetupScrolling()
         self.SetBackgroundColour(
-                wx.Colour(
-                        255,
-                        153,
-                        153
+                random.choice(
+                        colorList
                         )
                 )
         self.SetFont(
@@ -1137,7 +1150,7 @@ class lowerBody(scrolled.ScrolledPanel):
         wx.StaticText(
                 self,
                 -1,
-                "Supinating Bicep Curl" + '.' * (55 - len("Supinating Bicep Curl")),
+                "Hip Thrusters" + '.' * (55 - len("Hip Thrusters")),
                 pos = (30,
                        200)
                 )
@@ -1167,12 +1180,12 @@ class lowerBody(scrolled.ScrolledPanel):
                 self,
                 -1,
                 "",
-                pos = (410,
+                pos = (520,
                        200),
                 size = (100,
                         25)
                 )
-        self.hipThrusterWeight.SetHint('Sets')
+        self.hipThrusterWeight.SetHint('Weight')
 
         ######### Forward Squat
         wx.StaticText(
@@ -1342,16 +1355,16 @@ class lowerBody(scrolled.ScrolledPanel):
         wx.StaticText(
                 self,
                 -1,
-                "Long Lever Crunches" + '.' * (55 - len("Long Lever Crunches")),
+                "Long Lever Crunches" + '.' * (45 - len("Long Lever Crunches")),
                 pos = (30,
-                       320)
+                       350)
                 )
         self.longLeverReps = wx.TextCtrl(
                 self,
                 -1,
                 "",
                 pos = (300,
-                       320),
+                       350),
                 size = (100,
                         25)
                 )
@@ -1362,7 +1375,7 @@ class lowerBody(scrolled.ScrolledPanel):
                 -1,
                 "",
                 pos = (410,
-                       320),
+                       350),
                 size = (100,
                         25)
                 )
@@ -1374,7 +1387,7 @@ class lowerBody(scrolled.ScrolledPanel):
                 201,
                 "SAVE",
                 pos = (250,
-                       400),
+                       420),
                 size = (70,
                         30)
                 )
@@ -1388,7 +1401,7 @@ class lowerBody(scrolled.ScrolledPanel):
                 203,
                 "SHOW",
                 pos = (330,
-                       400),
+                       420),
                 size = (70,
                         30)
                 )
@@ -1402,7 +1415,7 @@ class lowerBody(scrolled.ScrolledPanel):
                 202,
                 "EXIT",
                 pos = (410,
-                       400),
+                       420),
                 size = (70,
                         30)
                 )
@@ -1470,6 +1483,16 @@ class lowerBody(scrolled.ScrolledPanel):
         dfAsStringL = dfAsStringL.replace(Find, Replace)
         dialog = MyBrowser(None, -1)
         dialog.browser.SetPage(dfAsStringL, "")
+        dialog.SetFont(
+                wx.Font(
+                        10,
+                        wx.MODERN,
+                        wx.NORMAL,
+                        wx.NORMAL,
+                        False,
+                        u'JetBrains Mono NL'
+                        )
+                )
         dialog.Show()
         self.panel.Layout()
 
@@ -1636,10 +1659,8 @@ class WorkoutLogBook(
                         )
                 )
         self.SetBackgroundColour(
-                wx.Colour(
-                        224,
-                        224,
-                        224
+                random.choice(
+                        colorList
                         )
                 )
         self.SetFont(
