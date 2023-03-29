@@ -203,8 +203,8 @@ if __name__ == '__main__':
 
 
 class MyBrowser(wx.Dialog):
-    def __init__(self, *args, **kwds):
-        wx.Dialog.__init__(self, *args, **kwds)
+    def __init__(self, *args, **kwargs):
+        wx.Dialog.__init__(self, *args, **kwargs)
         sizer = wx.BoxSizer(wx.VERTICAL)
         self.browser = wx.html2.WebView.New(self)
         sizer.Add(self.browser, 1, wx.EXPAND, 10)
@@ -214,7 +214,13 @@ class MyBrowser(wx.Dialog):
                         )
                 )
         self.SetSizer(sizer)
-        self.SetSize((1600, 1200))
+        self.SetSize((1500, 1000))
+
+
+def makePretty(styler):
+    styler.set_sticky(
+            axis = 1
+            )
 
 
 class upperBody(scrolled.ScrolledPanel):
@@ -752,7 +758,8 @@ class upperBody(scrolled.ScrolledPanel):
                 )
         dfAsStringU = df.to_html(index = False)
         Find = '<table border="1" class="dataframe">'
-        Replace = '<table border="1" class="dataframe">\n<colgroup>\n<col span="1" style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col span="2" ' \
+        Replace = '<style> thead th {position: sticky; top: 0px; background-color: white}</style>\n<table border="1" class="dataframe">\n<colgroup>\n<col span="1" style="background-color:white">\n<col span="3" ' \
+                  'style="background-color:LightGrey">\n<col span="2" ' \
                   'style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col span="3" style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col ' \
                   'span="3" style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col span="3" style="background-color:white">\n<col span="3" style="background-color:LightGrey">'
         dfAsStringU = dfAsStringU.replace(Find, Replace)
@@ -1470,7 +1477,8 @@ class lowerBody(scrolled.ScrolledPanel):
                 )
         dfAsStringL = df.to_html(index = False)
         Find = '<table border="1" class="dataframe">'
-        Replace = '<table border="1" class="dataframe">\n<colgroup>\n<col span="1" style="background-color:white">\n<col span="2" style="background-color:LightGrey">\n<col span="2" ' \
+        Replace = '<style> thead th {position: sticky; top: 0px; background-color: white}</style>\n<table border="1" class="dataframe">\n<colgroup>\n<col span="1" style="background-color:white">\n<col span="2" ' \
+                  'style="background-color:LightGrey">\n<col span="2" ' \
                   'style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col span="2" style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col ' \
                   'span="3" style="background-color:white">\n<col span="3" style="background-color:LightGrey">\n<col span="2" style="background-color:white">\n<col span="2" ' \
                   'style="background-color:LightGrey">\n<col span="2" style="background-color:white">'
@@ -1478,9 +1486,14 @@ class lowerBody(scrolled.ScrolledPanel):
         Find = '<tr style="text-align: right;">'
         Replace = '<tr style="text-align: center;">'
         dfAsStringL = dfAsStringL.replace(Find, Replace)
+        Find = '<tr style="text-align: right;">'
+        Replace = '<tr style="text-align: center;">'
+        dfAsStringL = dfAsStringL.replace(Find, Replace)
         Find = '<td>'
         Replace = '<td align="center">'
         dfAsStringL = dfAsStringL.replace(Find, Replace)
+        # dfAsStringL = dfAsStringL.style.pipe(makePretty)
+        print(dfAsStringL)
         dialog = MyBrowser(None, -1)
         dialog.browser.SetPage(dfAsStringL, "")
         dialog.SetFont(
