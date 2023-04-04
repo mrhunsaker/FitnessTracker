@@ -281,6 +281,24 @@ class upperBody(scrolled.ScrolledPanel):
                         u'JetBrains Mono NL'
                         )
                 )
+        conn = sqlite3.connect(dataBasePath)
+        dfSQL = pd.read_sql_query("SELECT * FROM UPPERBODY", conn)
+        conn.close()
+        indexMax = dfSQL.index.max()
+        YesterdayIndexed = dfSQL.loc[indexMax]
+        Yesterday = YesterdayIndexed.drop(index = ('ID'))
+        '''
+        previousDate = dfSQL.iloc[[indexMax], [1]]
+        previousFrontline = dfSQL.iloc[[indexMax], [2, 3, 4]]
+        previousDownDog = dfSQL.iloc[[indexMax], [5, 6]]
+        previousZpress = dfSQL.iloc[[indexMax], [7, 8]]
+        previousElbowOut = dfSQL.iloc[[indexMax], [9, 10, 11]]
+        previousCurl = dfSQL.iloc[[indexMax], [12, 13, 14]]
+        previousPushUP = dfSQL.iloc[[indexMax], [15, 16, 17]]
+        previousRearDelt = dfSQL.iloc[[indexMax], [18, 19, 20]]
+        previousSiddeBend = dfSQL.iloc[[indexMax], [21, 22, 23]]
+        previousLatRaise = dfSQL.iloc[[indexMax], [24, 25, 26]]
+        '''
         ######### Panel title
         wx.StaticText(
                 self,
@@ -289,7 +307,13 @@ class upperBody(scrolled.ScrolledPanel):
                 pos = (200,
                        20)
                 )
-
+        wx.StaticText(
+                self,
+                -1,
+                "PREVIOUS WORKOUT",
+                pos = (800,
+                       20)
+                )
         ######### Date
         wx.StaticText(
                 self,
@@ -308,7 +332,15 @@ class upperBody(scrolled.ScrolledPanel):
                         25)
                 )
         self.date.SetHint('YYYY-MM-DD')
-
+        self.yesterday = wx.StaticText(
+                self,
+                -1,
+                Yesterday.to_string(),
+                pos = (700,
+                       50)
+                )
+        self.yesterday.SetBackgroundColour('NAVY')
+        self.yesterday.SetForegroundColour('WHITE')
         ######### Frontline POW Raise
         wx.StaticText(
                 self,
@@ -993,6 +1025,12 @@ class lowerBody(scrolled.ScrolledPanel):
                         u'JetBrains Mono NL'
                         )
                 )
+        conn = sqlite3.connect(dataBasePath)
+        dfSQLlower = pd.read_sql_query("SELECT * FROM LOWERBODY", conn)
+        conn.close()
+        indexMax = dfSQLlower.index.max()
+        YesterdayIndexed = dfSQLlower.loc[indexMax]
+        Yesterday = YesterdayIndexed.drop(index = ('ID'))
 
         ########## Panel title
         wx.StaticText(
@@ -1002,7 +1040,13 @@ class lowerBody(scrolled.ScrolledPanel):
                 pos = (200,
                        20)
                 )
-
+        wx.StaticText(
+                self,
+                -1,
+                "PREVIOUS WORKOUT",
+                pos = (800,
+                       20)
+                )
         ######### Date
         wx.StaticText(
                 self,
@@ -1021,7 +1065,15 @@ class lowerBody(scrolled.ScrolledPanel):
                         25)
                 )
         self.date.SetHint('YYYY-MM-DD')
-
+        self.yesterday = wx.StaticText(
+                self,
+                -1,
+                Yesterday.to_string(),
+                pos = (700,
+                       50)
+                )
+        self.yesterday.SetBackgroundColour('NAVY')
+        self.yesterday.SetForegroundColour('WHITE')
         ######### Single Leg Bridge
         wx.StaticText(
                 self,
