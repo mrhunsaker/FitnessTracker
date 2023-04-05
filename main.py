@@ -22,17 +22,16 @@ import random
 import sqlite3
 from pathlib import Path
 from sqlite3 import Error
-import packaging
-import matplotlib
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
+
 import numpy as np
 import pandas as pd
+import plotly.graph_objects as go
 import wx
 import wx.html
 import wx.html2
 import wx.lib.colourdb
 import wx.lib.scrolledpanel as scrolled
+from plotly.subplots import make_subplots
 
 date = datetime.datetime.now().strftime("%Y_%m_%d-%H%M%S_%p")
 ##############################################################################
@@ -221,6 +220,7 @@ class MyBrowser(wx.Dialog):
         self.SetSizer(sizer)
         self.SetSize((1500, 1000))
 
+
 class GraphBrowser(wx.Dialog):
     def __init__(self, *args, **kwargs):
         wx.Dialog.__init__(self, *args, **kwargs)
@@ -234,6 +234,7 @@ class GraphBrowser(wx.Dialog):
                 )
         self.SetSizer(sizer)
         self.SetSize((1500, 1000))
+
 
 def makePretty(styler):
     styler.set_sticky(
@@ -853,7 +854,7 @@ class upperBody(scrolled.ScrolledPanel):
         dialog = MyBrowser(None, -1)
         dialog.browser.SetPage(dfAsStringU, "")
         dialog.Show()
-        
+
         conn = sqlite3.connect(dataBasePath)
         dfSQLupper = pd.read_sql_query("SELECT * FROM UPPERBODY", conn)
         conn.close()
@@ -894,11 +895,13 @@ class upperBody(scrolled.ScrolledPanel):
         noise = np.random.normal(mu, sigma, [len(dfSQLupper.index), len(dfSQLupper.columns)])
         dfSQLupper = dfSQLupper + noise
         pd.options.plotting.backend = "plotly"
-        figUpper = dfSQLupper.plot(x=dfSQLupper.index, y=['Frontline weight','Shoulder press weight','Elbow Out Row weight','Bicep Curl weight','Close Grip Pushup Stair','Rear Delt Fly weight','Side Bend weight','Lateral Raise weight'])
-        figUpper.update_yaxes(tickvals=[1,2,3,4,5,8,10,12,15,20,25,30,35,40,45,50,55])
-        figUpper.update_layout(width=1000, height=500)
-        #figUpper.show()
-
+        figUpper = dfSQLupper.plot(
+            x = dfSQLupper.index,
+            y = ['Frontline weight', 'Shoulder press weight', 'Elbow Out Row weight', 'Bicep Curl weight', 'Close Grip Pushup Stair', 'Rear Delt Fly weight', 'Side Bend weight', 'Lateral Raise weight']
+            )
+        figUpper.update_yaxes(tickvals = [1, 2, 3, 4, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55])
+        figUpper.update_layout(width = 1000, height = 500)
+        # figUpper.show()
 
         conn = sqlite3.connect(dataBasePath)
         dfSQLlower = pd.read_sql_query("SELECT * FROM LOWERBODY", conn)
@@ -939,36 +942,87 @@ class upperBody(scrolled.ScrolledPanel):
         noise = np.random.normal(mu, sigma, [len(dfSQLlower.index), len(dfSQLlower.columns)])
         dfSQLlower = dfSQLlower + noise
         pd.options.plotting.backend = "plotly"
-        figLower = dfSQLlower.plot(x=dfSQLlower.index, y=['Stiff Leg RDL weight','Hip Thruster weight','Forward Squat weight','Forward Lunge weight'])
-        figLower.update_yaxes(tickvals=[1,2,3,4,5,8,10,12,15,20,25,30,35,40,45,50,55])
-        figLower.update_layout(width=1000, height=500)
-        #figLower.show()
+        figLower = dfSQLlower.plot(x = dfSQLlower.index, y = ['Stiff Leg RDL weight', 'Hip Thruster weight', 'Forward Squat weight', 'Forward Lunge weight'])
+        figLower.update_yaxes(tickvals = [1, 2, 3, 4, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55])
+        figLower.update_layout(width = 1000, height = 500)
+        # figLower.show()
 
-        figTogether = make_subplots(rows=2,cols=1, subplot_titles = ("Upper Body", "Lower Body"), vertical_spacing = 0.1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Frontline weight'],name='Frontline PPOW Raise', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Shoulder press weight'],name = 'Shoulder Press', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Elbow Out Row weight'],name = 'Elbow Out Row', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Bicep Curl weight'], name='Bicep Curl', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Close Grip Pushup Stair'], name='Close Grip Push Up', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Rear Delt Fly weight'],name = 'Rear Delt Fly', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Side Bend weight'], name = 'Side Bend', legendgroup='Upper Body', mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Lateral Raise weight'],name = 'Lateral Raise', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLlower.index, y=dfSQLlower['Stiff Leg RDL weight'],name = 'Stiff Leg RDL', legendgroup='Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"), row=2, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLlower.index, y=dfSQLlower['Hip Thruster weight'],name = 'Hip Thruster', legendgroup='Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"), row=2, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLlower.index, y=dfSQLlower['Forward Squat weight'],name = 'Forward Squat', legendgroup='Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"), row=2, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLlower.index, y=dfSQLlower['Forward Lunge weight'],name = 'Forward Lunge', legendgroup='Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"), row=2, col=1)
-        figTogether.update_yaxes(tickvals=[1,2,3,4,5,8,10,12,15,20,25,30,35,40,45,50,55],range = [-0.5, 30], fixedrange = True, row=1, col=1)
-        figTogether.update_yaxes(tickvals=[1,2,3,4,5,8,10,12,15,20,25,30,35,40,45,50,55],range = [-0.5, 60], fixedrange = True, row=2, col=1)
-        figTogether.update_layout(legend_tracegroupgap=280, width=1000, height=1000)
+        figTogether = make_subplots(rows = 2, cols = 1, subplot_titles = ("Upper Body", "Lower Body"), vertical_spacing = 0.1)
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Frontline weight'], name = 'Frontline PPOW Raise', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Shoulder press weight'], name = 'Shoulder Press', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Elbow Out Row weight'], name = 'Elbow Out Row', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Bicep Curl weight'], name = 'Bicep Curl', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(
+                x = dfSQLupper.index,
+                y = dfSQLupper['Close Grip Pushup Stair'],
+                name = 'Close Grip Push Up',
+                legendgroup = 'Upper Body',
+                legendgrouptitle_text = "Upper Body Weights",
+                mode = "lines+markers+text"
+                ),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Rear Delt Fly weight'], name = 'Rear Delt Fly', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Side Bend weight'], name = 'Side Bend', legendgroup = 'Upper Body', mode = "lines+markers+text"), row = 1, col = 1)
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Lateral Raise weight'], name = 'Lateral Raise', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLlower.index, y = dfSQLlower['Stiff Leg RDL weight'], name = 'Stiff Leg RDL', legendgroup = 'Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"),
+            row = 2,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLlower.index, y = dfSQLlower['Hip Thruster weight'], name = 'Hip Thruster', legendgroup = 'Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"),
+            row = 2,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLlower.index, y = dfSQLlower['Forward Squat weight'], name = 'Forward Squat', legendgroup = 'Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"),
+            row = 2,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLlower.index, y = dfSQLlower['Forward Lunge weight'], name = 'Forward Lunge', legendgroup = 'Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"),
+            row = 2,
+            col = 1
+            )
+        figTogether.update_yaxes(tickvals = [1, 2, 3, 4, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55], range = [-0.5, 30], fixedrange = True, row = 1, col = 1)
+        figTogether.update_yaxes(tickvals = [1, 2, 3, 4, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55], range = [-0.5, 60], fixedrange = True, row = 2, col = 1)
+        figTogether.update_layout(legend_tracegroupgap = 280, width = 1000, height = 1000)
         figTogether.show()
-        
+
         dialog = GraphBrowser(
                 None, -1
                 )
         dialog.browser.SetPage(figTogether, "")
         dialog.Show()
         figTogether.show()
-        
+
     def save(
             self,
             event
@@ -1762,7 +1816,7 @@ class lowerBody(scrolled.ScrolledPanel):
                         )
                 )
         dialog.Show()
-        
+
         conn = sqlite3.connect(dataBasePath)
         dfSQLupper = pd.read_sql_query("SELECT * FROM UPPERBODY", conn)
         conn.close()
@@ -1803,11 +1857,13 @@ class lowerBody(scrolled.ScrolledPanel):
         noise = np.random.normal(mu, sigma, [len(dfSQLupper.index), len(dfSQLupper.columns)])
         dfSQLupper = dfSQLupper + noise
         pd.options.plotting.backend = "plotly"
-        figUpper = dfSQLupper.plot(x=dfSQLupper.index, y=['Frontline weight','Shoulder press weight','Elbow Out Row weight','Bicep Curl weight','Close Grip Pushup Stair','Rear Delt Fly weight','Side Bend weight','Lateral Raise weight'])
-        figUpper.update_yaxes(tickvals=[1,2,3,4,5,8,10,12,15,20,25,30,35,40,45,50,55])
-        figUpper.update_layout(width=1000, height=500)
-        #figUpper.show()
-
+        figUpper = dfSQLupper.plot(
+            x = dfSQLupper.index,
+            y = ['Frontline weight', 'Shoulder press weight', 'Elbow Out Row weight', 'Bicep Curl weight', 'Close Grip Pushup Stair', 'Rear Delt Fly weight', 'Side Bend weight', 'Lateral Raise weight']
+            )
+        figUpper.update_yaxes(tickvals = [1, 2, 3, 4, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55])
+        figUpper.update_layout(width = 1000, height = 500)
+        # figUpper.show()
 
         conn = sqlite3.connect(dataBasePath)
         dfSQLlower = pd.read_sql_query("SELECT * FROM LOWERBODY", conn)
@@ -1848,27 +1904,78 @@ class lowerBody(scrolled.ScrolledPanel):
         noise = np.random.normal(mu, sigma, [len(dfSQLlower.index), len(dfSQLlower.columns)])
         dfSQLlower = dfSQLlower + noise
         pd.options.plotting.backend = "plotly"
-        figLower = dfSQLlower.plot(x=dfSQLlower.index, y=['Stiff Leg RDL weight','Hip Thruster weight','Forward Squat weight','Forward Lunge weight'])
-        figLower.update_yaxes(tickvals=[1,2,3,4,5,8,10,12,15,20,25,30,35,40,45,50,55])
-        figLower.update_layout(width=1000, height=500)
-        #figLower.show()
+        figLower = dfSQLlower.plot(x = dfSQLlower.index, y = ['Stiff Leg RDL weight', 'Hip Thruster weight', 'Forward Squat weight', 'Forward Lunge weight'])
+        figLower.update_yaxes(tickvals = [1, 2, 3, 4, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55])
+        figLower.update_layout(width = 1000, height = 500)
+        # figLower.show()
 
-        figTogether = make_subplots(rows=2,cols=1, subplot_titles = ("Upper Body", "Lower Body"), vertical_spacing = 0.1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Frontline weight'],name='Frontline PPOW Raise', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Shoulder press weight'],name = 'Shoulder Press', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Elbow Out Row weight'],name = 'Elbow Out Row', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Bicep Curl weight'], name='Bicep Curl', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Close Grip Pushup Stair'], name='Close Grip Push Up', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Rear Delt Fly weight'],name = 'Rear Delt Fly', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Side Bend weight'], name = 'Side Bend', legendgroup='Upper Body', mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLupper.index, y=dfSQLupper['Lateral Raise weight'],name = 'Lateral Raise', legendgroup='Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"), row=1, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLlower.index, y=dfSQLlower['Stiff Leg RDL weight'],name = 'Stiff Leg RDL', legendgroup='Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"), row=2, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLlower.index, y=dfSQLlower['Hip Thruster weight'],name = 'Hip Thruster', legendgroup='Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"), row=2, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLlower.index, y=dfSQLlower['Forward Squat weight'],name = 'Forward Squat', legendgroup='Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"), row=2, col=1)
-        figTogether.add_trace(go.Scatter(x=dfSQLlower.index, y=dfSQLlower['Forward Lunge weight'],name = 'Forward Lunge', legendgroup='Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"), row=2, col=1)
-        figTogether.update_yaxes(tickvals=[1,2,3,4,5,8,10,12,15,20,25,30,35,40,45,50,55],range = [-0.5, 30], fixedrange = True, row=1, col=1)
-        figTogether.update_yaxes(tickvals=[1,2,3,4,5,8,10,12,15,20,25,30,35,40,45,50,55],range = [-0.5, 60], fixedrange = True, row=2, col=1)
-        figTogether.update_layout(legend_tracegroupgap=280, width=1000, height=1000)
+        figTogether = make_subplots(rows = 2, cols = 1, subplot_titles = ("Upper Body", "Lower Body"), vertical_spacing = 0.1)
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Frontline weight'], name = 'Frontline PPOW Raise', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Shoulder press weight'], name = 'Shoulder Press', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Elbow Out Row weight'], name = 'Elbow Out Row', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Bicep Curl weight'], name = 'Bicep Curl', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(
+                x = dfSQLupper.index,
+                y = dfSQLupper['Close Grip Pushup Stair'],
+                name = 'Close Grip Push Up',
+                legendgroup = 'Upper Body',
+                legendgrouptitle_text = "Upper Body Weights",
+                mode = "lines+markers+text"
+                ),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Rear Delt Fly weight'], name = 'Rear Delt Fly', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Side Bend weight'], name = 'Side Bend', legendgroup = 'Upper Body', mode = "lines+markers+text"), row = 1, col = 1)
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLupper.index, y = dfSQLupper['Lateral Raise weight'], name = 'Lateral Raise', legendgroup = 'Upper Body', legendgrouptitle_text = "Upper Body Weights", mode = "lines+markers+text"),
+            row = 1,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLlower.index, y = dfSQLlower['Stiff Leg RDL weight'], name = 'Stiff Leg RDL', legendgroup = 'Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"),
+            row = 2,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLlower.index, y = dfSQLlower['Hip Thruster weight'], name = 'Hip Thruster', legendgroup = 'Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"),
+            row = 2,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLlower.index, y = dfSQLlower['Forward Squat weight'], name = 'Forward Squat', legendgroup = 'Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"),
+            row = 2,
+            col = 1
+            )
+        figTogether.add_trace(
+            go.Scatter(x = dfSQLlower.index, y = dfSQLlower['Forward Lunge weight'], name = 'Forward Lunge', legendgroup = 'Lower Body', legendgrouptitle_text = "Lower Body Weights", mode = "lines+markers+text"),
+            row = 2,
+            col = 1
+            )
+        figTogether.update_yaxes(tickvals = [1, 2, 3, 4, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55], range = [-0.5, 30], fixedrange = True, row = 1, col = 1)
+        figTogether.update_yaxes(tickvals = [1, 2, 3, 4, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55], range = [-0.5, 60], fixedrange = True, row = 2, col = 1)
+        figTogether.update_layout(legend_tracegroupgap = 280, width = 1000, height = 1000)
         figTogether.show()
         dialog = GraphBrowser(
                 None, -1
@@ -1876,6 +1983,7 @@ class lowerBody(scrolled.ScrolledPanel):
         dialog.browser.SetPage(figTogether, "")
         dialog.Show()
         figTogether.show()
+
     def save(
             self,
             event
