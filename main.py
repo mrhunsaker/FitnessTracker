@@ -545,6 +545,56 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
         dfSQL = pd.read_sql_query("SELECT * FROM WORKOUTS", conn)
         conn.close()
         df = dfSQL.drop(columns = ['ID'])
+        df_last8=df.drop(columns = [                 
+                        'FRONTLINE_SETS',
+                        'FRONTLINE_WEIGHT',
+                        'SHOULDERZPRESS_SETS',
+                        'SHOULDERZPRESS_WEIGHT',
+                        'ELBOWOUTROW_SETS',
+                        'ELBOWOUTROW_WEIGHT',
+                        'SUPINEBICEPCURL_SETS',
+                        'SUPINEBICEPCURL_WEIGHT',
+                        'CLOSEGRIPPUSHUP_SETS',
+                        'CLOSEGRIPPUSHUP_STAIR',
+                        'REARDELTFLY_SETS',
+                        'REARDELTFLY_WEIGHT',
+                        'SIDEBEND_SETS',
+                        'SIDEBEND_WEIGHT',
+                        'LATERALRAISE_SETS',
+                        'LATERALRAISE_WEIGHT',
+                        'STIFFLEGRDL_SETS',
+                        'STIFFLEGRDL_WEIGHT',
+                        'SLIDERHAMSTRINGCURL_SETS',
+                        'HIPTHRUSTER_SETS',
+                        'HIPTHRUSTER_WEIGHT',
+                        'FORWARDSQUAT_SETS',
+                        'FORWARDSQUAT_WEIGHT',
+                        'SUMOSQUAT_SETS',
+                        'SUMOSQUAT_WEIGHT',
+                        'CYCLISTSQUAT_SETS',
+                        'SINGLELEGCALFRAISE_SETS',
+                        ]
+                        )
+        df_last8 = df_last8.rename(columns = {'DATE': 'Date', 
+                        'FRONTLINE_REPS': "Frontline POW Raise", 
+                        'SHOULDERZPRESS_REPS': "Arnold Press", 
+                        'ELBOWOUTROW_REPS': "Elbow Out Row", 
+                        'SUPINEBICEPCURL_REPS': "Supinating Bicep Curl", 
+                        'CLOSEGRIPPUSHUP_REPS' : "Close Grip Pushup",
+                        'REARDELTFLY_REPS': "Rear Delt Fly", 
+                        'SIDEBEND_REPS': "Side Bend", 
+                        'LATERALRAISE_REPS': "Lateral Raise",
+                        'STIFFLEGRDL_REPS': "Stiff Legged RDL", 
+                        'SLIDERHAMSTRINGCURL_REPS': "Hamstring Curls",
+                        'HIPTHRUSTER_REPS': "Hip Thrusters",
+                        'FORWARDSQUAT_REPS': "Forward Squat",
+                        'SUMOSQUAT_REPS': "Sumo Squat",
+                        'CYCLISTSQUAT_REPS': "Cyclist Squat",
+                        'SINGLELEGCALFRAISE_REPS': "Single Leg Calf Raise",
+                        'SIDELINESCULPT': "Sideline Sculpt",
+                        'ABDOMINALS' : "Abdominals"
+                        }
+                    )
         df = df.rename(
                 columns = {
                         'DATE':                     'Date',
@@ -597,15 +647,25 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
                         }
                 )
         with ui.row():
-            """Filter above import of all Zero Values and Print Column Names of Exercizes that have nonzeros"""
-            ui.label("Completed Exercises in Last 8 Exercise Days").classes("text-lg")
-            op = { col: df.loc[df[col].ne(0), col].tolist() for col in df.tail(8).columns}
-            #printout = completed.index[completed].tolist()
-            print(op)
-            ui.label(str(op))
-        ui.table(columns=[{'name' : col, 'label' : col, 'field': col} for col in df.tail(8).columns],rows=df.tail(8).to_dict('records'),)
+            with ui.card():
+                ui.label("Completed Exercises in Last 8 Exercise Days").classes("text-lg text-bold")
+                column_names = df_last8.columns[df_last8.any()]      
+                column_list = column_names.tolist()
+                my_column = ui.column()
+                with ui.column():
+                    for item in column_list:
+                        ui.label(item)
+
+            with ui.card():
+                ui.label("Exercises Not Completed in Last 8 Exercise Days").classes("text-lg text-bold")
+                column_names = df_last8.columns[(df_last8 == 0).all()]      
+                column_list = column_names.tolist()
+                my_column = ui.column()
+                with ui.column():
+                    for item in column_list:
+                        ui.label(item)
         with ui.row():
-            ui.label('Exercise Log').classes("text-lg")
+            ui.label('Cumulative Exercise Log').classes("text-lg text-bold")
         ui.table(columns=[{'name' : col, 'label' : col, 'field': col} for col in df.columns],rows=df.to_dict('records'),)
 
 with ui.footer(value=True) as footer:
