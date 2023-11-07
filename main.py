@@ -448,7 +448,6 @@ with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
                 ui.notify('Uploaded Successfully!', close_button = 'OK')
             data_entry()
 
-
         with ui.row().classes('w-full no-wrap'):
             ui.date(value = 'f{datenow}', on_change = lambda e: u_today_date.set_value(e.value)).classes('w-1/2')
         with ui.row().classes('w-full no-wrap py-4'):
@@ -598,7 +597,12 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
                         }
                 )
         with ui.row():
-            ui.label("Last 8 Exercise Days").classes("text-lg")
+            """Filter above import of all Zero Values and Print Column Names of Exercizes that have nonzeros"""
+            ui.label("Completed Exercises in Last 8 Exercise Days").classes("text-lg")
+            op = { col: df.loc[df[col].ne(0), col].tolist() for col in df.tail(8).columns}
+            #printout = completed.index[completed].tolist()
+            print(op)
+            ui.label(str(op))
         ui.table(columns=[{'name' : col, 'label' : col, 'field': col} for col in df.tail(8).columns],rows=df.tail(8).to_dict('records'),)
         with ui.row():
             ui.label('Exercise Log').classes("text-lg")
