@@ -28,47 +28,71 @@ import pandas as pd
 from nicegui import app, ui
 from pandas.api.types import is_bool_dtype, is_numeric_dtype
 
-##############################################################################
-# Define Paths
-##############################################################################
+
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 USER_DIR = ""
 
-##############################################################################
-# Set User Directory based on OS
-##############################################################################
 
-if os.name == 'nt':
-    tmppath = Path(os.environ['USERPROFILE']).joinpath('Documents')
-    Path.mkdir(tmppath, parents = True, exist_ok = True)
-    USER_DIR = Path(tmppath)
-    tmppath = Path(os.environ['USERPROFILE']).joinpath('Documents', 'Fitness')
-    Path.mkdir(tmppath, parents = True, exist_ok = True)
-elif os.name == 'posix':
-    tmppath = Path(os.environ['HOME']).joinpath('Documents')
-    Path.mkdir(tmppath, parents = True, exist_ok = True)
-    USER_DIR = Path(tmppath)
-    tmppath = Path(os.environ['USERPROFILE']).joinpath('Documents', 'Fitness')
-    Path.mkdir(tmppath, parents = True, exist_ok = True)
-else:
-    print("Error! Cannot find HOME directory")
+def set_directory() -> Path:
+    """
+    Set the user directory based on the operating system.
 
+    Returns:
+        Path: The user directory path.
+
+    Raises:
+        OSError: If the HOME directory cannot be determined.
+
+    Examples:
+        >>> set_directory()
+        PosixPath('/home/user/Documents')  # Example for a POSIX system
+        >>> set_directory()
+        WindowsPath('C:/Users/User/Documents')  # Example for a Windows system
+    """
+    if os.name == 'nt':
+        tmppath = Path(os.environ['USERPROFILE']).joinpath('Documents')
+        Path.mkdir(tmppath, parents=True, exist_ok=True)
+        START_DIR = Path(tmppath)
+        tmppath = Path(os.environ['USERPROFILE']).joinpath('Documents', 'Fitness')
+        Path.mkdir(tmppath, parents=True, exist_ok=True)
+    elif os.name == 'posix':
+        tmppath = Path(os.environ['HOME']).joinpath('Documents')
+        Path.mkdir(tmppath, parents=True, exist_ok=True)
+        START_DIR = Path(tmppath)
+        tmppath = Path(os.environ['USERPROFILE']).joinpath('Documents', 'Fitness')
+        Path.mkdir(tmppath, parents=True, exist_ok=True)
+    else:
+        raise OSError("Error! Cannot find HOME directory")
+
+    return START_DIR
+USER_DIR=set_directory()
 os.chdir(USER_DIR)
 
 dataBasePath = Path(USER_DIR).joinpath('Fitness/workoutLog.db')
 
-##############################################################################
-# Create SQL database with SQLite and create data tables
-##############################################################################
-print(f"SQLite version {sqlite3.sqlite_version}")
-
-
 def create_connection(db_file):
     """
+    Create a SQLite database connection.
 
-    :param db_file:
-    :type db_file:
+    Parameters
+    ----------
+    db_file : str
+        The path to the SQLite database file.
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    Error
+        If an error occurs while connecting to the database.
+
+    Examples
+    --------
+    >>> create_connection("example.db")
+    2.6.0  # Example output for SQLite version
     """
     conn = None
     try:
@@ -79,35 +103,34 @@ def create_connection(db_file):
     finally:
         if conn:
             conn.close()
-        # end if
-
+    return conn
 
 create_connection(dataBasePath)
 
-def create_connection(db_file):
-    """
-
-    :param db_file:
-    :type db_file:
-    :return:
-    :rtype:
-    """
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file)
-        return conn
-    except Error as e:
-        print(e)
-    return conn
-
-
 def create_table(conn, sql_create_sql_table):
     """
+    Create a table in the SQLite database using the provided SQL statement.
 
-    :param conn:
-    :type conn:
-    :param sql_create_sql_table:
-    :type sql_create_sql_table:
+    Parameters
+    ----------
+    conn : sqlite3.Connection
+        The SQLite database connection.
+    sql_create_sql_table : str
+        The SQL statement for creating the table.
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    Error
+        If an error occurs while executing the SQL statement.
+
+    Examples
+    --------
+    >>> conn = sqlite3.connect("example.db")
+    >>> create_table(conn, "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, age INTEGER)")
     """
     try:
         c = conn.cursor()
@@ -117,9 +140,24 @@ def create_table(conn, sql_create_sql_table):
     conn.close()
 
 
-def main():
+def implement_tables():
     """
+    Create or initialize the WORKOUTS table in the SQLite database.
 
+    This function establishes a connection to the SQLite database, creates a table
+    named WORKOUTS with specified columns, and closes the connection.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+
+    Examples
+    --------
+    >>> implement_tables()
     """
     sql_create_workout_table = """CREATE TABLE IF NOT EXISTS WORKOUTS (
         ID                          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -166,6 +204,8 @@ def main():
         CYCLISTSQUAT_SETS	        INTEGER,
         SINGLELEGCALFRAISE_REPS	    INTEGER,
         SINGLELEGCALFRAISE_SETS	    INTEGER,
+        LONGLEVERCRUNCHES_REPS      INTEGER,
+        LONGLEVERCRUNCHES_SETS      INTEGER,
         SIDELINESCULPT              INTEGER,
         ABDOMINALS                  INTEGER
     );"""
@@ -175,10 +215,9 @@ def main():
         create_table(conn, sql_create_workout_table)
     else:
         print("Error! cannot create the database connection.")
-    # end if
     conn.close()
 
-main()
+implement_tables()
 
 datenow = datetime.datetime.now().strftime("%Y_%m_%d-%H%M%S_%p")
 
@@ -233,15 +272,114 @@ with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
         u_calfRaiseReps = ui.number().classes('hidden')
         u_calfRaiseSets = ui.number().classes('hidden')
         u_calfRaiseWeight = ui.number().classes('hidden')
+        u_longLeverCrunchesReps = ui.number().classes('hidden')
+        u_longLeverCrunchesSets = ui.number().classes('hidden')
         u_sidelineSculpt = ui.number().classes('hidden')
         u_abdominals = ui.number().classes('hidden')
 
 
         def save(event):
             """
-            :param event:
-            :type event:
+            Save workout data to individual exercise variables.
+
+            This function extracts data from input fields representing different exercises,
+            converts them to integers, and assigns the values to corresponding variables.
+            If an exercise value is not provided, it defaults to 0. The function also
+            captures the current date.
+
+            Parameters
+            ----------
+            event : EventType
+                The event triggering the save operation.
+
+            Returns
+            -------
+            None
+
+            Examples
+            --------
+            >>> save(some_event)
             """
+            exercises = [
+            u_frontlineRaiseSets,
+            u_frontlineRaiseReps,
+            u_frontlineRaiseWeight,
+            u_shoulderPressReps,
+            u_shoulderPressSets,
+            u_shoulderPressWeight,
+            u_elbowOutRowReps,
+            u_elbowOutRowSets,
+            u_elbowOutRowWeight,
+            u_bicepCurlReps,
+            u_bicepCurlSets,
+            u_bicepCurlWeight,
+            u_closeGripPushupReps,
+            u_closeGripPushupSets,
+            u_closeGripPushupWeight,
+            u_rearDeltFlyReps,
+            u_rearDeltFlySets,
+            u_rearDeltFlyWeight,
+            u_sideBendReps,
+            u_sideBendSets,
+            u_sideBendWeight,
+            u_lateralRaiseReps,
+            u_lateralRaiseSets,
+            u_lateralRaiseWeight,
+            u_stiffLegRDLReps,
+            u_stiffLegRDLSets,
+            u_stiffLegRDLWeight,
+            u_hamstringCurlReps,
+            u_hamstringCurlSets,
+            u_hipThrusterReps,
+            u_hipThrusterSets,
+            u_hipThrusterWeight,
+            u_frontSquatReps,
+            u_frontSquatSets,
+            u_frontSquatWeight,
+            u_sumoSquatReps,
+            u_sumoSquatSets,
+            u_sumoSquatWeight,
+            u_cyclistSquatReps,
+            u_cyclistSquatSets,
+            u_calfRaiseReps,
+            u_calfRaiseSets,
+            u_calfRaiseWeight,
+            u_longLeverCrunchesReps,
+            u_longLeverCrunchesSets,
+            u_sidelineSculpt,
+            u_abdominals
+            ]
+            for exercise in exercises:
+                """
+                Ensure exercise values are not None.
+
+                This loop iterates through a list of exercise objects and checks if the
+                'value' attribute of each exercise is None. If it is, the 'value' attribute
+                is set to 0. If the 'value' attribute is not None, the loop continues to the
+                next iteration.
+
+                Parameters
+                ----------
+                exercises : list
+                    A list of exercise objects with a 'value' attribute.
+
+                Returns
+                -------
+                None
+
+                Examples
+                --------
+                >>> exercises = [exercise1, exercise2, exercise3]
+                >>> for exercise in exercises:
+                ...     if exercise.value is None:
+                ...         exercise.value = 0
+                ...     else:
+                ...         continue
+                """
+                if exercise.value is None:
+                    exercise.value = 0
+                else:
+                    continue
             today_date = (u_today_date.value)
             frontlineRaiseReps = int(u_frontlineRaiseReps.value)
             frontlineRaiseSets = int(u_frontlineRaiseReps.value)
@@ -286,12 +424,31 @@ with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
             calfRaiseReps = int(u_calfRaiseReps.value)
             calfRaiseSets = int(u_calfRaiseSets.value)
             calfRaiseWeight = int(u_calfRaiseWeight.value)
+            longLeverCrunchesReps = int(u_longLeverCrunchesReps.value)
+            longLeverCrunchesSets = int(u_longLeverCrunchesSets.value)
             sidelineSculpt = int(u_sidelineSculpt.value)
             abdominals = int(u_abdominals.value)
 
             def data_entry():
                 """
+                Insert workout data into the WORKOUTS table in the SQLite database.
 
+                This function connects to the SQLite database, creates a cursor, and executes
+                an SQL INSERT statement to add workout data to the WORKOUTS table. The data is
+                provided as parameters, including the current date and various exercise details.
+                After execution, the changes are committed, and the connection is closed.
+
+                Parameters
+                ----------
+                None
+
+                Returns
+                -------
+                None
+
+                Examples
+                --------
+                >>> data_entry()
                 """
                 conn = sqlite3.connect(dataBasePath)
                 if conn is not None:
@@ -341,10 +498,14 @@ with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
                         CYCLISTSQUAT_SETS,
                         SINGLELEGCALFRAISE_REPS,
                         SINGLELEGCALFRAISE_SETS,
+                        LONGLEVERCRUNCHES_REPS,
+                        LONGLEVERCRUNCHES_SETS,
                         SIDELINESCULPT,
                         ABDOMINALS
                         )
                         VALUES (
+                        ?,
+                        ?,
                         ?,
                         ?,
                         ?,
@@ -436,6 +597,8 @@ with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
                             cyclistSquatSets,
                             calfRaiseReps,
                             calfRaiseSets,
+                            longLeverCrunchesReps,
+                            longLeverCrunchesSets,
                             sidelineSculpt,
                             abdominals
                             )
@@ -443,7 +606,6 @@ with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
                     conn.commit()
                 else:
                     print("Error! cannot create the database connection.")
-                # end if
                 conn.close()
                 ui.notify('Uploaded Successfully!', close_button = 'OK')
             data_entry()
@@ -487,13 +649,13 @@ with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
             ui.number(label = 'REPS', value ="", on_change = lambda e: u_sideBendReps.set_value(e.value)).classes('w-1/4').props('aria-label="Side Bend Reps"')
             ui.number(label = 'SETS', value ="", on_change = lambda e: u_sideBendSets.set_value(e.value)).classes('w-1/4').props('aria-label="Side Bend Sets"')
             ui.number(label = 'WEIGHT', value ="", on_change = lambda e: u_sideBendWeight.set_value(e.value)).classes('w-1/4').props('aria-label="Side Bend Weight"')
-        with ui.row().classes('w-full no-wrap py-4'):
-            ui.label('LOWER BODY WORK').classes('text-lg')
         with ui.row().classes('w-full no-wrap'):
             ui.label('Lateral Raise').classes('w-1/4')
             ui.number(label = 'REPS', value ="", on_change = lambda e: u_lateralRaiseReps.set_value(e.value)).classes('w-1/4').props('aria-label="Lateral Raise Reps"')
             ui.number(label = 'SETS', value ="", on_change = lambda e: u_lateralRaiseSets.set_value(e.value)).classes('w-1/4').props('aria-label="Lateral Raise Sets"')
             ui.number(label = 'WEIGHT', value ="", on_change = lambda e: u_lateralRaiseWeight.set_value(e.value)).classes('w-1/4').props('aria-label="Lateral Raise Weight"')
+        with ui.row().classes('w-full no-wrap py-4'):
+            ui.label('LOWER BODY WORK').classes('text-lg')        
         with ui.row().classes('w-full no-wrap'):
             ui.label('Stiff Leg RDL').classes('w-1/4')
             ui.number(label = 'REPS', value ="", on_change = lambda e: u_stiffLegRDLReps.set_value(e.value)).classes('w-1/4').props('aria-label="Stiff Leg RDL Reps"')
@@ -503,6 +665,7 @@ with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
             ui.label('Hamstring Curl').classes('w-1/4')
             ui.number(label = 'REPS', value ="", on_change = lambda e: u_hamstringCurlReps.set_value(e.value)).classes('w-1/4').props('aria-label="Hamstring Curl Reps"')
             ui.number(label = 'SETS', value ="", on_change = lambda e: u_hamstringCurlSets.set_value(e.value)).classes('w-1/4').props('aria-label="Hamstring Curl Sets"')
+            ui.label(" ").classes('w-1/4')
         with ui.row().classes('w-full no-wrap'):
             ui.label('Hip Thruster').classes('w-1/4')
             ui.number(label = 'REPS', value ="", on_change = lambda e: u_hipThrusterReps.set_value(e.value)).classes('w-1/4').props('aria-label="Hip Thruster Reps"')
@@ -522,19 +685,29 @@ with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
             ui.label('Cyclist Squat').classes('w-1/4')
             ui.number(label = 'REPS', value ="", on_change = lambda e: u_cyclistSquatReps.set_value(e.value)).classes('w-1/4').props('aria-label="Cyclist Squat Reps"')
             ui.number(label = 'SETS', value ="", on_change = lambda e: u_cyclistSquatSets.set_value(e.value)).classes('w-1/4').props('aria-label="Cyclist Squat Sets"')
+            ui.label(" ").classes('w-1/4')
         with ui.row().classes('w-full no-wrap'):
             ui.label('Calf Raise').classes('w-1/4')
             ui.number(label = 'REPS', value ="", on_change = lambda e: u_calfRaiseReps.set_value(e.value)).classes('w-1/4').props('aria-label="Calf Raise Reps"')
             ui.number(label = 'SETS', value ="", on_change = lambda e: u_calfRaiseSets.set_value(e.value)).classes('w-1/4').props('aria-label="Calf Raise Sets"')
             ui.number(label = 'WEIGHT', value ="", on_change = lambda e: u_calfRaiseWeight.set_value(e.value)).classes('w-1/4').props('aria-label="Cald Raise Weight"')
+        with ui.row().classes('w-full no-wrap'):
+            ui.label('Long Lever Crunches').classes('w-1/4')
+            ui.number(label = 'REPS', value ="", on_change = lambda e: u_longLeverCrunchesReps.set_value(e.value)).classes('w-1/4').props('aria-label="Calf Raise Reps"')
+            ui.number(label = 'SETS', value ="", on_change = lambda e: u_longLeverCrunchesSets.set_value(e.value)).classes('w-1/4').props('aria-label="Calf Raise Sets"')
+            ui.label("").classes('w-1/4')
         with ui.row().classes('w-full no-wrap py-4'):
             ui.label('CORE WORK').classes('text-lg')
         with ui.row().classes('w-full no-wrap'):
             ui.label('Sideline Sculpt').classes('w-1/4')
             ui.number(label = 'DONE', value ="", on_change = lambda e: u_sidelineSculpt.set_value(e.value)).classes('w-1/4').props('aria-label="Long Lever Crunch Reps"')
+            ui.label(" ").classes('w-1/4')
+            ui.label(" ").classes('w-1/4')
         with ui.row().classes('w-full no-wrap'):
             ui.label('Abdominals').classes('w-1/4')
             ui.number(label = 'DONE', value ="", on_change = lambda e: u_abdominals.set_value(e.value)).classes('w-1/4').props('aria-label="Long Lever Cruch Sets"')
+            ui.label(" ").classes('w-1/4')
+            ui.label(" ").classes('w-1/4')
         with ui.row().classes('w-full no-wrap'):
             ui.button('SAVE', on_click = save)
             ui.button('EXIT', on_click = app.shutdown)
@@ -545,7 +718,8 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
         dfSQL = pd.read_sql_query("SELECT * FROM WORKOUTS", conn)
         conn.close()
         df = dfSQL.drop(columns = ['ID'])
-        df_last8=df.drop(columns = [                 
+        df = df.sort_values(by=['DATE'])
+        df_last8=df.drop(columns = ['DATE',                 
                         'FRONTLINE_SETS',
                         'FRONTLINE_WEIGHT',
                         'SHOULDERZPRESS_SETS',
@@ -573,9 +747,10 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
                         'SUMOSQUAT_WEIGHT',
                         'CYCLISTSQUAT_SETS',
                         'SINGLELEGCALFRAISE_SETS',
+                        'LONGLEVERCRUNCHES_SETS'
                         ]
                         )
-        df_last8 = df_last8.rename(columns = {'DATE': 'Date', 
+        df_last8 = df_last8.rename(columns = {
                         'FRONTLINE_REPS': "Frontline POW Raise", 
                         'SHOULDERZPRESS_REPS': "Arnold Press", 
                         'ELBOWOUTROW_REPS': "Elbow Out Row", 
@@ -591,6 +766,7 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
                         'SUMOSQUAT_REPS': "Sumo Squat",
                         'CYCLISTSQUAT_REPS': "Cyclist Squat",
                         'SINGLELEGCALFRAISE_REPS': "Single Leg Calf Raise",
+                        'LONGLEVERCRUNCHES_REPS' : "Long Lever Crunches",
                         'SIDELINESCULPT': "Sideline Sculpt",
                         'ABDOMINALS' : "Abdominals"
                         }
@@ -642,13 +818,17 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
                         'CYCLISTSQUAT_SETS' :       'Cyclist Squat sets',
                         'SINGLELEGCALFRAISE_REPS' : 'Single-Leg Calf Raise reps',
                         'SINGLELEGCALFRAISE_SETS' : 'Single-Leg Calf Raise sets',
+                        'LONGLEVERCRUNCHES_REPS' :  'Long Lever Crunches reps',
+                        'LONGLEVERCRUNCHES_SETS' :  'Long Lever Crunches sets',
                         'SIDELINESCULPT' :          'Sideline Scupt',
                         'ABDOMINALS' :              'Abdominals',
                         }
                 )
         with ui.row():
+            ui.label("Last 8 Exercises").classes('text-2xl text-bold')
+        with ui.row():
             with ui.card():
-                ui.label("Completed Exercises in Last 8 Exercise Days").classes("text-lg text-bold")
+                ui.label("Completed Exercises").classes("text-lg text-bold")
                 column_names = df_last8.columns[df_last8.any()]      
                 column_list = column_names.tolist()
                 my_column = ui.column()
@@ -657,7 +837,7 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
                         ui.label(item)
 
             with ui.card():
-                ui.label("Exercises Not Completed in Last 8 Exercise Days").classes("text-lg text-bold")
+                ui.label("Exercises Not Completed").classes("text-lg text-bold")
                 column_names = df_last8.columns[(df_last8 == 0).all()]      
                 column_list = column_names.tolist()
                 my_column = ui.column()
@@ -665,19 +845,60 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
                     for item in column_list:
                         ui.label(item)
         with ui.row():
-            ui.label('Cumulative Exercise Log').classes("text-lg text-bold")
+            ui.label('Cumulative Exercise Log').classes("text-2xl text-bold")
         ui.table(columns=[{'name' : col, 'label' : col, 'field': col} for col in df.columns],rows=df.to_dict('records'),)
 
 with ui.footer(value=True) as footer:
+    def github() -> ui.html:
+        """
+        Retrieve and return the GitHub icon as HTML.
+
+        This function reads the content of the "github.svg" file located in the ROOT_DIR
+        and returns it as HTML using the ui.html class.
+
+        Returns
+        -------
+        ui.html
+            HTML representation of the GitHub icon.
+
+        Examples
+        --------
+        >>> github()
+        <ui.html>...</ui.html>
+        """
+        return ui.html(Path(ROOT_DIR).joinpath("github.svg").read_text())
     with ui.row().classes(
             "w-screen no-wrap justify-center items-center text-l font-bold"
             ):
         ui.label(
-                "Copyright © 2023 Michael Ryan Hunsaker, M.Ed., Ph.D.\nReport Bugs or Request Features by emailing hunsakerconsulting@gmail.com"
+                "Copyright © 2023 Michael Ryan Hunsaker, M.Ed., Ph.D."
                 ).classes("justify-center items-center")
+    with ui.row().classes(
+            "w-screen no-wrap justify-center items-center text-l font-bold"
+            ):
+        with ui.link(target="https://github.com/mrhunsaker/FitnessTracker").classes(
+                "max-[305px]:hidden"
+            ).tooltip("GitHub"):
+            github().classes("fill-white scale-125 m-1")
 
-SCREEN = ""
 def getresolution() -> str:
+    """
+    Retrieve the screen resolution.
+
+    This function iterates through all available monitors using the get_monitors
+    function from the screeninfo module and returns the resolution of the last monitor
+    in the format "widthxheight". If no monitors are available, an empty string is returned.
+
+    Returns
+    -------
+    str
+        Screen resolution in the format "widthxheight".
+
+    Examples
+    --------
+    >>> getresolution()
+    '1920x1080'
+    """
     SCREEN = " "
     for SCREEN in get_monitors():
         SCREENRESOLUTION = "{str(SCREEN.width)}x{str(SCREEN.height)}"
