@@ -607,7 +607,12 @@ with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
                 else:
                     print("Error! cannot create the database connection.")
                 conn.close()
-                ui.notify('Uploaded Successfully!', close_button = 'OK')
+                ui.notify(
+                        "Saved successfully!",
+                        position="center",
+                        type="positive",
+                        close_button="OK",
+                    )
             data_entry()
 
         with ui.row().classes('w-full no-wrap'):
