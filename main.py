@@ -23,10 +23,8 @@ from pathlib import Path
 from sqlite3 import Error
 
 from screeninfo import get_monitors
-import numpy as np
 import pandas as pd
 from nicegui import app, ui
-from pandas.api.types import is_bool_dtype, is_numeric_dtype
 
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -60,7 +58,7 @@ def set_directory() -> Path:
         tmppath = Path(os.environ['HOME']).joinpath('Documents')
         Path.mkdir(tmppath, parents=True, exist_ok=True)
         START_DIR = Path(tmppath)
-        tmppath = Path(os.environ['USERPROFILE']).joinpath('Documents', 'Fitness')
+        tmppath = Path(os.environ['HOME']).joinpath('Documents', 'Fitness')
         Path.mkdir(tmppath, parents=True, exist_ok=True)
     else:
         raise OSError("Error! Cannot find HOME directory")
@@ -221,61 +219,65 @@ implement_tables()
 
 datenow = datetime.datetime.now().strftime("%Y_%m_%d-%H%M%S_%p")
 
+ui.colors(primary="#183969", secondary="#bed2e3", positive="#ffca58", accent="cfcac1")
 with ui.header().classes(replace = 'row items-center') as header:
-    ui.button(on_click = lambda: left_drawer.toggle()).props('flat color=white icon=menu')
+    ui.label("Fitness Habit Tracker").classes("text-4xl text-bold text-white")
+    ui.label(' ').classes("text-4xl text-bold text-white")
+    ui.label(' ').classes("text-4xl text-bold text-white")
+    ui.label(' ').classes("text-4xl text-bold text-white")
 with ui.tabs() as tabs:
     ui.tab('WORKOUT INPUT')
     ui.tab('WORKOUT DATA')
 with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
     with ui.tab_panel('WORKOUT INPUT'):
-        u_today_date = ui.date().classes('hidden')
-        u_frontlineRaiseSets = ui.number().classes('hidden')
-        u_frontlineRaiseReps = ui.number().classes('hidden')
-        u_frontlineRaiseWeight = ui.number().classes('hidden')
-        u_shoulderPressReps = ui.number().classes('hidden')
-        u_shoulderPressSets = ui.number().classes('hidden')
-        u_shoulderPressWeight = ui.number().classes('hidden')
-        u_elbowOutRowReps = ui.number().classes('hidden')
-        u_elbowOutRowSets = ui.number().classes('hidden')
-        u_elbowOutRowWeight = ui.number().classes('hidden')
-        u_bicepCurlReps = ui.number().classes('hidden')
-        u_bicepCurlSets = ui.number().classes('hidden')
-        u_bicepCurlWeight = ui.number().classes('hidden')
-        u_closeGripPushupReps = ui.number().classes('hidden')
-        u_closeGripPushupSets = ui.number().classes('hidden')
-        u_closeGripPushupWeight = ui.number().classes('hidden')
-        u_rearDeltFlyReps = ui.number().classes('hidden')
-        u_rearDeltFlySets = ui.number().classes('hidden')
-        u_rearDeltFlyWeight = ui.number().classes('hidden')
-        u_sideBendReps = ui.number().classes('hidden')
-        u_sideBendSets = ui.number().classes('hidden')
-        u_sideBendWeight = ui.number().classes('hidden')
-        u_lateralRaiseReps = ui.number().classes('hidden')
-        u_lateralRaiseSets = ui.number().classes('hidden')
-        u_lateralRaiseWeight = ui.number().classes('hidden')
-        u_stiffLegRDLReps = ui.number().classes('hidden')
-        u_stiffLegRDLSets = ui.number().classes('hidden')
-        u_stiffLegRDLWeight = ui.number().classes('hidden')
-        u_hamstringCurlReps = ui.number().classes('hidden')
-        u_hamstringCurlSets = ui.number().classes('hidden')
-        u_hipThrusterReps = ui.number().classes('hidden')
-        u_hipThrusterSets = ui.number().classes('hidden')
-        u_hipThrusterWeight = ui.number().classes('hidden')
-        u_frontSquatReps = ui.number().classes('hidden')
-        u_frontSquatSets = ui.number().classes('hidden')
-        u_frontSquatWeight = ui.number().classes('hidden')
-        u_sumoSquatReps = ui.number().classes('hidden')
-        u_sumoSquatSets = ui.number().classes('hidden')
-        u_sumoSquatWeight = ui.number().classes('hidden')
-        u_cyclistSquatReps = ui.number().classes('hidden')
-        u_cyclistSquatSets = ui.number().classes('hidden')
-        u_calfRaiseReps = ui.number().classes('hidden')
-        u_calfRaiseSets = ui.number().classes('hidden')
-        u_calfRaiseWeight = ui.number().classes('hidden')
-        u_longLeverCrunchesReps = ui.number().classes('hidden')
-        u_longLeverCrunchesSets = ui.number().classes('hidden')
-        u_sidelineSculpt = ui.number().classes('hidden')
-        u_abdominals = ui.number().classes('hidden')
+        u_today_date                = ui.date().classes('hidden')
+        u_frontlineRaiseSets        = ui.number().classes('hidden')
+        u_frontlineRaiseReps        = ui.number().classes('hidden')
+        u_frontlineRaiseWeight      = ui.number().classes('hidden')
+        u_shoulderPressReps         = ui.number().classes('hidden')
+        u_shoulderPressSets         = ui.number().classes('hidden')
+        u_shoulderPressWeight       = ui.number().classes('hidden')
+        u_elbowOutRowReps           = ui.number().classes('hidden')
+        u_elbowOutRowSets           = ui.number().classes('hidden')
+        u_elbowOutRowWeight         = ui.number().classes('hidden')
+        u_bicepCurlReps             = ui.number().classes('hidden')
+        u_bicepCurlSets             = ui.number().classes('hidden')
+        u_bicepCurlWeight           = ui.number().classes('hidden')
+        u_closeGripPushupReps       = ui.number().classes('hidden')
+        u_closeGripPushupSets       = ui.number().classes('hidden')
+        u_closeGripPushupWeight     = ui.number().classes('hidden')
+        u_rearDeltFlyReps           = ui.number().classes('hidden')
+        u_rearDeltFlySets           = ui.number().classes('hidden')
+        u_rearDeltFlyWeight         = ui.number().classes('hidden')
+        u_sideBendReps              = ui.number().classes('hidden')
+        u_sideBendSets              = ui.number().classes('hidden')
+        u_sideBendWeight            = ui.number().classes('hidden')
+        u_lateralRaiseReps          = ui.number().classes('hidden')
+        u_lateralRaiseSets          = ui.number().classes('hidden')
+        u_lateralRaiseWeight        = ui.number().classes('hidden')
+        u_stiffLegRDLReps           = ui.number().classes('hidden')
+        u_stiffLegRDLSets           = ui.number().classes('hidden')
+        u_stiffLegRDLWeight         = ui.number().classes('hidden')
+        u_hamstringCurlReps         = ui.number().classes('hidden')
+        u_hamstringCurlSets         = ui.number().classes('hidden')
+        u_hipThrusterReps           = ui.number().classes('hidden')
+        u_hipThrusterSets           = ui.number().classes('hidden')
+        u_hipThrusterWeight         = ui.number().classes('hidden')
+        u_frontSquatReps            = ui.number().classes('hidden')
+        u_frontSquatSets            = ui.number().classes('hidden')
+        u_frontSquatWeight          = ui.number().classes('hidden')
+        u_sumoSquatReps             = ui.number().classes('hidden')
+        u_sumoSquatSets             = ui.number().classes('hidden')
+        u_sumoSquatWeight           = ui.number().classes('hidden')
+        u_cyclistSquatReps          = ui.number().classes('hidden')
+        u_cyclistSquatSets          = ui.number().classes('hidden')
+        u_calfRaiseReps             = ui.number().classes('hidden')
+        u_calfRaiseSets             = ui.number().classes('hidden')
+        u_calfRaiseWeight           = ui.number().classes('hidden')
+        u_longLeverCrunchesReps     = ui.number().classes('hidden')
+        u_longLeverCrunchesSets     = ui.number().classes('hidden')
+        u_sidelineSculpt            = ui.number().classes('hidden')
+        u_abdominals                = ui.number().classes('hidden')
 
 
         def save(event):
@@ -389,13 +391,13 @@ with ui.tab_panels(tabs, value = 'WORKOUT INPUT'):
             shoulderPressWeight = int(u_shoulderPressWeight.value)
             elbowOutRowReps = int(u_elbowOutRowReps.value)
             elbowOutRowSets = int(u_elbowOutRowSets.value)
-            elbowOutRowWeight = int(u_elbowOutRowWeight.value)
-            bicepCurlReps = int(u_bicepCurlReps.value)
-            bicepCurlSets = int(u_bicepCurlSets.value)
-            bicepCurlWeight = int(u_bicepCurlWeight.value)
-            closeGripPushupReps = int(u_closeGripPushupReps.value)
-            closeGripPushupSets = int(u_frontlineRaiseReps.value)
-            closeGripPushupWeight = int(u_closeGripPushupWeight.value)
+            elbowOutRowWeight       = int(u_elbowOutRowWeight.value)
+            bicepCurlReps           = int(u_bicepCurlReps.value)
+            bicepCurlSets           = int(u_bicepCurlSets.value)
+            bicepCurlWeight         = int(u_bicepCurlWeight.value)
+            closeGripPushupReps     = int(u_closeGripPushupReps.value)
+            closeGripPushupSets     = int(u_frontlineRaiseReps.value)
+            closeGripPushupWeight   = int(u_closeGripPushupWeight.value)
             rearDeltFlyReps = int(u_rearDeltFlyReps.value)
             rearDeltFlySets = int(u_rearDeltFlySets.value)
             rearDeltFlyWeight = int(u_rearDeltFlyWeight.value)
@@ -724,7 +726,7 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
         conn.close()
         df = dfSQL.drop(columns = ['ID'])
         df = df.sort_values(by=['DATE'])
-        df_last8=df.drop(columns = ['DATE',                 
+        df_last8=df.drop(columns = [                 
                         'FRONTLINE_SETS',
                         'FRONTLINE_WEIGHT',
                         'SHOULDERZPRESS_SETS',
@@ -756,6 +758,7 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
                         ]
                         )
         df_last8 = df_last8.rename(columns = {
+                        'DATE' : 'Date',
                         'FRONTLINE_REPS': "Frontline POW Raise", 
                         'SHOULDERZPRESS_REPS': "Arnold Press", 
                         'ELBOWOUTROW_REPS': "Elbow Out Row", 
@@ -829,28 +832,93 @@ with ui.tab_panels(tabs, value = 'WORKOUT DATA'):
                         'ABDOMINALS' :              'Abdominals',
                         }
                 )
-        with ui.row():
-            ui.label("Last 8 Exercises").classes('text-2xl text-bold')
-        with ui.row():
-            with ui.card():
-                ui.label("Completed Exercises").classes("text-lg text-bold")
-                column_names = df_last8.columns[df_last8.any()]      
-                column_list = column_names.tolist()
-                my_column = ui.column()
-                with ui.column():
-                    for item in column_list:
-                        ui.label(item)
+        
+        def reshape_and_rename(input_df):
+            """
+            Reshape and rename a DataFrame containing exercise data.
 
-            with ui.card():
-                ui.label("Exercises Not Completed").classes("text-lg text-bold")
-                column_names = df_last8.columns[(df_last8 == 0).all()]      
-                column_list = column_names.tolist()
-                my_column = ui.column()
-                with ui.column():
-                    for item in column_list:
-                        ui.label(item)
+            Parameters
+            ----------
+            input_df : pandas.DataFrame
+                Input DataFrame containing exercise data with columns 'Date', exercise names as columns,
+                and corresponding values representing exercise metrics.
+
+            Returns
+            -------
+            pandas.DataFrame
+                Reshaped and renamed DataFrame with the following columns:
+                - 'Exercises': Exercise names.
+                - 'Most Recent': The most recent date for each exercise.
+                - 'Days Since Last': Number of days since the last exercise recorded.
+                
+            Notes
+            -----
+            This function performs the following steps:
+            1. Melt the input DataFrame to transform it into a long format.
+            2. Remove rows with 'value' equal to 0.
+            3. Group by 'Exercises' and find the most recent date for each exercise.
+            4. Merge the melted DataFrame with the most recent dates.
+            5. Drop unnecessary columns ('Date', 'value') and sort by the most recent date.
+            6. Keep only the first occurrence of each exercise, removing duplicates.
+            7. Calculate the 'Days Since Last' based on the time elapsed since the previous record.
+
+            Examples
+            --------
+            >>> import pandas as pd
+            >>> from datetime import datetime, timedelta
+            >>> # Creating a sample DataFrame
+            >>> data = {'Date': ['2023-01-01', '2023-01-02', '2023-01-03'],
+            ...         'Exercise_A': [10, 15, 0],
+            ...         'Exercise_B': [5, 0, 20]}
+            >>> df = pd.DataFrame(data)
+            >>> df['Date'] = pd.to_datetime(df['Date'])
+            >>> # Applying reshape_and_rename function
+            >>> result_df = reshape_and_rename(df)
+            >>> print(result_df)
+            """
+            melted_df = pd.melt(input_df, id_vars=['Date'], var_name='Exercises', value_name='value')
+            melted_df = melted_df[melted_df['value'] != 0]
+            recent_df = melted_df.groupby('Exercises').agg({'Date': 'max'}).reset_index()
+            recent_df.columns = ['Exercises', 'Most Recent']
+            reformed_df = pd.merge(melted_df, recent_df, on='Exercises')
+            reformed_df = reformed_df.drop('Date', axis=1)
+            reformed_df = reformed_df.drop('value', axis=1)
+            reformed_df = reformed_df.sort_values(by=['Most Recent'])
+            reformed_df = reformed_df.drop_duplicates(subset = ['Exercises'], keep = 'first')
+            reformed_df['Days Since Last'] = (datetime.datetime.now()  - pd.to_datetime(reformed_df['Most Recent'].shift(1))).dt.days
+            return reformed_df
+        
+        """Drop Rows for Easier Data Presentation"""
+        # Upper Body Workout 
+        upper_index_to_drop = [19,11,13, 17,21,14,15,20,32,41]     
+        upper_df=reshape_and_rename(df_last8)
+        upper_df=upper_df.drop(upper_index_to_drop)
+        # Lower Body Workout
+        lower_index_to_drop = [8,4,10,9,5,7,0,2,32,41]
+        lower_df=reshape_and_rename(df_last8)
+        lower_df=lower_df.drop(lower_index_to_drop)
+        # Abdominal Workout
+        abs_index_to_drop = [10,9,8,4,5,7,0,2,11,19,13,17,21,14,15,20]        
+        abs_df=reshape_and_rename(df_last8)
+        abs_df=abs_df.drop(abs_index_to_drop)
+
         with ui.row():
-            ui.label('Cumulative Exercise Log').classes("text-2xl text-bold")
+            ui.label('Most Recent Exercises').classes("text-3xl text-bold")
+        with ui.row():
+            with ui.card():
+                ui.label("Upper Body Exercises").classes("text-lg text-bold")
+                ui.separator().classes('w-full h-1  bg-pink-200')
+                ui.table(columns=[{'name' : col, 'label' : col, 'field': col} for col in upper_df.columns],rows=upper_df.to_dict('records'),)
+            with ui.card():
+                ui.label("Lower Body Exercises").classes("text-lg text-bold")
+                ui.separator().classes('w-full h-1 bg-pink-200')
+                ui.table(columns=[{'name' : col, 'label' : col, 'field': col} for col in lower_df.columns],rows=lower_df.to_dict('records'),)
+            with ui.card():
+                ui.label("Abdominal Exercises").classes("text-lg text-bold")
+                ui.separator().classes('w-full h-1  bg-pink-200')
+                ui.table(columns=[{'name':col, 'label':col, 'field':col} for col in abs_df.columns], rows=abs_df.to_dict('records'),)
+        with ui.row():
+            ui.label('Cumulative Exercise Log').classes("text-3xl text-bold")
         ui.table(columns=[{'name' : col, 'label' : col, 'field': col} for col in df.columns],rows=df.to_dict('records'),)
 
 with ui.footer(value=True) as footer:
@@ -873,7 +941,7 @@ with ui.footer(value=True) as footer:
         """
         return ui.html(Path(ROOT_DIR).joinpath("github.svg").read_text())
     with ui.row().classes(
-            "w-screen no-wrap justify-center items-center text-l font-bold"
+            "w-screen no-wrap justify-center items-center text-l font-bold text-white"
             ):
         ui.label(
                 "Copyright © 2023 Michael Ryan Hunsaker, M.Ed., Ph.D."
@@ -909,10 +977,7 @@ def getresolution() -> str:
         SCREENRESOLUTION = "{str(SCREEN.width)}x{str(SCREEN.height)}"
     return SCREEN
 
-
 MONITOR = getresolution()
-print(f'SQLite Version is: {sqlite3.sqlite_version}')
-print(f'SQLite DB-API Version is: {sqlite3.version}')
 print(f'Monitor: \nwidth = {MONITOR.width} \nheight = {MONITOR.height}')
 ui.run(
         native=True,
