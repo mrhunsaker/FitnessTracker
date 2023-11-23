@@ -82,6 +82,7 @@ def set_start_dir() -> Path:
     os.chdir(START_DIR)
     return START_DIR
 
+
 USER_DIR = set_start_dir()
 os.chdir(USER_DIR)
 

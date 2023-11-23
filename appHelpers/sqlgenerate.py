@@ -74,7 +74,9 @@ def create_connection(db_file):
             conn.close()
     return conn
 
+
 create_connection(dataBasePath)
+
 
 def create_table(conn, sql_create_sql_table):
     """

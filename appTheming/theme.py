@@ -175,10 +175,14 @@ def frame(navtitle: str) -> None:
 
     ui.add_head_html(style)
 
-    ui.colors(primary="#fc8370", secondary="#7e549e", positive="#c2549d", accent="fecb3e")
-    
-    with ui.header().classes('justify-between text-white h-[100px]') as header:
-        ui.label("Habit Tracker").classes("text-3xl text-bold text-white").style('font-style: normal, font-family : "Atkinson Hyperlegible"')
+    ui.colors(
+        primary="#f26d6d", secondary="#976fbf", positive="#f2c2cf", accent="#038c7f"
+    )
+
+    with ui.header().classes("justify-between text-white h-[100px]") as header:
+        ui.label("Habit Tracker").classes("text-3xl text-bold text-white").style(
+            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+        )
         """
         Create a custom layout using the NiceGUI UI framework.
 
@@ -211,8 +215,8 @@ def frame(navtitle: str) -> None:
         - NiceGUI UI framework documentation for more details on the UI components and styling classes.
         """
         ui.label(navtitle).classes(
-                "absolute-center no-wrap text-3xl text-white font-bold self-center"
-            ).classes().style('font-family: "Atkinson Hyperlegible"')
+            "absolute-center no-wrap text-3xl text-white font-bold self-center"
+        ).classes().style('font-family: "Atkinson Hyperlegible"')
         menu()
     with ui.column().classes(""):
         yield

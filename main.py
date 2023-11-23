@@ -53,6 +53,7 @@ from appPages import piano
 from appPages import fitness
 from appPages import homepage
 
+
 def warningmessage(exception_type, exception_value, exception_traceback) -> None:
     """
     Log an error message and display a warning notification.
@@ -115,6 +116,7 @@ def index_page() -> None:
     """
     with theme.frame("Habit Tracking"):
         homepage.content()
+
 
 fitness.create()
 piano.create()
