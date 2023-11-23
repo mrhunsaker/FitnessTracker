@@ -1354,8 +1354,8 @@ def create() -> None:
                             'font-style: normal, font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
-                        ui.button("SAVE", on_click=save)
-                        ui.button("EXIT", on_click=app.shutdown)
+                        ui.button("SAVE", on_click=save).props('color=secondary')
+                        ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
 
             with ui.tab_panels(tabs, value="WORKOUT DATA"):
                 with ui.tab_panel("WORKOUT DATA"):
