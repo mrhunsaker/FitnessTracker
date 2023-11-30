@@ -181,7 +181,7 @@ def frame(navtitle: str) -> None:
 
     with ui.header().classes("justify-between text-white h-[100px]") as header:
         ui.label("Habit Tracker").classes("text-3xl text-bold text-white").style(
-            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+            'font-family : "Atkinson Hyperlegible"'
         )
         """
         Create a custom layout using the NiceGUI UI framework.

@@ -23,7 +23,7 @@ teachers of students with Visual Impairments
 """
 
 import math
-import datetime
+from datetime import datetime
 import os
 import sqlite3
 import sys
@@ -61,350 +61,350 @@ def create() -> None:
                         ui.date()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_frontlineRaiseSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_frontlineRaiseReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_frontlineRaiseWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_shoulderPressReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_shoulderPressSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_shoulderPressWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_elbowOutRowReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_elbowOutRowSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_elbowOutRowWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_bicepCurlReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_bicepCurlSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_bicepCurlWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_closeGripPushupReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_closeGripPushupSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_closeGripPushupWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_rearDeltFlyReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_rearDeltFlySets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_rearDeltFlyWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_sideBendReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_sideBendSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_sideBendWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_lateralRaiseReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_lateralRaiseSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_lateralRaiseWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_stiffLegRDLReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_stiffLegRDLSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_stiffLegRDLWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_hamstringCurlReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_hamstringCurlSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_hipThrusterReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_hipThrusterSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_hipThrusterWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_frontSquatReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_frontSquatSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_frontSquatWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_sumoSquatReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_sumoSquatSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_sumoSquatWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_cyclistSquatReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_cyclistSquatSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_calfRaiseReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_calfRaiseSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_calfRaiseWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_longLeverCrunchesReps = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_longLeverCrunchesSets = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_sidelineSculpt = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_abdominals = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_walk = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
                     u_walkDistance = (
                         ui.number()
                         .classes("hidden")
                         .style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     )
 
@@ -516,7 +516,9 @@ def create() -> None:
                                 exercise.value = int(math.ciel(num))
                             else:
                                 continue
-                        today_date = u_today_date.value
+                        today_date_str = str(u_today_date.value)
+                        today_date = datetime.strptime(today_date_str, "%Y-%m-%d")
+                        today_date = today_date.strftime("%Y-%m-%d %H:%M:%S")
                         frontlineRaiseReps = int(u_frontlineRaiseReps.value)
                         frontlineRaiseSets = int(u_frontlineRaiseReps.value)
                         frontlineRaiseWeight = int(u_frontlineRaiseReps.value)
@@ -767,11 +769,11 @@ def create() -> None:
                         ).classes("w-1/2")
                     with ui.row().classes("w-full no-wrap py-4"):
                         ui.label("UPPER BODY").classes("text-2xl").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Frontline Raise").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -780,7 +782,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Frontline Raise Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -789,7 +791,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Frontline Raise Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -800,11 +802,11 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Frontline Raise Weight"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Arnold Presses").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -813,7 +815,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Shoulder Press Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -822,7 +824,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Shoulder Press Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -833,11 +835,11 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Shoulder Press Weight"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Elbow Out Row").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -846,7 +848,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Elbow Out Row Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -855,7 +857,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Elbow Out Row Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -864,13 +866,13 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Elbow Out Row Weight"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Supinating Bicep Curl").classes(
                             "w-1/4 text-base"
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -879,7 +881,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Bicep Curls Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -888,7 +890,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Bicep Curls Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -897,11 +899,11 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Bicep Curls Weight"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Close Grip Pushup").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -912,7 +914,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Close Grip Pushup Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -923,7 +925,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Close Grip Pushup Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="STAIR",
@@ -934,13 +936,13 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Close Grip Pushup Stair"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Seated Rear Delt Fly").classes(
                             "w-1/4 text-base"
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -949,7 +951,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Rear Delt Fly Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -958,7 +960,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Rear Delt Fly Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -967,11 +969,11 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Rear Delt Fly Weight"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Standing Side Bend").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -980,7 +982,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Side Bend Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -989,7 +991,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Side Bend Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -998,11 +1000,11 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Side Bend Weight"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Lateral Raise").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -1011,7 +1013,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Lateral Raise Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -1020,7 +1022,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Lateral Raise Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -1029,15 +1031,15 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Lateral Raise Weight"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap py-4"):
                         ui.label("LOWER BODY WORK").classes("text-2xl").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Stiff Leg RDL").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -1046,7 +1048,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Stiff Leg RDL Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -1055,7 +1057,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Stiff Leg RDL Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -1064,11 +1066,11 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Stiff Leg RDL Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Hamstring Curl").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -1077,7 +1079,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hamstring Curl Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -1086,14 +1088,14 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hamstring Curl Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Hip Thruster").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -1102,7 +1104,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hip Thruster Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -1111,7 +1113,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hip Thruster Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -1120,11 +1122,11 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hip Thruster Weight"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Front Squat").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -1133,7 +1135,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Front Squat Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -1142,7 +1144,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Front Squat Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -1151,11 +1153,11 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Front Squat Weight"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Sumo Squat").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -1164,7 +1166,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Forward Lunge Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -1173,7 +1175,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Forward Lunge Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -1182,11 +1184,11 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Forward Lunge Weight"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Cyclist Squat").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -1195,7 +1197,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Cyclist Squat Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -1204,14 +1206,14 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Cyclist Squat Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Calf Raise").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -1220,7 +1222,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Calf Raise Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -1229,7 +1231,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Calf Raise Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="WEIGHT",
@@ -1238,13 +1240,13 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Cald Raise Weight"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Long Lever Crunches").classes(
                             "w-1/4 text-base"
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="REPS",
@@ -1255,7 +1257,7 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Calf Raise Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="SETS",
@@ -1266,18 +1268,18 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Calf Raise Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.label("").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap py-4"):
                         ui.label("CORE WORK").classes("text-2xl").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Sideline Sculpt").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="DONE",
@@ -1286,17 +1288,17 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Long Lever Crunch Reps"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Abdominals").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="DONE",
@@ -1305,38 +1307,38 @@ def create() -> None:
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Long Lever Crunch Sets"'
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap py-4"):
                         ui.label("WALKING").classes("text-2xl").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Walking").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="Did I Walk",
                             value="",
                             on_change=lambda e: u_walk.set_value(e.value),
                         ).classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Distance Walked").classes("w-1/4").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
                             label="Distance",
@@ -1345,13 +1347,13 @@ def create() -> None:
                                 math.ceil(e.value)
                             ),
                         ).classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.button("SAVE", on_click=save).props('color=secondary')
@@ -1363,7 +1365,8 @@ def create() -> None:
                     dfSQL = pd.read_sql_query("SELECT * FROM WORKOUTS", conn)
                     conn.close()
                     df = dfSQL.drop(columns=["ID"])
-                    df = df.sort_values(by=["DATE"])
+                    df = df.sort_values(by=["DATE"],ascending=False)
+                    print(df)
                     df_last8 = df.drop(
                         columns=[
                             "FRONTLINE_SETS",
@@ -1604,6 +1607,7 @@ def create() -> None:
                             value_name="value",
                         )
                         melted_df = melted_df[melted_df["value"] != 0]
+                        melted_df = melted_df[melted_df["value"].notna()]
                         recent_df = (
                             melted_df.groupby("Exercises")
                             .agg({"Date": "max"})
@@ -1618,7 +1622,7 @@ def create() -> None:
                             subset=["Exercises"], keep="first"
                         )
                         reformed_df["Days Since Last"] = (
-                            datetime.datetime.now()
+                            datetime.now()
                             - pd.to_datetime(reformed_df["Most Recent"])
                         ).dt.days
                         return reformed_df
@@ -1631,84 +1635,92 @@ def create() -> None:
                     with ui.row():
                         ui.label("Most Recent Exercises").classes(
                             "text-3xl text-bold"
-                        ).style('font-style: normal, font-family : "JetBrainsMono"')
+                        ).style('font-family : "JetBrainsMono"')
                     with ui.row():
                         with ui.card():
                             ui.label("Upper Body Exercises").classes(
                                 "text-xl text-bold"
                             ).style(
-                                'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                                'font-family : "Atkinson Hyperlegible"'
                             )
                             ui.separator().classes("w-full h-1").props("color=positive")
                             ui.table(
                                 columns=[
-                                    {"name": col, "label": col, "field": col}
+                                    {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
+                                "align": 'left'}
                                     for col in upper_df.columns
                                 ],
                                 rows=upper_df.to_dict("records"),
                             ).style(
-                                "font-style: normal, font-family: JeBrainsMono"
+                                "font-family: JetBrainsMono"
                             ).classes("text-lg font-normal")
                         with ui.card():
                             ui.label("Lower Body Exercises").classes(
                                 "text-xl text-bold"
                             ).style(
-                                'font-style: normal, font-family : "Atkinson Hyperlegible"'
+                                'font-family : "Atkinson Hyperlegible"'
                             )
                             ui.separator().classes("w-full h-1").props("color=positive")
                             ui.table(
                                 columns=[
-                                    {"name": col, "label": col, "field": col}
+                                    {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
+                                "align": 'left'}
                                     for col in lower_df.columns
                                 ],
                                 rows=lower_df.to_dict("records"),
                             ).style(
-                                "font-style: normal, font-family: JeBrainsMono"
+                                "font-family: JetBrainsMono"
                             ).classes("text-lg font-normal")
-                        with ui.card():
-                            ui.label("Abdominal Exercises").classes(
-                                "text-xl text-bold"
-                            ).style(
-                                'font-style: normal, font-family : "Atkinson Hyperlegible"'
-                            )
-                            ui.separator().classes("w-full h-1").props("color=positive")
-                            ui.table(
-                                columns=[
-                                    {"name": col, "label": col, "field": col}
-                                    for col in abs_df.columns
-                                ],
-                                rows=abs_df.to_dict("records"),
-                            ).style(
-                                "font-style: normal, font-family: JeBrainsMono"
-                            ).classes("text-lg font-normal")
-                        with ui.card():
-                            ui.label("Walking").classes("text-xl text-bold").style(
-                                'font-style: normal, font-family : "Atkinson Hyperlegible"'
-                            )
-                            ui.separator().classes("w-full h-1").props("color=positive")
-                            ui.table(
-                                columns=[
-                                    {"name": col, "label": col, "field": col}
-                                    for col in walk_df.columns
-                                ],
-                                rows=walk_df.to_dict("records"),
-                            ).style(
-                                "font-style: normal, font-family: JeBrainsMono"
-                            ).classes("text-lg font-normal")
+                        with ui.column():
+                            with ui.card():
+                                ui.label("Abdominal Exercises").classes(
+                                    "text-xl text-bold"
+                                ).style(
+                                    'font-family : "Atkinson Hyperlegible"'
+                                )
+                                ui.separator().classes("w-full h-1").props("color=positive")
+                                ui.table(
+                                    columns=[
+                                        {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
+                                "align": 'left'}
+                                        for col in abs_df.columns
+                                    ],
+                                    rows=abs_df.to_dict("records"),
+                                ).style(
+                                    "font-family: JetBrainsMono"
+                                ).classes("text-lg font-normal")
+                            with ui.card():
+                                ui.label("Walking").classes("text-xl text-bold").style(
+                                    'font-family : "Atkinson Hyperlegible"'
+                                )
+                                ui.separator().classes("w-full h-1").props("color=positive")
+                                ui.table(
+                                    columns=[
+                                        {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
+                                "align": 'left'}
+                                        for col in walk_df.columns
+                                    ],
+                                    rows=walk_df.to_dict("records"),
+                                ).style(
+                                    "font-family: JetBrainsMono"
+                                ).classes("text-lg font-normal")
                     with ui.row():
                         ui.label("Cumulative Exercise Log").classes(
                             "text-3xl text-bold"
                         ).style(
-                            'font-style: normal, font-family : "Atkinson Hypelegible"'
+                            'font-family : "Atkinson Hypelegible"'
                         )
+                    
                     table = (
                         ui.table(
                             columns=[
-                                {"name": col, "label": col, "field": col}
+                                {"name": col, 
+                                "label": col, 
+                                "field": col, 
+                                "headerClasses":"border-b border-secondary",
+                                "align": 'left'}
                                 for col in df.columns
                             ],
-                            rows=df.to_dict("records"),
-                        )
-                        .style("font-style: normal, font-family: JeBrainsMono")
-                        .classes("text-lg font-normal")
+                            rows=df.to_dict("records"),pagination={'rowsPerPage': 10}
+                        ).style('font-family: "JetBrainsMono"').classes()
                     )
