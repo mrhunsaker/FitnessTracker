@@ -43,17 +43,17 @@ def menu() -> None:
     >>> menu()
     """
     with ui.button("Navigation Menu", icon="apps").classes(
-        "absolute-right self-center scale=150").style('font-style:normal, font-family: "Atkinson Hyperlegible"'):
+        "absolute-right self-center scale=150"
+    ).style('font-style:normal, font-family: "Atkinson Hyperlegible"'):
         with ui.menu().classes("w-[250px]") as menu:
             ui.menu_item("HOME", lambda: ui.open("/")).classes(
                 replace="text-black"
-            ).style('font-style:normal, font-family: "Atkinson Hyperlegible"')
+            ).style('font-family: "Atkinson Hyperlegible"')
             ui.separator()
             ui.menu_item("FITNESS", lambda: ui.open("/fitness")).classes(
                 replace="text-black"
-            ).style('font-style:normal, font-family: "Atkinson Hyperlegible"')
+            ).style('font-family: "Atkinson Hyperlegible"')
             ui.separator()
             ui.menu_item("PIANO", lambda: ui.open("/piano")).classes(
                 replace="text-black"
-            ).style('font-style:normal, font-family: "Atkinson Hyperlegible"')
-            
+            ).style('font-family: "Atkinson Hyperlegible"')

@@ -53,6 +53,7 @@ from appPages import piano
 from appPages import fitness
 from appPages import homepage
 
+
 def warningmessage(exception_type, exception_value, exception_traceback) -> None:
     """
     Log an error message and display a warning notification.
@@ -84,7 +85,7 @@ def warningmessage(exception_type, exception_value, exception_traceback) -> None
         exception_type, exception_value, exception_traceback
     )
     log_path = Path(USER_DIR).joinpath(
-        "StudentDatabase", "errorLogs", f"logfile_{datenow}.log"
+        "errorLogs", f"logfile_{datenow}.log"
     )
     Path.touch(log_path)
     for i in tb:
@@ -113,8 +114,9 @@ def index_page() -> None:
     --------
     >>> index_page()
     """
-    with theme.frame("Habit Tracking"):
+    with theme.frame("QUICK VIEW"):
         homepage.content()
+
 
 fitness.create()
 piano.create()
@@ -153,7 +155,7 @@ ui.run(
     native=False,
     reload=False,
     dark=False,
-    title="Student Skills Progressions",
+    title="Habit and Fitness Tracker",
     fullscreen=False,
     # window_size=(MONITOR.width, MONITOR.height - 72) # only relevant if native=True
 )

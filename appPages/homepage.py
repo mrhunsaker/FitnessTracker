@@ -22,114 +22,494 @@ Program designed to be a data collection and instructional tool for
 teachers of students with Visual Impairments
 """
 
+import math
+import datetime
+import os
+import sqlite3
+import sys
+import traceback
+from pathlib import Path
+import pandas as pd
+import numpy as np
+from nicegui import ui, app
 
-from nicegui import ui
-
+from appHelpers.helpers import dataBasePath
 from appTheming import theme
+from appPages import fitness
+
+def piano() -> None:
+    conn = sqlite3.connect(dataBasePath)
+    dfSQL = pd.read_sql_query("SELECT * FROM PIANO", conn)
+    conn.close()
+    df = dfSQL.drop(columns=["ID"])
+    df = df.sort_values(by=["DATE"])
+    df_last8 = df.drop(
+        columns=[
+            "LESSON",
+            "RECITAL"
+        ]
+    )
+    df_last8 = df_last8.rename(
+        columns={
+            "DATE"  : "Date",
+            "PIANO" : "Practiced" 
+        }
+    )
+    df = df.rename(
+        columns={
+            "DATE": "Date",
+            "PIANO" : "Practiced",
+            "LESSON" : "Lesson",
+            "RECITAL" : "Recital"
+        }
+    )
+
+    def reshape_and_rename(input_df):
+        """
+        Reshape and rename a DataFrame containing exercise data.
+
+        Parameters
+        ----------
+        input_df : pandas.DataFrame
+            Input DataFrame containing exercise data with columns 'Date', exercise names as columns,
+            and corresponding values representing exercise metrics.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Reshaped and renamed DataFrame with the following columns:
+            - 'Exercises': Exercise names.
+            - 'Most Recent': The most recent date for each exercise.
+            - 'Days Since Last': Number of days since the last exercise recorded.
+
+        Notes
+        -----
+        This function performs the following steps:
+        1. Melt the input DataFrame to transform it into a long format.
+        2. Remove rows with 'value' equal to 0.
+        3. Group by 'Exercises' and find the most recent date for each exercise.
+        4. Merge the melted DataFrame with the most recent dates.
+        5. Drop unnecessary columns ('Date', 'value') and sort by the most recent date.
+        6. Keep only the first occurrence of each exercise, removing duplicates.
+        7. Calculate the 'Days Since Last' based on the time elapsed since the previous record.
+
+        Examples
+        --------
+        >>> import pandas as pd
+        >>> from datetime import datetime, timedelta
+        >>> # Creating a sample DataFrame
+        >>> data = {'Date': ['2023-01-01', '2023-01-02', '2023-01-03'],
+        ...         'Exercise_A': [10, 15, 0],
+        ...         'Exercise_B': [5, 0, 20]}
+        >>> df = pd.DataFrame(data)
+        >>> df['Date'] = pd.to_datetime(df['Date'])
+        >>> # Applying reshape_and_rename function
+        >>> result_df = reshape_and_rename(df)
+        >>> print(result_df)
+        """
+
+        melted_df = pd.melt(
+            input_df,
+            id_vars=["Date"],
+            var_name="Exercises",
+            value_name="value",
+        )
+        melted_df = melted_df[melted_df["value"] != 0]
+        melted_df = melted_df[melted_df["value"].notna()]
+        recent_df = (
+            melted_df.groupby("Exercises")
+            .agg({"Date": "max"})
+            .reset_index()
+        )
+        recent_df.columns = ["Exercises", "Most Recent"]
+        reformed_df = pd.merge(melted_df, recent_df, on="Exercises")
+        reformed_df = reformed_df.drop("Date", axis=1)
+        reformed_df = reformed_df.drop("value", axis=1)
+        reformed_df = reformed_df.sort_values(by=["Most Recent"])
+        reformed_df = reformed_df.drop_duplicates(
+            subset=["Exercises"], keep="first"
+        )
+        reformed_df["Days Since Last"] = (
+            datetime.datetime.now()
+            - pd.to_datetime(reformed_df["Most Recent"])
+        ).dt.days
+        return reformed_df
+
+    """Drop Rows for Easier Data Presentation"""
+    piano_df = reshape_and_rename(df_last8)
+
+    with ui.row():
+        ui.label("Piano Practice").classes(
+            "text-3xl text-bold"
+        ).style('font-family : "JetBrainsMono"')
+    with ui.row():
+        with ui.card():
+            ui.label("Time Since Last Practice").classes(
+                "text-xl text-bold"
+            ).style(
+                'font-family : "Atkinson Hyperlegible"'
+            )
+            ui.separator().classes("w-full h-1").props("color=positive")
+            ui.table(
+                columns=[
+                    {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
+                                "align": 'left'}
+                    for col in piano_df.columns
+                ],
+                rows=piano_df.to_dict("records"),
+            ).style(
+                "font-family: JetBrainsMono"
+            ).classes("text-lg font-normal")
+    
+def fitness() -> None:
+    conn = sqlite3.connect(dataBasePath)
+    dfSQL = pd.read_sql_query("SELECT * FROM WORKOUTS", conn)
+    conn.close()
+    df = dfSQL.drop(columns=["ID"])
+    df = df.sort_values(by=["DATE"])
+    df_last8 = df.drop(
+        columns=[
+            "FRONTLINE_SETS",
+            "FRONTLINE_WEIGHT",
+            "SHOULDERZPRESS_SETS",
+            "SHOULDERZPRESS_WEIGHT",
+            "ELBOWOUTROW_SETS",
+            "ELBOWOUTROW_WEIGHT",
+            "SUPINEBICEPCURL_SETS",
+            "SUPINEBICEPCURL_WEIGHT",
+            "CLOSEGRIPPUSHUP_SETS",
+            "CLOSEGRIPPUSHUP_STAIR",
+            "REARDELTFLY_SETS",
+            "REARDELTFLY_WEIGHT",
+            "SIDEBEND_SETS",
+            "SIDEBEND_WEIGHT",
+            "LATERALRAISE_SETS",
+            "LATERALRAISE_WEIGHT",
+            "STIFFLEGRDL_SETS",
+            "STIFFLEGRDL_WEIGHT",
+            "SLIDERHAMSTRINGCURL_SETS",
+            "HIPTHRUSTER_SETS",
+            "HIPTHRUSTER_WEIGHT",
+            "FORWARDSQUAT_SETS",
+            "FORWARDSQUAT_WEIGHT",
+            "SUMOSQUAT_SETS",
+            "SUMOSQUAT_WEIGHT",
+            "CYCLISTSQUAT_SETS",
+            "SINGLELEGCALFRAISE_SETS",
+            "LONGLEVERCRUNCHES_SETS",
+        ]
+    )
+    df_last8 = df_last8.rename(
+        columns={
+            "DATE": "Date",
+            "FRONTLINE_REPS": "Frontline POW Raise",
+            "SHOULDERZPRESS_REPS": "Arnold Press",
+            "ELBOWOUTROW_REPS": "Elbow Out Row",
+            "SUPINEBICEPCURL_REPS": "Supinating Bicep Curl",
+            "CLOSEGRIPPUSHUP_REPS": "Close Grip Pushup",
+            "REARDELTFLY_REPS": "Rear Delt Fly",
+            "SIDEBEND_REPS": "Side Bend",
+            "LATERALRAISE_REPS": "Lateral Raise",
+            "STIFFLEGRDL_REPS": "Stiff Legged RDL",
+            "SLIDERHAMSTRINGCURL_REPS": "Hamstring Curls",
+            "HIPTHRUSTER_REPS": "Hip Thrusters",
+            "FORWARDSQUAT_REPS": "Forward Squat",
+            "SUMOSQUAT_REPS": "Sumo Squat",
+            "CYCLISTSQUAT_REPS": "Cyclist Squat",
+            "SINGLELEGCALFRAISE_REPS": "Single Leg Calf Raise",
+            "LONGLEVERCRUNCHES_REPS": "Long Lever Crunches",
+            "SIDELINESCULPT": "Sideline Sculpt",
+            "ABDOMINALS": "Abdominals",
+            "WALK": "Walk",
+            "WALK_DISTANCE": "Distance Walked",
+        }
+    )
+    df = df.rename(
+        columns={
+            "DATE": "Date",
+            "FRONTLINE_REPS": "Frontline reps",
+            "FRONTLINE_SETS": "Frontline sets",
+            "FRONTLINE_WEIGHT": "Frontline weight",
+            "DOWNDOGPUSHUP_REPS": "Downdog reps",
+            "DOWNDOGPUSHUP_SETS": "Downdog sets",
+            "SHOULDERZPRESS_REPS": "Shoulder press reps",
+            "SHOULDERZPRESS_SETS": "Shoulder press sets",
+            "SHOULDERZPRESS_WEIGHT": "Shoulder press weight",
+            "ELBOWOUTROW_REPS": "Elbow Out Row reps",
+            "ELBOWOUTROW_SETS": "Elbow Out Row sets",
+            "ELBOWOUTROW_WEIGHT": "Elbow Out Row weight",
+            "SUPINEBICEPCURL_REPS": "Bicep Curl reps",
+            "SUPINEBICEPCURL_SETS": "Bicep Curl sets",
+            "SUPINEBICEPCURL_WEIGHT": "Bicep Curl weight",
+            "CLOSEGRIPPUSHUP_REPS": "Close Grip Pushup reps",
+            "CLOSEGRIPPUSHUP_SETS": "Close Grip Pshup sets",
+            "CLOSEGRIPPUSHUP_STAIR": "Close Grip Pushup Stair",
+            "REARDELTFLY_REPS": "Rear Delt Fly reps",
+            "REARDELTFLY_SETS": "Rear Delt Fly sets",
+            "REARDELTFLY_WEIGHT": "Rear Delt Fly weight",
+            "SIDEBEND_REPS": "Side Bend reps",
+            "SIDEBEND_SETS": "Side Bend sets",
+            "SIDEBEND_WEIGHT": "Side Bend weight",
+            "LATERALRAISE_REPS": "Lateral Raise reps",
+            "LATERALRAISE_SETS": "Lateral Raise sets",
+            "LATERALRAISE_WEIGHT": "Lateral Raise weight",
+            "STIFFLEGRDL_REPS": "Stiff Leg RDL reps",
+            "STIFFLEGRDL_SETS": "Stiff Leg RDL sets",
+            "STIFFLEGRDL_WEIGHT": "Stiff Leg RDL weight",
+            "SLIDERHAMSTRINGCURL_REPS": "Slider Hamstring Curls reps",
+            "SLIDERHAMSTRINGCURL_SETS": "Slider Hamstring Curls sets",
+            "HIPTHRUSTER_REPS": "Hip Thruster reps",
+            "HIPTHRUSTER_SETS": "Hip thruster sets",
+            "HIPTHRUSTER_WEIGHT": "Hip thruster weight",
+            "FORWARDSQUAT_REPS": "Front Squat reps",
+            "FORWARDSQUAT_SETS": "Front Squat sets",
+            "FORWARDSQUAT_WEIGHT": "Front Squat weight",
+            "SUMOSQUAT_REPS": "Sumo Squat reps",
+            "SUMOSQUAT_SETS": "Sumo Squat sets",
+            "SUMOSQUAT_WEIGHT": "Sumo Squat weight",
+            "CYCLISTSQUAT_REPS": "Cyclist Squat reps",
+            "CYCLISTSQUAT_SETS": "Cyclist Squat sets",
+            "SINGLELEGCALFRAISE_REPS": "Single-Leg Calf Raise reps",
+            "SINGLELEGCALFRAISE_SETS": "Single-Leg Calf Raise sets",
+            "LONGLEVERCRUNCHES_REPS": "Long Lever Crunches reps",
+            "LONGLEVERCRUNCHES_SETS": "Long Lever Crunches sets",
+            "SIDELINESCULPT": "Sideline Scupt",
+            "ABDOMINALS": "Abdominals",
+            "WALK": "Walk",
+            "WALK_DISTANCE": "Distance Walked",
+        }
+    )
+    lower_df = df_last8.drop(
+        columns=[
+            "Frontline POW Raise",
+            "Arnold Press",
+            "Elbow Out Row",
+            "Supinating Bicep Curl",
+            "Close Grip Pushup",
+            "Rear Delt Fly",
+            "Side Bend",
+            "Lateral Raise",
+            "Abdominals",
+            "Sideline Sculpt",
+            "Walk",
+            "Distance Walked",
+        ]
+    )
+    upper_df = df_last8.drop(
+        columns=[
+            "Stiff Legged RDL",
+            "Hamstring Curls",
+            "Hip Thrusters",
+            "Forward Squat",
+            "Sumo Squat",
+            "Cyclist Squat",
+            "Single Leg Calf Raise",
+            "Long Lever Crunches",
+            "Abdominals",
+            "Sideline Sculpt",
+            "Walk",
+            "Distance Walked",
+        ]
+    )
+    abs_df = df_last8.drop(
+        columns=[
+            "Stiff Legged RDL",
+            "Hamstring Curls",
+            "Hip Thrusters",
+            "Forward Squat",
+            "Sumo Squat",
+            "Cyclist Squat",
+            "Single Leg Calf Raise",
+            "Long Lever Crunches",
+            "Frontline POW Raise",
+            "Arnold Press",
+            "Elbow Out Row",
+            "Supinating Bicep Curl",
+            "Close Grip Pushup",
+            "Rear Delt Fly",
+            "Side Bend",
+            "Lateral Raise",
+            "Walk",
+            "Distance Walked",
+        ]
+    )
+    walk_df = df_last8.drop(
+        columns=[
+            "Stiff Legged RDL",
+            "Hamstring Curls",
+            "Hip Thrusters",
+            "Forward Squat",
+            "Sumo Squat",
+            "Cyclist Squat",
+            "Single Leg Calf Raise",
+            "Long Lever Crunches",
+            "Frontline POW Raise",
+            "Arnold Press",
+            "Elbow Out Row",
+            "Supinating Bicep Curl",
+            "Close Grip Pushup",
+            "Rear Delt Fly",
+            "Side Bend",
+            "Lateral Raise",
+            "Abdominals",
+            "Sideline Sculpt",
+            "Distance Walked",
+        ]
+    )
+
+    def reshape_and_rename(input_df):
+        """
+        Reshape and rename a DataFrame containing exercise data.
+
+        Parameters
+        ----------
+        input_df : pandas.DataFrame
+            Input DataFrame containing exercise data with columns 'Date', exercise names as columns,
+            and corresponding values representing exercise metrics.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Reshaped and renamed DataFrame with the following columns:
+            - 'Exercises': Exercise names.
+            - 'Most Recent': The most recent date for each exercise.
+            - 'Days Since Last': Number of days since the last exercise recorded.
+
+        Notes
+        -----
+        This function performs the following steps:
+        1. Melt the input DataFrame to transform it into a long format.
+        2. Remove rows with 'value' equal to 0.
+        3. Group by 'Exercises' and find the most recent date for each exercise.
+        4. Merge the melted DataFrame with the most recent dates.
+        5. Drop unnecessary columns ('Date', 'value') and sort by the most recent date.
+        6. Keep only the first occurrence of each exercise, removing duplicates.
+        7. Calculate the 'Days Since Last' based on the time elapsed since the previous record.
+
+        Examples
+        --------
+        >>> import pandas as pd
+        >>> from datetime import datetime, timedelta
+        >>> # Creating a sample DataFrame
+        >>> data = {'Date': ['2023-01-01', '2023-01-02', '2023-01-03'],
+        ...         'Exercise_A': [10, 15, 0],
+        ...         'Exercise_B': [5, 0, 20]}
+        >>> df = pd.DataFrame(data)
+        >>> df['Date'] = pd.to_datetime(df['Date'])
+        >>> # Applying reshape_and_rename function
+        >>> result_df = reshape_and_rename(df)
+        >>> print(result_df)
+        """
+
+        melted_df = pd.melt(
+            input_df,
+            id_vars=["Date"],
+            var_name="Exercises",
+            value_name="value",
+        )
+        melted_df = melted_df[melted_df["value"] != 0]
+        melted_df = melted_df[melted_df["value"].notna()]
+        recent_df = (
+            melted_df.groupby("Exercises")
+            .agg({"Date": "max"})
+            .reset_index()
+        )
+        recent_df.columns = ["Exercises", "Most Recent"]
+        reformed_df = pd.merge(melted_df, recent_df, on="Exercises")
+        reformed_df = reformed_df.drop("Date", axis=1)
+        reformed_df = reformed_df.drop("value", axis=1)
+        reformed_df = reformed_df.sort_values(by=["Most Recent"])
+        reformed_df = reformed_df.drop_duplicates(
+            subset=["Exercises"], keep="first"
+        )
+        reformed_df["Days Since Last"] = (
+            datetime.datetime.now()
+            - pd.to_datetime(reformed_df["Most Recent"])
+        ).dt.days
+        return reformed_df
+
+    """Drop Rows for Easier Data Presentation"""
+    upper_df = reshape_and_rename(upper_df)
+    lower_df = reshape_and_rename(lower_df)
+    abs_df = reshape_and_rename(abs_df)
+    walk_df = reshape_and_rename(walk_df)
+    with ui.row():
+        ui.label("Most Recent Exercises").classes(
+            "text-3xl text-bold"
+        ).style('font-family : "JetBrainsMono"')
+    with ui.row():
+        with ui.card():
+            ui.label("Upper Body Exercises").classes(
+                "text-xl text-bold"
+            ).style(
+                'font-family : "Atkinson Hyperlegible"'
+            )
+            ui.separator().classes("w-full h-1").props("color=positive")
+            ui.table(
+                columns=[
+                    {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
+                                "align": 'left'}
+                    for col in upper_df.columns
+                ],
+                rows=upper_df.to_dict("records"),
+            ).style(
+                "font-family: JetBrainsMono"
+            ).classes("text-lg font-normal")
+        with ui.card():
+            ui.label("Lower Body Exercises").classes(
+                "text-xl text-bold"
+            ).style(
+                'font-family : "Atkinson Hyperlegible"'
+            )
+            ui.separator().classes("w-full h-1").props("color=positive")
+            ui.table(
+                columns=[
+                    {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
+                                "align": 'left'}
+                    for col in lower_df.columns
+                ],
+                rows=lower_df.to_dict("records"),
+            ).style(
+                "font-family: JetBrainsMono"
+            ).classes("text-lg font-normal")
+        with ui.column():
+            with ui.card():
+                ui.label("Abdominal Exercises").classes(
+                    "text-xl text-bold"
+                ).style(
+                    'font-family : "Atkinson Hyperlegible"'
+                )
+                ui.separator().classes("w-full h-1").props("color=positive")
+                ui.table(
+                    columns=[
+                        {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
+                                "align": 'left'}
+                        for col in abs_df.columns
+                    ],
+                    rows=abs_df.to_dict("records"),
+                ).style(
+                    "font-family: JetBrainsMono"
+                ).classes("text-lg font-normal")
+            with ui.card():
+                ui.label("Walking").classes("text-xl text-bold").style(
+                    'font-family : "Atkinson Hyperlegible"'
+                )
+                ui.separator().classes("w-full h-1").props("color=positive")
+                ui.table(
+                    columns=[
+                        {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
+                                "align": 'left'}
+                        for col in walk_df.columns
+                    ],
+                    rows=walk_df.to_dict("records"),
+                ).style(
+                    "font-family: JetBrainsMono"
+                ).classes()
 
 
 def content() -> None:
-    with theme.frame("- HOW TO USE THIS APP -"):
-        ui.label("VISION SKILLS PROGRESSIONS").classes(
-            "text-3xl font-bold pl-10"
-        ).style('font-family: "Atkinson Hyperlegible"')
-        # fmt: off
-        with ui.row().classes("w-[800px] no-wrap py-0 pl-10"):
-            ui.label("About this app").classes("text-2xl font-bold").style('font-family: "Atkinson Hyperlegible"')
-        with ui.row().classes("w-[800px] no-wrap py-0 pl-10"):
-            ui.label("This app was designed to help TVIs engage in data-based decision making. The app is designed to be screenreader accessible using all known screenreaders (specifically tested with JAWS, NVDA, Dolphin ScreenReader, Narrator, and ZDSR).").classes("text-lg font-normal").style('font-style: normal, font-family: "Atkinson Hyperlegible"')
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10"):
-            ui.label("Use Instructions").classes("text-2xl font-bold").style('font-family: "Atkinson Hyperlegible"')
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10"):
-            ui.label("Navigation").classes("text-xl font-bold").style('font-family: "Atkinson Hyperlegible"')
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10"):
-            ui.label("The site is designed to be worked with a screenreader using the TAB key.").style('font-style:normal, font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px] no-wrap py-0 pl-10"):
-            ui.label("Tab through each option and follow audio prompts (if using a screenreader) or tooltips (if not) to input data").style('font-style:normal, font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px] no-wrap py-0 pl-10"):       
-            ui.label("Press the \"Exit\" button to close the app. Then close the window with the button in the upper left corner.").style('font-style:normal, font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px] no-wrap py-0 pl-10"):
-            ui.label("Data Input").classes("text-xl font-bold").style('font-family: "Atkinson Hyperlegible"')
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10"):
-            ui.label("Select the Student from the drop-down menu (it will autofill when you type as well)").style('font-style:normal, font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10"):
-            ui.label("Choose the Date using the date picker or else type in the date using the YYYY-MM-DD format (i.e., 2023-12-31)").style('font-style:normal, font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10"):
-            ui.label("For each measure, type in the 0,1, 2, or 3 Rubric value").style('font-style:normal, font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10"):
-            ui.label("Activate the \"Save\" button to save data to .csv format as well as to a Database").style('font-style:normal, font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10"):
-            ui.label("Data Visualization").classes("text-xl font-bold").style('font-family: "Atkinson Hyperlegible"')
-        with ui.row().classes("w-[800px]  no-wrap pl-10"):
-            ui.label("Press the \"Graph\" button to pull saved data and open interactive plots in a new window.").style('font-style:normal, font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10"):            
-            ui.label("The graph is also saved in HTML format in the Student data folder").style('font-style:normal, font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px] center no-wrap py-0 pl-10"):
-            ui.label("Scoring Rubrics").classes("text-2xl font-bold").style('font-family: "Atkinson Hyperlegible"')
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10"):
-            ui.label("All measures are evaluated using the following rubric").style('font-style:normal, font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10"):
-            rows = [
-                {'RUBRIC SCORE': 0, 'Narrative Meaning':"No attempt", 'Interpretation':"Teach or Reteach skills as if previously untaught"},
-                {'RUBRIC SCORE': 1, 'Narrative Meaning':"Required Assistance", 'Interpretation':"Student needs to learn to quickly recognize what skills is needed"},
-                {'RUBRIC SCORE': 2, 'Narrative Meaning':"Hesitated", 'Interpretation':"Student needs to develop confidence in using their skills without waiting"},
-                {'RUBRIC SCORE': 3, 'Narrative Meaning':"Independent", 'Interpretation':"Student has mastered the skill"}
-            ]
-            columns = [
-                {'name': "RUBRIC SCORE", 'label':"RUBRIC SCORE", "field":"RUBRIC SCORE", "align":"left"},
-                {'name': "Narrative Meaning", 'label':"Narrative Meaning", "field":"Narrative Meaning", "align":"left"},
-                {'name': "Interpretation", 'label':"Interpretation", "field":"Interpretation", "align":"left"}
-                ]
-            ui.table(columns=columns, rows=rows, row_key='name').style('font-style: normal, font-family: JeBrainsMono').classes('text-lg font-normal')
-        with ui.row().classes("w-[800px]  no-wrap py-0 pl-10 text-lg"):
-            ui.label("The motivation for this system is from the Screen Reader Skills Progression course available at eyeTvision.org").style('font-style:normal, font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px]  center  no-wrap py-0 pl-10"):
-            ui.label("Folder Structure").classes("text-xl font-bold").style('font-family: "Atkinson Hyperlegible"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px]  center  no-wrap py-0 pl-10"):
-            ui.label("On initial setup, the program tries to set up the following folder hierarchy on your computer").style('font-style:normal, font-family: "JetBrainsMono"').classes("text-lg font-normal")
-        with ui.row().classes("w-[800px]  center  no-wrap py-0 pl-10"):
-            ui.code("""
-                HOME
-                +--- Documents
-                |   +---StudentDatabase
-                |   |   +-- errorLogs
-                |   |   +-- StudentDataFiles
-                |   |   |   +--Filenames.txt
-                |   |   |   +--Student 1
-                |   |   |   |   +-- StudentDataSheets
-                |   |   |   |   |   +-- BlankVisionTemplate.pdf
-                |   |   |   |   |   +-- GenericDataSheets.pdf
-                |   |   |   |   |   +-- ProgressMonitoring.pdf
-                |   |   |   |   +-- StudentVisionAssessments
-                |   |   |   |   |   +-- EducationVisionAssessments.pdf
-                |   |   |   |   +-- AbacusSkillsProgression.csv
-                |   |   |   |   +-- AbacusSkillsProgression.html
-                |   |   |   |   +-- BrailleSkillsProgression.csv
-                |   |   |   |   +-- cviProgression.csv
-                |   |   |   |   +-- cviProgression.html
-                |   |   |   |   +-- omnibusDatabase.csv
-                |   |   |   |   +-- ScreenReaderSkillsProgression.csv
-                |   |   |   |   +-- ScreenReaderSkillsProgression.html
-                |   |   |   |   +-- UEBLiterarySkillsProgression.html
-                |   |   |   |   +-- UEBTechnicalSkillsProgression.html
-                |   |   |    ...  ...
-                |   |   |   +--Student n
-                |   |   |   |   +-- StudentDataSheets
-                |   |   |   |   |   +-- BlankVisionTemplate.pdf
-                |   |   |   |   |   +-- GenericDataSheets.pdf
-                |   |   |   |   |   +-- ProgressMonitoring.pdf
-                |   |   |   |   +-- StudentVisionAssessments
-                |   |   |   |   |   +-- EducationVisionAssessments.pdf
-                |   |   |   |   +-- AbacusSkillsProgression.csv
-                |   |   |   |   +-- AbacusSkillsProgression.html
-                |   |   |   |   +-- BrailleSkillsProgression.csv
-                |   |   |   |   +-- cviProgression.csv
-                |   |   |   |   +-- cviProgression.html
-                |   |   |   |   +-- omnibusDatabase.csv
-                |   |   |   |   +-- ScreenReaderSkillsProgression.csv
-                |   |   |   |   +-- ScreenReaderSkillsProgression.html
-                |   |   |   |   +-- UEBLiterarySkillsProgression.html
-                |   |   |   |   +-- UEBTechnicalSkillsProgression.html
-                |   |   +-- Students.db
-                """
-            ).style('font-family: "JetBrainsMono",font-size:24px').classes('text-base w-[800px]')
+    with theme.frame("- DASHBOARD -"):
+        fitness()
+        ui.separator().classes("w-full h-2").props("color=accent")
+        piano()
+

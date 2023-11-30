@@ -74,7 +74,9 @@ def create_connection(db_file):
             conn.close()
     return conn
 
+
 create_connection(dataBasePath)
+
 
 def create_table(conn, sql_create_sql_table):
     """
@@ -133,6 +135,13 @@ def implement_tables():
     --------
     >>> implement_tables()
     """
+    sql_create_piano_table = """CREATE TABLE IF NOT EXISTS PIANO ( 
+        ID    INTEGER PRIMARY KEY AUTOINCREMENT,
+        DATE    TEXT,
+        PIANO   INTEGER,
+        LESSON  TEXT,
+        RECITAL TEXT
+    );"""
     sql_create_workout_table = """CREATE TABLE IF NOT EXISTS WORKOUTS (
         ID                          INTEGER PRIMARY KEY AUTOINCREMENT,
         DATE                        TEXT,
@@ -191,4 +200,9 @@ def implement_tables():
         create_table(conn, sql_create_workout_table)
     else:
         print("Error! cannot create the database connection.")
+    conn = sqlite3.connect(dataBasePath)
+    if conn is not None:
+        create_table(conn, sql_create_piano_table)
+    else:
+        print('Error! cannot create the database connection.')
     conn.close()
