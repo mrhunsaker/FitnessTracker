@@ -291,17 +291,17 @@ def create() -> None:
                             .agg({"Date": "max"})
                             .reset_index()
                         )
-                        recent_df.columns = ["Exercises", "Most Recent"]
+                        recent_df.columns = ["Exercises", "Most_Recent"]
                         reformed_df = pd.merge(melted_df, recent_df, on="Exercises")
                         reformed_df = reformed_df.drop("Date", axis=1)
                         reformed_df = reformed_df.drop("value", axis=1)
-                        reformed_df = reformed_df.sort_values(by=["Most Recent"])
+                        reformed_df = reformed_df.sort_values(by=["Most_Recent"])
                         reformed_df = reformed_df.drop_duplicates(
                             subset=["Exercises"], keep="first"
                         )
-                        reformed_df["Days Since Last"] = (
+                        reformed_df["Days_Since_Last"] = (
                             datetime.datetime.now()
-                            - pd.to_datetime(reformed_df["Most Recent"])
+                            - pd.to_datetime(reformed_df["Most_Recent"])
                         ).dt.days
                         return reformed_df
 
@@ -320,7 +320,7 @@ def create() -> None:
                                 'font-family : "Atkinson Hyperlegible"'
                             )
                             ui.separator().classes("w-full h-1").props("color=positive")
-                            ui.table(
+                            table=ui.table(
                                 columns=[
                                     {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
                                 "align": 'left'}
@@ -330,6 +330,13 @@ def create() -> None:
                             ).style(
                                 "font-family: JeBrainsMono"
                             ).classes("text-lg font-normal")
+                            table.add_slot('body-cell-Days_Since_Last', '''
+                <q-td key="Days_Since_Last" :props="props">
+                <q-badge :color="props.value < 3 ? 'green' : 'red'">
+                    {{ props.value }}
+                </q-badge>
+                </q-td>
+                ''')
                     with ui.row():
                         ui.label("Cumulative Practice Log").classes(
                             "text-3xl text-bold"

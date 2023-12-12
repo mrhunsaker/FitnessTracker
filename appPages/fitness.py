@@ -1366,7 +1366,6 @@ def create() -> None:
                     conn.close()
                     df = dfSQL.drop(columns=["ID"])
                     df = df.sort_values(by=["DATE"],ascending=False)
-                    print(df)
                     df_last8 = df.drop(
                         columns=[
                             "FRONTLINE_SETS",
@@ -1613,17 +1612,17 @@ def create() -> None:
                             .agg({"Date": "max"})
                             .reset_index()
                         )
-                        recent_df.columns = ["Exercises", "Most Recent"]
+                        recent_df.columns = ["Exercises", "Most_Recent"]
                         reformed_df = pd.merge(melted_df, recent_df, on="Exercises")
                         reformed_df = reformed_df.drop("Date", axis=1)
                         reformed_df = reformed_df.drop("value", axis=1)
-                        reformed_df = reformed_df.sort_values(by=["Most Recent"])
+                        reformed_df = reformed_df.sort_values(by=["Most_Recent"])
                         reformed_df = reformed_df.drop_duplicates(
                             subset=["Exercises"], keep="first"
                         )
-                        reformed_df["Days Since Last"] = (
+                        reformed_df["Days_Since_Last"] = (
                             datetime.now()
-                            - pd.to_datetime(reformed_df["Most Recent"])
+                            - pd.to_datetime(reformed_df["Most_Recent"])
                         ).dt.days
                         return reformed_df
 
@@ -1644,7 +1643,7 @@ def create() -> None:
                                 'font-family : "Atkinson Hyperlegible"'
                             )
                             ui.separator().classes("w-full h-1").props("color=positive")
-                            ui.table(
+                            table_c=ui.table(
                                 columns=[
                                     {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
                                 "align": 'left'}
@@ -1654,6 +1653,13 @@ def create() -> None:
                             ).style(
                                 "font-family: JetBrainsMono"
                             ).classes("text-lg font-normal")
+                            table_c.add_slot('body-cell-Days_Since_Last', '''
+                                <q-td key="Days_Since_Last" :props="props">
+                                <q-badge :color="props.value < 13 ?  'green' : 'red'">
+                                    {{ props.value }}
+                                </q-badge>
+                                </q-td>
+                                ''')
                         with ui.card():
                             ui.label("Lower Body Exercises").classes(
                                 "text-xl text-bold"
@@ -1661,7 +1667,7 @@ def create() -> None:
                                 'font-family : "Atkinson Hyperlegible"'
                             )
                             ui.separator().classes("w-full h-1").props("color=positive")
-                            ui.table(
+                            table_b=ui.table(
                                 columns=[
                                     {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
                                 "align": 'left'}
@@ -1671,6 +1677,13 @@ def create() -> None:
                             ).style(
                                 "font-family: JetBrainsMono"
                             ).classes("text-lg font-normal")
+                            table_b.add_slot('body-cell-Days_Since_Last', '''
+                                <q-td key="Days_Since_Last" :props="props">
+                                <q-badge :color="props.value < 13 ?  'green' : 'red'">
+                                    {{ props.value }}
+                                </q-badge>
+                                </q-td>
+                                ''')
                         with ui.column():
                             with ui.card():
                                 ui.label("Abdominal Exercises").classes(
@@ -1679,7 +1692,7 @@ def create() -> None:
                                     'font-family : "Atkinson Hyperlegible"'
                                 )
                                 ui.separator().classes("w-full h-1").props("color=positive")
-                                ui.table(
+                                table_a=ui.table(
                                     columns=[
                                         {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
                                 "align": 'left'}
@@ -1689,12 +1702,19 @@ def create() -> None:
                                 ).style(
                                     "font-family: JetBrainsMono"
                                 ).classes("text-lg font-normal")
+                                table_a.add_slot('body-cell-Days_Since_Last', '''
+                                    <q-td key="Days_Since_Last" :props="props">
+                                    <q-badge :color="props.value < 13 ?  'green' : 'red'">
+                                        {{ props.value }}
+                                    </q-badge>
+                                    </q-td>
+                                    ''')
                             with ui.card():
                                 ui.label("Walking").classes("text-xl text-bold").style(
                                     'font-family : "Atkinson Hyperlegible"'
                                 )
                                 ui.separator().classes("w-full h-1").props("color=positive")
-                                ui.table(
+                                table_w=ui.table(
                                     columns=[
                                         {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
                                 "align": 'left'}
@@ -1704,6 +1724,13 @@ def create() -> None:
                                 ).style(
                                     "font-family: JetBrainsMono"
                                 ).classes("text-lg font-normal")
+                                table_w.add_slot('body-cell-Days_Since_Last', '''
+                                    <q-td key="Days_Since_Last" :props="props">
+                                    <q-badge :color="props.value < 3 ?  'green' : 'red'">
+                                        {{ props.value }}
+                                    </q-badge>
+                                    </q-td>
+                                    ''')
                     with ui.row():
                         ui.label("Cumulative Exercise Log").classes(
                             "text-3xl text-bold"
