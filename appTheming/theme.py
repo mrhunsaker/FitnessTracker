@@ -174,7 +174,16 @@ def frame(navtitle: str) -> None:
     )
 
     ui.add_head_html(style)
-
+    ui.add_head_html('''
+        <style>
+        .q-table__bottom {
+            justify-content: flex-start !important;
+        }
+        .q-table__bottom .q-table__separator {
+            display: none;
+        }
+        </style>
+    ''')
     ui.colors(
         primary="#f26d6d", secondary="#976fbf", positive="#f2c2cf", accent="#038c7f"
     )
