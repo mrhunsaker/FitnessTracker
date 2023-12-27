@@ -22,20 +22,16 @@ Program designed to be a data collection and instructional tool for
 teachers of students with Visual Impairments
 """
 
-import math
 import datetime
-import os
 import sqlite3
-import sys
-import traceback
-from pathlib import Path
+
 import pandas as pd
-import numpy as np
-from nicegui import ui, app
+from nicegui import ui
 
 from appHelpers.helpers import dataBasePath
-from appTheming import theme
 from appPages import fitness
+from appTheming import theme
+
 
 def piano() -> None:
     conn = sqlite3.connect(dataBasePath)
@@ -51,16 +47,16 @@ def piano() -> None:
     )
     df_last8 = df_last8.rename(
         columns={
-            "DATE"  : "Date",
-            "PIANO" : "Practiced" 
+            "DATE": "Date",
+            "PIANO": "Practiced"
         }
     )
     df = df.rename(
         columns={
             "DATE": "Date",
-            "PIANO" : "Practiced",
-            "LESSON" : "Lesson",
-            "RECITAL" : "Recital"
+            "PIANO": "Practiced",
+            "LESSON": "Lesson",
+            "RECITAL": "Recital"
         }
     )
 
@@ -130,8 +126,8 @@ def piano() -> None:
             subset=["Exercises"], keep="first"
         )
         reformed_df["Days_Since_Last"] = (
-            datetime.datetime.now()
-            - pd.to_datetime(reformed_df["Most_Recent"])
+                datetime.datetime.now()
+                - pd.to_datetime(reformed_df["Most_Recent"])
         ).dt.days
         return reformed_df
 
@@ -150,10 +146,10 @@ def piano() -> None:
                 'font-family : "Atkinson Hyperlegible"'
             )
             ui.separator().classes("w-full h-1").props("color=positive")
-            table_p=ui.table(
+            table_p = ui.table(
                 columns=[
-                    {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                    {"name": col, "label": col, "field": col, "headerClasses": "border-b border-secondary",
+                     "align": 'left'}
                     for col in piano_df.columns
                 ],
                 rows=piano_df.to_dict("records"),
@@ -167,7 +163,8 @@ def piano() -> None:
                 </q-badge>
                 </q-td>
                 ''')
-    
+
+
 def fitness() -> None:
     conn = sqlite3.connect(dataBasePath)
     dfSQL = pd.read_sql_query("SELECT * FROM WORKOUTS", conn)
@@ -430,8 +427,8 @@ def fitness() -> None:
             subset=["Exercises"], keep="first"
         )
         reformed_df["Days_Since_Last"] = (
-            datetime.datetime.now()
-            - pd.to_datetime(reformed_df["Most_Recent"])
+                datetime.datetime.now()
+                - pd.to_datetime(reformed_df["Most_Recent"])
         ).dt.days
         return reformed_df
 
@@ -452,10 +449,10 @@ def fitness() -> None:
                 'font-family : "Atkinson Hyperlegible"'
             )
             ui.separator().classes("w-full h-1").props("color=positive")
-            table_c=ui.table(
+            table_c = ui.table(
                 columns=[
-                    {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                    {"name": col, "label": col, "field": col, "headerClasses": "border-b border-secondary",
+                     "align": 'left'}
                     for col in upper_df.columns
                 ],
                 rows=upper_df.to_dict("records"),
@@ -478,8 +475,8 @@ def fitness() -> None:
             ui.separator().classes("w-full h-1").props("color=positive")
             table_b = ui.table(
                 columns=[
-                    {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                    {"name": col, "label": col, "field": col, "headerClasses": "border-b border-secondary",
+                     "align": 'left'}
                     for col in lower_df.columns
                 ],
                 rows=lower_df.to_dict("records"),
@@ -501,10 +498,10 @@ def fitness() -> None:
                     'font-family : "Atkinson Hyperlegible"'
                 )
                 ui.separator().classes("w-full h-1").props("color=positive")
-                table_a=ui.table(
+                table_a = ui.table(
                     columns=[
-                        {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                        {"name": col, "label": col, "field": col, "headerClasses": "border-b border-secondary",
+                         "align": 'left'}
                         for col in abs_df.columns
                     ],
                     rows=abs_df.to_dict("records"),
@@ -525,8 +522,8 @@ def fitness() -> None:
                 ui.separator().classes("w-full h-1").props("color=positive")
                 table = ui.table(
                     columns=[
-                        {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                        {"name": col, "label": col, "field": col, "headerClasses": "border-b border-secondary",
+                         "align": 'left'}
                         for col in walk_df.columns
                     ],
                     rows=walk_df.to_dict("records"),
@@ -547,4 +544,3 @@ def content() -> None:
         fitness()
         ui.separator().classes("w-full h-2").props("color=accent")
         piano()
-

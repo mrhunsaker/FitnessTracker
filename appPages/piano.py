@@ -22,17 +22,13 @@ Program designed to be a data collection and instructional tool for
 teachers of students with Visual Impairments
 """
 
-
+import datetime
 import os
 import sqlite3
 import sys
-import traceback
-from pathlib import Path
-import pandas as pd
-import datetime
 
+import pandas as pd
 from nicegui import ui, app
-from screeninfo import get_monitors
 
 module_path = os.path.abspath(os.getcwd())
 if module_path not in sys.path:
@@ -41,15 +37,7 @@ if module_path not in sys.path:
 from appTheming import theme
 from appHelpers.helpers import (
     dataBasePath,
-    set_start_dir,
-    USER_DIR,
-    datenow,
-    )
-from appHelpers.workingdirectory import create_user_dir
-from appHelpers.sqlgenerate import create_connection, implement_tables, create_table
-
-from appPages import piano
-from appPages import fitness
+)
 
 
 def create() -> None:
@@ -62,26 +50,25 @@ def create() -> None:
             with ui.tab_panels(tabs, value="PIANO INPUT"):
                 with ui.tab_panel("PIANO INPUT"):
                     u_today_date = (
-                    ui.date()
-                    .classes("hidden")
-                    .style('font-family : "Atkinson Hyperlegible"')
+                        ui.date()
+                        .classes("hidden")
+                        .style('font-family : "Atkinson Hyperlegible"')
                     )
-                    u_piano= (
-                    ui.number()
-                    .classes("hidden")
-                    .style('font-family : "Atkinson Hyperlegible"')
+                    u_piano = (
+                        ui.number()
+                        .classes("hidden")
+                        .style('font-family : "Atkinson Hyperlegible"')
                     )
                     u_lesson = (
-                    ui.input()
-                    .classes("hidden")
-                    .style('font-family : "Atkinson Hyperlegible"')
+                        ui.input()
+                        .classes("hidden")
+                        .style('font-family : "Atkinson Hyperlegible"')
                     )
                     u_recital = (
-                    ui.input()
-                    .classes("hidden")
-                    .style('font-family : "Atkinson Hyperlegible"')
+                        ui.input()
+                        .classes("hidden")
+                        .style('font-family : "Atkinson Hyperlegible"')
                     )
-
 
                     def save(event):
                         """
@@ -136,20 +123,20 @@ def create() -> None:
                             if conn is not None:
                                 c = conn.cursor()
                                 c.execute(
-                                        """INSERT INTO PIANO (
-                                        DATE,
-                                        PIANO,
-                                        LESSON,
-                                        RECITAL
-                                        )
-                                        VALUES (
-                                        ?,
-                                        ?,
-                                        ?,
-                                        ?
-                                        )
-                                        """,
-                                    ( 
+                                    """INSERT INTO PIANO (
+                                    DATE,
+                                    PIANO,
+                                    LESSON,
+                                    RECITAL
+                                    )
+                                    VALUES (
+                                    ?,
+                                    ?,
+                                    ?,
+                                    ?
+                                    )
+                                    """,
+                                    (
                                         today_date,
                                         piano,
                                         lesson,
@@ -161,52 +148,52 @@ def create() -> None:
                                 print("Error! cannot create the database connection.")
                                 conn.close()
                             ui.notify(
-                            "Saved successfully!",
-                            position="center",
-                            type="positive",
-                            close_button="OK",
+                                "Saved successfully!",
+                                position="center",
+                                type="positive",
+                                close_button="OK",
                             )
 
                         data_entry()
 
                     with ui.row().classes("w-full no-wrap"):
                         ui.date(
-                        value="f{datenow}",
-                        on_change=lambda e: u_today_date.set_value(e.value),
+                            value="f{datenow}",
+                            on_change=lambda e: u_today_date.set_value(e.value),
                         ).classes("w-1/2")
                     with ui.row().classes("w-full no-wrap py-4"):
                         ui.label("PIANO PRACTICE").classes("text-2xl").style(
-                        'font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
                         ui.label("Practice").classes("w-1/4 text-base").style(
-                        'font-family : "Atkinson Hyperlegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                         ui.number(
-                        label="Practice",
-                        value="",
-                        on_change=lambda e: u_piano.set_value(e.value),
+                            label="Practice",
+                            value="",
+                            on_change=lambda e: u_piano.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
-                        'aria-label=Practice'
+                            'aria-label=Practice'
                         ).style('font-family : "Atkinson Hyperlegible"')
                         ui.input(
-                        label="LESSON SONG",
-                        value="",
-                        on_change=lambda e: u_lesson.set_value(e.value),
+                            label="LESSON SONG",
+                            value="",
+                            on_change=lambda e: u_lesson.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
-                        'aria-label="Lesson"'
+                            'aria-label="Lesson"'
                         ).style('font-family : "Atkinson Hyperlegible"')
                         ui.input(
-                        label="RECITAL SONG",
-                        value="",
-                        on_change=lambda e: u_recital.set_value(e.value),
+                            label="RECITAL SONG",
+                            value="",
+                            on_change=lambda e: u_recital.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
-                        'aria-label="Recital"'
+                            'aria-label="Recital"'
                         ).style('font-family : "Atkinson Hyperlegible"')
                     with ui.row().classes("w-full no-wrap"):
                         ui.button("SAVE", on_click=save).props('color=secondary')
                         ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
-                        
+
             with ui.tab_panels(tabs, value="PRACTICE DATA"):
                 with ui.tab_panel("PRACTICE DATA"):
                     conn = sqlite3.connect(dataBasePath)
@@ -222,16 +209,16 @@ def create() -> None:
                     )
                     df_last8 = df_last8.rename(
                         columns={
-                            "DATE"  : "Date",
-                            "PIANO" : "Practiced" 
+                            "DATE": "Date",
+                            "PIANO": "Practiced"
                         }
                     )
                     df = df.rename(
                         columns={
                             "DATE": "Date",
-                            "PIANO" : "Practiced",
-                            "LESSON" : "Lesson",
-                            "RECITAL" : "Recital"
+                            "PIANO": "Practiced",
+                            "LESSON": "Lesson",
+                            "RECITAL": "Recital"
                         }
                     )
 
@@ -300,8 +287,8 @@ def create() -> None:
                             subset=["Exercises"], keep="first"
                         )
                         reformed_df["Days_Since_Last"] = (
-                            datetime.datetime.now()
-                            - pd.to_datetime(reformed_df["Most_Recent"])
+                                datetime.datetime.now()
+                                - pd.to_datetime(reformed_df["Most_Recent"])
                         ).dt.days
                         return reformed_df
 
@@ -320,10 +307,11 @@ def create() -> None:
                                 'font-family : "Atkinson Hyperlegible"'
                             )
                             ui.separator().classes("w-full h-1").props("color=positive")
-                            table=ui.table(
+                            table = ui.table(
                                 columns=[
-                                    {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                                    {"name": col, "label": col, "field": col,
+                                     "headerClasses": "border-b border-secondary",
+                                     "align": 'left'}
                                     for col in piano_df.columns
                                 ],
                                 rows=piano_df.to_dict("records"),
@@ -346,11 +334,11 @@ def create() -> None:
                     with ui.row():
                         ui.table(
                             columns=[
-                                {"name": col, 
-                                "label": col, 
-                                "field": col, 
-                                "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                                {"name": col,
+                                 "label": col,
+                                 "field": col,
+                                 "headerClasses": "border-b border-secondary",
+                                 "align": 'left'}
                                 for col in df.columns
                             ],
                             rows=df.to_dict("records"),

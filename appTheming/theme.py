@@ -22,11 +22,11 @@ Program designed to be a data collection and instructional tool for
 teachers of students with Visual Impairments
 """
 
-
+import os
 from contextlib import contextmanager
 from pathlib import Path
+
 from nicegui import ui, app
-import os
 
 from appTheming.menu import menu
 
@@ -186,8 +186,8 @@ def frame(navtitle: str) -> None:
     ''')
     ui.add_head_html('''
     <style>        
-        .q-badge--yellow-5 {
-            color: black !important;
+        .q-badge--yellow-1 {
+            text-color: black !important;
         }
         </style>   
     ''')
@@ -239,12 +239,12 @@ def frame(navtitle: str) -> None:
 
     with ui.footer(value=True).classes("h-[75px]") as footer:
         with ui.row().classes(
-            "w-screen no-wrap justify-between items-center text-l font-bold text-white h-full pt-2.5"
+                "w-screen no-wrap justify-between items-center text-l font-bold text-white h-full pt-2.5"
         ):
             ui.label("Copyright © 2023 Michael Ryan Hunsaker, M.Ed., Ph.D.").classes(
                 "absolute-center flex-1 self-bottom"
             ).style('font-family: "Atkinson Hyperlegible"')
             with ui.link(target="https://github.com/mrhunsaker/FitnessTracker").classes(
-                "max-[305px]:hidden absolute-right flex-none mt-2.5"
+                    "max-[305px]:hidden absolute-right flex-none mt-2.5"
             ).tooltip("GitHub Repo"):
                 github().classes("fill-white scale-75 m-1 mt-2.5")

@@ -23,16 +23,13 @@ teachers of students with Visual Impairments
 """
 
 import math
-from datetime import datetime
 import os
 import sqlite3
 import sys
-import traceback
-from pathlib import Path
+from datetime import datetime
+
 import pandas as pd
-import numpy as np
 from nicegui import ui, app
-from screeninfo import get_monitors
 
 module_path = os.path.abspath(os.getcwd())
 if module_path not in sys.path:
@@ -40,12 +37,7 @@ if module_path not in sys.path:
 from appTheming import theme
 from appHelpers.helpers import (
     dataBasePath,
-    set_start_dir,
-    USER_DIR,
-    datenow,
 )
-from appHelpers.workingdirectory import create_user_dir
-from appHelpers.sqlgenerate import create_connection, implement_tables, create_table
 
 
 def create() -> None:
@@ -1365,7 +1357,7 @@ def create() -> None:
                     dfSQL = pd.read_sql_query("SELECT * FROM WORKOUTS", conn)
                     conn.close()
                     df = dfSQL.drop(columns=["ID"])
-                    df = df.sort_values(by=["DATE"],ascending=False)
+                    df = df.sort_values(by=["DATE"], ascending=False)
                     df_last8 = df.drop(
                         columns=[
                             "FRONTLINE_SETS",
@@ -1621,8 +1613,8 @@ def create() -> None:
                             subset=["Exercises"], keep="first"
                         )
                         reformed_df["Days_Since_Last"] = (
-                            datetime.now()
-                            - pd.to_datetime(reformed_df["Most_Recent"])
+                                datetime.now()
+                                - pd.to_datetime(reformed_df["Most_Recent"])
                         ).dt.days
                         return reformed_df
 
@@ -1643,10 +1635,11 @@ def create() -> None:
                                 'font-family : "Atkinson Hyperlegible"'
                             )
                             ui.separator().classes("w-full h-1").props("color=positive")
-                            table_c=ui.table(
+                            table_c = ui.table(
                                 columns=[
-                                    {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                                    {"name": col, "label": col, "field": col,
+                                     "headerClasses": "border-b border-secondary",
+                                     "align": 'left'}
                                     for col in upper_df.columns
                                 ],
                                 rows=upper_df.to_dict("records"),
@@ -1667,10 +1660,11 @@ def create() -> None:
                                 'font-family : "Atkinson Hyperlegible"'
                             )
                             ui.separator().classes("w-full h-1").props("color=positive")
-                            table_b=ui.table(
+                            table_b = ui.table(
                                 columns=[
-                                    {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                                    {"name": col, "label": col, "field": col,
+                                     "headerClasses": "border-b border-secondary",
+                                     "align": 'left'}
                                     for col in lower_df.columns
                                 ],
                                 rows=lower_df.to_dict("records"),
@@ -1692,10 +1686,11 @@ def create() -> None:
                                     'font-family : "Atkinson Hyperlegible"'
                                 )
                                 ui.separator().classes("w-full h-1").props("color=positive")
-                                table_a=ui.table(
+                                table_a = ui.table(
                                     columns=[
-                                        {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                                        {"name": col, "label": col, "field": col,
+                                         "headerClasses": "border-b border-secondary",
+                                         "align": 'left'}
                                         for col in abs_df.columns
                                     ],
                                     rows=abs_df.to_dict("records"),
@@ -1714,10 +1709,11 @@ def create() -> None:
                                     'font-family : "Atkinson Hyperlegible"'
                                 )
                                 ui.separator().classes("w-full h-1").props("color=positive")
-                                table_w=ui.table(
+                                table_w = ui.table(
                                     columns=[
-                                        {"name": col, "label": col, "field": col, "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                                        {"name": col, "label": col, "field": col,
+                                         "headerClasses": "border-b border-secondary",
+                                         "align": 'left'}
                                         for col in walk_df.columns
                                     ],
                                     rows=walk_df.to_dict("records"),
@@ -1737,17 +1733,17 @@ def create() -> None:
                         ).style(
                             'font-family : "Atkinson Hypelegible"'
                         )
-                    
+
                     table = (
                         ui.table(
                             columns=[
-                                {"name": col, 
-                                "label": col, 
-                                "field": col, 
-                                "headerClasses":"border-b border-secondary",
-                                "align": 'left'}
+                                {"name": col,
+                                 "label": col,
+                                 "field": col,
+                                 "headerClasses": "border-b border-secondary",
+                                 "align": 'left'}
                                 for col in df.columns
                             ],
-                            rows=df.to_dict("records"),pagination={'rowsPerPage': 10}
+                            rows=df.to_dict("records"), pagination={'rowsPerPage': 10}
                         ).style('font-family: "JetBrainsMono"').classes()
                     )

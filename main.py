@@ -22,9 +22,7 @@ Program designed to be a data collection and instructional tool for
 teachers of students with Visual Impairments
 """
 
-
 import os
-import sqlite3
 import sys
 import traceback
 from pathlib import Path
@@ -42,8 +40,7 @@ from appHelpers.helpers import (
     USER_DIR,
     datenow,
 )
-from appHelpers.workingdirectory import create_user_dir
-from appHelpers.sqlgenerate import create_connection, implement_tables, create_table
+from appHelpers.sqlgenerate import create_connection, implement_tables
 
 set_start_dir()
 create_connection(dataBasePath)
