@@ -200,7 +200,7 @@ def create() -> None:
                     dfSQL = pd.read_sql_query("SELECT * FROM PIANO", conn)
                     conn.close()
                     df = dfSQL.drop(columns=["ID"])
-                    df = df.sort_values(by=["DATE"])
+                    df = df.sort_values(by=["DATE"], ascending=False)
                     df_last8 = df.drop(
                         columns=[
                             "LESSON",
@@ -221,7 +221,11 @@ def create() -> None:
                             "RECITAL": "Recital"
                         }
                     )
-
+                    df = df.drop(
+                        columns=[
+                            "Practiced"
+                        ]
+                    )
                     def reshape_and_rename(input_df):
                         """
                         Reshape and rename a DataFrame containing exercise data.
@@ -290,6 +294,7 @@ def create() -> None:
                                 datetime.datetime.now()
                                 - pd.to_datetime(reformed_df["Most_Recent"])
                         ).dt.days
+                        reformed_df = reformed_df.drop("Most_Recent", axis=1)
                         return reformed_df
 
                     """Drop Rows for Easier Data Presentation"""
@@ -320,7 +325,7 @@ def create() -> None:
                             ).classes("text-lg font-normal")
                             table.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
-                <q-badge :color="props.value  <= 2 ? 'blue' : props.value <= 3? 'green' : props.value <= 4? 'orange- :  'red"" text-color="black" outline>
+                <q-badge :color="props.value  <= 2 ? 'blue' : props.value <= 3? 'green' : props.value <= 4? 'orange' :  'red'" text-color="black" outline>
                     {{ props.value }}
                 </q-badge>
                 </q-td>

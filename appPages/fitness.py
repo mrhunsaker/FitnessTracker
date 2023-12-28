@@ -1616,6 +1616,7 @@ def create() -> None:
                                 datetime.now()
                                 - pd.to_datetime(reformed_df["Most_Recent"])
                         ).dt.days
+                        reformed_df = reformed_df.drop("Most_Recent", axis=1)
                         return reformed_df
 
                     """Drop Rows for Easier Data Presentation"""
