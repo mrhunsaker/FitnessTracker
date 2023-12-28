@@ -320,7 +320,7 @@ def create() -> None:
                             ).classes("text-lg font-normal")
                             table.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
-                <q-badge :color="props.value  <= 2 ? 'blue' : props.value <= 3? 'green' : props.value <= 4? 'orange- :  'red-"" text-color="black" outline>
+                <q-badge :color="props.value  <= 2 ? 'blue' : props.value <= 3? 'green' : props.value <= 4? 'orange- :  'red"" text-color="black" outline>
                     {{ props.value }}
                 </q-badge>
                 </q-td>
