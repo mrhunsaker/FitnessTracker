@@ -9,7 +9,7 @@
 
       https://www.apache.org/licenses/LICENSE-2.0
 
- Unless required-1 by applicable law or agreed to in writing, software
+ Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
@@ -158,7 +158,7 @@ def piano() -> None:
             ).classes("text-lg font-normal")
             table_p.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
-                <q-badge :color="props.value  <= 2 ? 'green-1' : props.value <= 3? 'yellow-1' : props.value <= 4? 'orange-1' :  'red-1'" text-color="black">
+                <q-badge :color="props.value  <= 2 ? 'blue' : props.value <= 3? 'green' : props.value <= 4? 'orange' :  'red'" text-color="black" outline>
                     {{ props.value }}
                 </q-badge>
                 </q-td>
@@ -461,7 +461,7 @@ def fitness() -> None:
             ).classes("text-lg font-normal")
             table_c.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
-                <q-badge :color="props.value  <= 8 ? 'green-1' : props.value <= 14 ? 'yellow-1' : props.value <= 21 ? 'orange-1' : 'red-1'" text-color="black">
+                <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' : 'red'" text-color="black" outline>
                     {{ props.value }}
                 </q-badge>
                 </q-td>
@@ -485,7 +485,7 @@ def fitness() -> None:
             ).classes("text-lg font-normal")
             table_b.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
-                <q-badge :color="props.value  <= 8 ? 'green-1' : props.value <= 14 ? 'yellow-1' : props.value <= 21 ? 'orange-1' :  'red-1'" text-color="black">
+                <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
                     {{ props.value }}
                 </q-badge>
                 </q-td>
@@ -510,7 +510,7 @@ def fitness() -> None:
                 ).classes("text-lg font-normal")
                 table_a.add_slot('body-cell-Days_Since_Last', '''
                     <q-td key="Days_Since_Last" :props="props">
-                    <q-badge :color="props.value  <= 8 ? 'green-1' : props.value <= 14 ? 'yellow-1' : props.value <= 21 ? 'orange-1' :  'red-1'" text-color="black">
+                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
                         {{ props.value }}
                     </q-badge>
                     </q-td>
@@ -532,7 +532,7 @@ def fitness() -> None:
                 ).classes()
                 table.add_slot('body-cell-Days_Since_Last', '''
                     <q-td key="Days_Since_Last" :props="props">
-                    <q-badge :color="props.value  <= 8 ? 'green-1' : props.value <= 14 ? 'yellow-1' : props.value <= 21 ? 'orange-1' :  'red-1'" text-color="black">
+                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
                         {{ props.value }}
                     </q-badge>
                     </q-td>
