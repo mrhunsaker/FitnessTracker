@@ -321,7 +321,7 @@ def create() -> None:
                                 ],
                                 rows=piano_df.to_dict("records"),
                             ).style(
-                                "font-family: JeBrainsMono"
+                                "font-family: JetBrainsMono; background-color: #f5f5f5"
                             ).classes("text-lg font-normal")
                             table.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
@@ -334,7 +334,7 @@ def create() -> None:
                         ui.label("Cumulative Practice Log").classes(
                             "text-3xl text-bold"
                         ).style(
-                            'font-family : "Atkinson Hypelegible"'
+                            'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row():
                         ui.table(
@@ -347,4 +347,4 @@ def create() -> None:
                                 for col in df.columns
                             ],
                             rows=df.to_dict("records"),
-                        ).style('font-family: JetBrainsMono').classes()
+                        ).style('font-family: JetBrainsMono; background-color: #f5f5f5').classes()

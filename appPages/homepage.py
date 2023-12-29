@@ -154,7 +154,7 @@ def piano() -> None:
                 ],
                 rows=piano_df.to_dict("records"),
             ).style(
-                "font-family: JetBrainsMono"
+                "font-family: JetBrainsMono; background-color: #f5f5f5"
             ).classes("text-lg font-normal")
             table_p.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
@@ -458,7 +458,7 @@ def fitness() -> None:
                 ],
                 rows=upper_df.to_dict("records"),
             ).style(
-                "font-family: JetBrainsMono"
+                "font-family: JetBrainsMono; background-color: #f5f5f5"
             ).classes("text-lg font-normal")
             table_c.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
@@ -482,7 +482,7 @@ def fitness() -> None:
                 ],
                 rows=lower_df.to_dict("records"),
             ).style(
-                "font-family: JetBrainsMono"
+                "font-family: JetBrainsMono; background-color: #f5f5f5"
             ).classes("text-lg font-normal")
             table_b.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
@@ -507,7 +507,7 @@ def fitness() -> None:
                     ],
                     rows=abs_df.to_dict("records"),
                 ).style(
-                    "font-family: JetBrainsMono"
+                    "font-family: JetBrainsMono; background-color: #f5f5f5"
                 ).classes("text-lg font-normal")
                 table_a.add_slot('body-cell-Days_Since_Last', '''
                     <q-td key="Days_Since_Last" :props="props">
@@ -529,7 +529,7 @@ def fitness() -> None:
                     ],
                     rows=walk_df.to_dict("records"),
                 ).style(
-                    "font-family: JetBrainsMono"
+                    "font-family: JetBrainsMono; background-color: #f5f5f5"
                 ).classes()
                 table.add_slot('body-cell-Days_Since_Last', '''
                     <q-td key="Days_Since_Last" :props="props">
