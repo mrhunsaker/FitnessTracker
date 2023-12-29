@@ -129,6 +129,7 @@ def piano() -> None:
                 datetime.datetime.now()
                 - pd.to_datetime(reformed_df["Most_Recent"])
         ).dt.days
+        reformed_df = reformed_df.drop("Most_Recent", axis=1)
         return reformed_df
 
     """Drop Rows for Easier Data Presentation"""
@@ -155,7 +156,7 @@ def piano() -> None:
                 rows=piano_df.to_dict("records"),
             ).style(
                 "font-family: JetBrainsMono; background-color: #f5f5f5"
-            ).classes("text-lg font-normal")
+            ).classes("text-lg font-normal  my-table")
             table_p.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
                 <q-badge :color="props.value  <= 2 ? 'blue' : props.value <= 3? 'green' : props.value <= 4? 'orange' :  'red'" text-color="black" outline>
@@ -438,6 +439,8 @@ def fitness() -> None:
     lower_df = reshape_and_rename(lower_df)
     abs_df = reshape_and_rename(abs_df)
     walk_df = reshape_and_rename(walk_df)
+    with ui.row().classes("w-full no-wrap"):
+        ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
     with ui.row():
         ui.label("Most Recent Exercises").classes(
             "text-3xl text-bold"
@@ -459,7 +462,7 @@ def fitness() -> None:
                 rows=upper_df.to_dict("records"),
             ).style(
                 "font-family: JetBrainsMono; background-color: #f5f5f5"
-            ).classes("text-lg font-normal")
+            ).classes("text-lg font-normal my-table")
             table_c.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
                 <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' : 'red'" text-color="black" outline>
@@ -483,7 +486,7 @@ def fitness() -> None:
                 rows=lower_df.to_dict("records"),
             ).style(
                 "font-family: JetBrainsMono; background-color: #f5f5f5"
-            ).classes("text-lg font-normal")
+            ).classes("text-lg font-normal my-table")
             table_b.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
                 <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
@@ -508,7 +511,7 @@ def fitness() -> None:
                     rows=abs_df.to_dict("records"),
                 ).style(
                     "font-family: JetBrainsMono; background-color: #f5f5f5"
-                ).classes("text-lg font-normal")
+                ).classes("text-lg font-normal my-table")
                 table_a.add_slot('body-cell-Days_Since_Last', '''
                     <q-td key="Days_Since_Last" :props="props">
                     <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
@@ -530,10 +533,10 @@ def fitness() -> None:
                     rows=walk_df.to_dict("records"),
                 ).style(
                     "font-family: JetBrainsMono; background-color: #f5f5f5"
-                ).classes()
+                ).classes('my-table')
                 table.add_slot('body-cell-Days_Since_Last', '''
                     <q-td key="Days_Since_Last" :props="props">
-                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
+                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' : 'red'" outline>
                         {{ props.value }}
                     </q-badge>
                     </q-td>

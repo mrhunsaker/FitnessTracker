@@ -182,15 +182,21 @@ def frame(navtitle: str) -> None:
         .q-table__bottom .q-table__separator {
             display: none;
         }   
+        .q-badge--outline {
+            border-width: 4px;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+        .my-table tbody td { 
+        font-size: 1.25em
+        font-weight: bold;
+        }
+        .my-table thead th {
+        font-size: 1.25em
+        }
         </style>
     ''')
-    ui.add_head_html('''
-    <style>        
-        .q-badge--yellow-1 {
-            text-color: black !important;
-        }
-        </style>   
-    ''')
+
     ui.colors(
         primary="#f26d6d", secondary="#976fbf", positive="#f2c2cf", accent="#038c7f"
     )

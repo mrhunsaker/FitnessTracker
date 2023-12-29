@@ -322,7 +322,7 @@ def create() -> None:
                                 rows=piano_df.to_dict("records"),
                             ).style(
                                 "font-family: JetBrainsMono; background-color: #f5f5f5"
-                            ).classes("text-lg font-normal")
+                            ).classes("text-lg font-normal my-table")
                             table.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
                 <q-badge :color="props.value  <= 2 ? 'blue' : props.value <= 3? 'green' : props.value <= 4? 'orange' :  'red'" text-color="black" outline>
@@ -347,4 +347,4 @@ def create() -> None:
                                 for col in df.columns
                             ],
                             rows=df.to_dict("records"),
-                        ).style('font-family: JetBrainsMono; background-color: #f5f5f5').classes()
+                        ).style('font-family: JetBrainsMono; background-color: #f5f5f5').classes('my-table')

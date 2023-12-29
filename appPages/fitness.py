@@ -1646,7 +1646,7 @@ def create() -> None:
                                 rows=upper_df.to_dict("records"),
                             ).style(
                                 "font-family: JetBrainsMono; background-color: #f5f5f5"
-                            ).classes("text-lg font-normal")
+                            ).classes("text-lg font-normal my-table")
                             table_c.add_slot('body-cell-Days_Since_Last', '''
                                 <q-td key="Days_Since_Last" :props="props">
                                 <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
@@ -1671,7 +1671,7 @@ def create() -> None:
                                 rows=lower_df.to_dict("records"),
                             ).style(
                                 "font-family: JetBrainsMono; background-color: #f5f5f5"
-                            ).classes("text-lg font-normal")
+                            ).classes("text-lg font-normal my-table")
                             table_b.add_slot('body-cell-Days_Since_Last', '''
                                 <q-td key="Days_Since_Last" :props="props">
                                 <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
@@ -1697,7 +1697,7 @@ def create() -> None:
                                     rows=abs_df.to_dict("records"),
                                 ).style(
                                     "font-family: JetBrainsMono; background-color: #f5f5f5"
-                                ).classes("text-lg font-normal")
+                                ).classes("text-lg font-normal my-table")
                                 table_a.add_slot('body-cell-Days_Since_Last', '''
                                     <q-td key="Days_Since_Last" :props="props">
                                     <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
@@ -1720,7 +1720,7 @@ def create() -> None:
                                     rows=walk_df.to_dict("records"),
                                 ).style(
                                     "font-family: JetBrainsMono; background-color: #f5f5f5"
-                                ).classes("text-lg font-normal")
+                                ).classes("text-lg font-normal my-table")
                                 table_w.add_slot('body-cell-Days_Since_Last', '''
                                     <q-td key="Days_Since_Last" :props="props">
                                     <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
@@ -1746,5 +1746,5 @@ def create() -> None:
                                 for col in df.columns
                             ],
                             rows=df.to_dict("records"), pagination={'rowsPerPage': 10}
-                        ).style('font-family: "JetBrainsMono; background-color: #f5f5f5"').classes()
+                        ).style("font-family: JetBrainsMono; background-color: #f5f5f5").classes('my-table')
                     )
