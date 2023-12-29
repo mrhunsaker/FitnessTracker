@@ -26,7 +26,7 @@ import datetime
 import sqlite3
 
 import pandas as pd
-from nicegui import ui
+from nicegui import ui, app
 
 from appHelpers.helpers import dataBasePath
 from appPages import fitness
@@ -440,6 +440,7 @@ def fitness() -> None:
     abs_df = reshape_and_rename(abs_df)
     walk_df = reshape_and_rename(walk_df)
     with ui.row().classes("w-full no-wrap"):
+        ui.button("HOME", on_click=lambda: ui.open("/")).props('color=secondary')
         ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
     with ui.row():
         ui.label("Most Recent Exercises").classes(
@@ -533,7 +534,7 @@ def fitness() -> None:
                     rows=walk_df.to_dict("records"),
                 ).style(
                     "font-family: JetBrainsMono; background-color: #f5f5f5"
-                ).classes('my-table')
+                ).classes("text-lg font-normal my-table")
                 table.add_slot('body-cell-Days_Since_Last', '''
                     <q-td key="Days_Since_Last" :props="props">
                     <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' : 'red'" outline>

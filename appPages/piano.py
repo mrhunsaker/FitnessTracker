@@ -193,6 +193,7 @@ def create() -> None:
                     with ui.row().classes("w-full no-wrap"):
                         ui.button("SAVE", on_click=save).props('color=secondary')
                         ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
+                        ui.button("HOME", on_click=lambda: ui.open("/")).props('color=secondary')
 
             with ui.tab_panels(tabs, value="PRACTICE DATA"):
                 with ui.tab_panel("PRACTICE DATA"):
@@ -299,7 +300,9 @@ def create() -> None:
 
                     """Drop Rows for Easier Data Presentation"""
                     piano_df = reshape_and_rename(df_last8)
-
+                    with ui.row().classes("w-full no-wrap"):
+                        ui.button("HOME", on_click=lambda: ui.open("/")).props('color=secondary')
+                        ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
                     with ui.row():
                         ui.label("Piano Practice").classes(
                             "text-3xl text-bold"

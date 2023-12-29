@@ -188,11 +188,13 @@ def frame(navtitle: str) -> None:
             font-size: 1.25rem;
         }
         .my-table tbody td { 
-        font-size: 1.25em
-        font-weight: bold;
+        font-size: 1.25em;
+        align: left;
         }
         .my-table thead th {
-        font-size: 1.25em
+        font-size: 1.25em;
+        font-weight: bold;
+        align: left;
         }
         </style>
     ''')

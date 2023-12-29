@@ -1350,6 +1350,7 @@ def create() -> None:
                     with ui.row().classes("w-full no-wrap"):
                         ui.button("SAVE", on_click=save).props('color=secondary')
                         ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
+                        ui.button("HOME", on_click=lambda: ui.open("/")).props('color=secondary')
 
             with ui.tab_panels(tabs, value="WORKOUT DATA"):
                 with ui.tab_panel("WORKOUT DATA"):
@@ -1624,6 +1625,9 @@ def create() -> None:
                     lower_df = reshape_and_rename(lower_df)
                     abs_df = reshape_and_rename(abs_df)
                     walk_df = reshape_and_rename(walk_df)
+                    with ui.row().classes("w-full no-wrap"):
+                        ui.button("HOME", on_click=lambda: ui.open("/")).props('color=secondary')
+                        ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
                     with ui.row():
                         ui.label("Most Recent Exercises").classes(
                             "text-3xl text-bold"
