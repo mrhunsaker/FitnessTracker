@@ -22,11 +22,11 @@ Program designed to be a data collection and instructional tool for
 teachers of students with Visual Impairments
 """
 
-
+import os
 from contextlib import contextmanager
 from pathlib import Path
+
 from nicegui import ui, app
-import os
 
 from appTheming.menu import menu
 
@@ -174,6 +174,30 @@ def frame(navtitle: str) -> None:
     )
 
     ui.add_head_html(style)
+    ui.add_head_html('''
+        <style>
+        .q-table__bottom {
+            justify-content: flex-start !important;
+        }
+        .q-table__bottom .q-table__separator {
+            display: none;
+        }   
+        .q-badge--outline {
+            border-width: 4px;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+        .my-table tbody td { 
+        font-size: 1.25em;
+        align: left;
+        }
+        .my-table thead th {
+        font-size: 1.25em;
+        font-weight: bold;
+        align: left;
+        }
+        </style>
+    ''')
 
     ui.colors(
         primary="#f26d6d", secondary="#976fbf", positive="#f2c2cf", accent="#038c7f"
@@ -223,12 +247,12 @@ def frame(navtitle: str) -> None:
 
     with ui.footer(value=True).classes("h-[75px]") as footer:
         with ui.row().classes(
-            "w-screen no-wrap justify-between items-center text-l font-bold text-white h-full pt-2.5"
+                "w-screen no-wrap justify-between items-center text-l font-bold text-white h-full pt-2.5"
         ):
             ui.label("Copyright © 2023 Michael Ryan Hunsaker, M.Ed., Ph.D.").classes(
                 "absolute-center flex-1 self-bottom"
             ).style('font-family: "Atkinson Hyperlegible"')
             with ui.link(target="https://github.com/mrhunsaker/FitnessTracker").classes(
-                "max-[305px]:hidden absolute-right flex-none mt-2.5"
+                    "max-[305px]:hidden absolute-right flex-none mt-2.5"
             ).tooltip("GitHub Repo"):
                 github().classes("fill-white scale-75 m-1 mt-2.5")

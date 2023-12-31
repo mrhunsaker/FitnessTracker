@@ -18,10 +18,7 @@
 
 import datetime
 import os
-import shutil
-from csv import writer
 from pathlib import Path
-
 
 date_fmt = "%Y-%m-%d %H:%M:%S"
 
