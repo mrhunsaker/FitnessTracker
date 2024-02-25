@@ -62,9 +62,9 @@ def create_connection(db_file):
     conn = None
     try:
         conn = sqlite3.connect(db_file)
-    except Error as e:
+    except sqlite3.Error as e:
         ui.notify(
-            e,
+            f"SQLite error: {e}",
             position="center",
             type="negative",
             close_button="OK",
@@ -106,9 +106,9 @@ def create_table(conn, sql_create_sql_table):
     try:
         c = conn.cursor()
         c.execute(sql_create_sql_table)
-    except Error as e:
+    except sqlite3.Error as e:
         ui.notify(
-            e,
+            f"SQLite error: {e}",
             position="center",
             type="negative",
             close_button="OK",
@@ -143,70 +143,97 @@ def implement_tables():
         RECITAL TEXT
     );"""
     sql_create_workout_table = """CREATE TABLE IF NOT EXISTS WORKOUTS (
-                "ID"	NUMERIC,
-                "DATE"	TEXT,
-                "FRONTLINE_REPS"	INTEGER,
-                "FRONTLINE_SETS"	INTEGER,
-                "FRONTLINE_WEIGHT"	INTEGER,
-                "SHOULDERZPRESS_REPS"	INTEGER,
-                "SHOULDERZPRESS_SETS"	INTEGER,
-                "SHOULDERZPRESS_WEIGHT"	INTEGER,
-                "ELBOWOUTROW_REPS"	INTEGER,
-                "ELBOWOUTROW_SETS"	INTEGER,
-                "ELBOWOUTROW_WEIGHT"	INTEGER,
-                "SUPINEBICEPCURL_REPS"	INTEGER,
-                "SUPINEBICEPCURL_SETS"	INTEGER,
-                "SUPINEBICEPCURL_WEIGHT"	INTEGER,
-                "CLOSEGRIPPUSHUP_REPS"	INTEGER,
-                "CLOSEGRIPPUSHUP_SETS"	INTEGER,
-                "CLOSEGRIPPUSHUP_STAIR"	INTEGER,
-                "REARDELTFLY_REPS"	INTEGER,
-                "REARDELTFLY_SETS"	INTEGER,
-                "REARDELTFLY_WEIGHT"	INTEGER,
-                "SIDEBEND_REPS"	INTEGER,
-                "SIDEBEND_SETS"	INTEGER,
-                "SIDEBEND_WEIGHT"	INTEGER,
-                "LATERALRAISE_REPS"	INTEGER,
-                "LATERALRAISE_SETS"	INTEGER,
-                "LATERALRAISE_WEIGHT"	INTEGER,
-                "STIFFLEGRDL_REPS"	INTEGER,
-                "STIFFLEGRDL_SETS"	INTEGER,
-                "STIFFLEGRDL_WEIGHT"	INTEGER,
-                "SLIDERHAMSTRINGCURL_REPS"	INTEGER,
-                "SLIDERHAMSTRINGCURL_SETS"	INTEGER,
-                "HIPTHRUSTER_REPS"	INTEGER,
-                "HIPTHRUSTER_SETS"	INTEGER,
-                "HIPTHRUSTER_WEIGHT"	INTEGER,
-                "FORWARDSQUAT_REPS"	INTEGER,
-                "FORWARDSQUAT_SETS"	INTEGER,
-                "FORWARDSQUAT_WEIGHT"	INTEGER,
-                "SUMOSQUAT_REPS"	INTEGER,
-                "SUMOSQUAT_SETS"	INTEGER,
-                "SUMOSQUAT_WEIGHT"	INTEGER,
-                "CYCLISTSQUAT_REPS"	INTEGER,
-                "CYCLISTSQUAT_SETS"	INTEGER,
-                "SINGLELEGCALFRAISE_REPS"	INTEGER,
-                "SINGLELEGCALFRAISE_SETS"	INTEGER,
-                "SINGLELEGCALFRAISE_WEIGHT"	INTEGER,
-                "LONGLEVERCRUNCHES_REPS"	INTEGER,
-                "LONGLEVERCRUNCHES_SETS"	INTEGER,
-                "SIDELINESCULPT"	INTEGER,
-                "SIDELINESCULPT_WEIGHT"	INTEGER,
-                "ABDOMINALS"	INTEGER,
-                "ABDOMINALS_WEIGHT"	INTEGER,
-                "WALK_DISTANCE"	INTEGER,
-                "WALK"	INTEGER,
-                PRIMARY KEY("ID" AUTOINCREMENT)
+                    "ID"	INTEGER,
+                    "DATE"	TEXT,
+                    "FRONTLINE_REPS"	INTEGER,
+                    "FRONTLINE_SETS"	INTEGER,
+                    "FRONTLINE_WEIGHT"	INTEGER,
+                    "SHOULDERZPRESS_REPS"	INTEGER,
+                    "SHOULDERZPRESS_SETS"	INTEGER,
+                    "SHOULDERZPRESS_WEIGHT"	INTEGER,
+                    "ELBOWOUTROW_REPS"	INTEGER,
+                    "ELBOWOUTROW_SETS"	INTEGER,
+                    "ELBOWOUTROW_WEIGHT"	INTEGER,
+                    "SUPINEBICEPCURL_REPS"	INTEGER,
+                    "SUPINEBICEPCURL_SETS"	INTEGER,
+                    "SUPINEBICEPCURL_WEIGHT"	INTEGER,
+                    "CLOSEGRIPPUSHUP_REPS"	INTEGER,
+                    "CLOSEGRIPPUSHUP_SETS"	INTEGER,
+                    "CLOSEGRIPPUSHUP_STAIR"	INTEGER,
+                    "REARDELTFLY_REPS"	INTEGER,
+                    "REARDELTFLY_SETS"	INTEGER,
+                    "REARDELTFLY_WEIGHT"	INTEGER,
+                    "SIDEBEND_REPS"	INTEGER,
+                    "SIDEBEND_SETS"	INTEGER,
+                    "SIDEBEND_WEIGHT"	INTEGER,
+                    "LATERALRAISE_REPS"	INTEGER,
+                    "LATERALRAISE_SETS"	INTEGER,
+                    "LATERALRAISE_WEIGHT"	INTEGER,
+                    "STIFFLEGRDL_REPS"	INTEGER,
+                    "STIFFLEGRDL_SETS"	INTEGER,
+                    "STIFFLEGRDL_WEIGHT"	INTEGER,
+                    "SLIDERHAMSTRINGCURL_REPS"	INTEGER,
+                    "SLIDERHAMSTRINGCURL_SETS"	INTEGER,
+                    "SLIDERHAMSTRINGCURL_WEIGHT"	INTEGER,
+                    "HIPTHRUSTER_REPS"	INTEGER,
+                    "HIPTHRUSTER_SETS"	INTEGER,
+                    "HIPTHRUSTER_WEIGHT"	INTEGER,
+                    "FORWARDSQUAT_REPS"	INTEGER,
+                    "FORWARDSQUAT_SETS"	INTEGER,
+                    "FORWARDSQUAT_WEIGHT"	INTEGER,
+                    "SUMOSQUAT_REPS"	INTEGER,
+                    "SUMOSQUAT_SETS"	INTEGER,
+                    "SUMOSQUAT_WEIGHT"	INTEGER,
+                    "CYCLISTSQUAT_REPS"	INTEGER,
+                    "CYCLISTSQUAT_SETS"	INTEGER,
+                    "CYCLISTSQUAT_WEIGHT"	INTEGER,
+                    "SINGLELEGCALFRAISE_REPS"	INTEGER,
+                    "SINGLELEGCALFRAISE_SETS"	INTEGER,
+                    "SINGLELEGCALFRAISE_WEIGHT"	INTEGER,
+                    "LONGLEVERCRUNCHES_REPS"	INTEGER,
+                    "LONGLEVERCRUNCHES_SETS"	INTEGER,
+                    "SIDELINESCULPT"	INTEGER,
+                    "SIDELINESCULPT_WEIGHT"	INTEGER,
+                    "ABDOMINALS"	INTEGER,
+                    "ABDOMINALS_WEIGHT"	INTEGER,
+                    "WALK_DISTANCE"	INTEGER,
+                    "WALK"	INTEGER,
+                    "LONGLEVERCRUNCHES_WEIGHT"	INTEGER,
+                    PRIMARY KEY("ID" AUTOINCREMENT)
+                )
             );"""
 
     conn = sqlite3.connect(dataBasePath)
-    if conn is not None:
-        create_table(conn, sql_create_workout_table)
-    else:
-        print("Error! cannot create the database connection.")
-    conn = sqlite3.connect(dataBasePath)
-    if conn is not None:
-        create_table(conn, sql_create_piano_table)
-    else:
-        print('Error! cannot create the database connection.')
+    try:
+        if conn is not None:
+            create_table(conn, sql_create_workout_table)
+        else:
+            print("Error! cannot create the database connection.")
+        conn = sqlite3.connect(dataBasePath)
+    except sqlite3.Error as e:
+        ui.notify(
+            f"SQLite error: {e}",
+            position="center",
+            type="negative",
+            close_button="OK",
+        )
+    try:
+        if conn is not None:
+            create_table(conn, sql_create_piano_table)
+        else:
+            print('Error! cannot create the database connection.')
+    except sqlite3.Error as e:
+            ui.notify(
+                f"SQLite error: {e}",
+                position="center",
+                type="negative",
+                close_button="OK",
+            )
     conn.close()
+    ui.notify(
+        "SQL Tables Successfully Created",
+        position="center",
+        type="positive",
+        close_button="OK",
+    )
+

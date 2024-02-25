@@ -259,6 +259,13 @@ def create() -> None:
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     )
+                    u_hamstringCurlWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
                     u_hipThrusterReps = (
                         ui.number()
                         .classes("hidden")
@@ -330,6 +337,13 @@ def create() -> None:
                         )
                     )
                     u_cyclistSquatSets = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_cyclistSquatWeight = (
                         ui.number()
                         .classes("hidden")
                         .style(
@@ -1131,7 +1145,13 @@ def create() -> None:
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-                        ui.label(" ").classes("w-1/4 text-base").style(
+                        ui.number(
+                            label="WEIGHT",
+                            value="",
+                            on_change=lambda e: u_hamstringCurlWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Hamstring Curl Weight"'
+                        ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
@@ -1249,7 +1269,13 @@ def create() -> None:
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-                        ui.label(" ").classes("w-1/4 text-base").style(
+                        ui.number(
+                            label="WEIGHT",
+                            value="",
+                            on_change=lambda e: u_cyclistSquatWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Cyclist Squat Weight"'
+                        ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
