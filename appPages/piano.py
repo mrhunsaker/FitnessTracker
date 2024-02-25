@@ -93,7 +93,16 @@ def create() -> None:
                         >>> save(some_event)
                         """
 
-                        today_date = u_today_date.value
+                        today_date_str = str(u_today_date.value)
+                        try:
+                            today_date = datetime.strptime(today_date_str, "%Y-%m-%d")
+                        except ValueError as e:
+                            ui.notify(
+                                str(e),  # Converting exception object to string for the error message
+                                position="center",
+                                type="warning",
+                                close_button="OK",
+                            )
                         piano = int(u_piano.value)
                         lesson = str(u_lesson.value)
                         recital = str(u_recital.value)
@@ -119,41 +128,49 @@ def create() -> None:
                             --------
                             >>> data_entry()
                             """
-                            conn = sqlite3.connect(dataBasePath)
-                            if conn is not None:
-                                c = conn.cursor()
-                                c.execute(
-                                    """INSERT INTO PIANO (
-                                    DATE,
-                                    PIANO,
-                                    LESSON,
-                                    RECITAL
+                            try:
+                                conn = sqlite3.connect(dataBasePath)
+                                if conn is not None:
+                                    c = conn.cursor()
+                                    c.execute(
+                                        """INSERT INTO PIANO (
+                                        DATE,
+                                        PIANO,
+                                        LESSON,
+                                        RECITAL
+                                        )
+                                        VALUES (
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?
+                                        )
+                                        """,
+                                        (
+                                            today_date,
+                                            piano,
+                                            lesson,
+                                            recital,
+                                        ),
                                     )
-                                    VALUES (
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?
-                                    )
-                                    """,
-                                    (
-                                        today_date,
-                                        piano,
-                                        lesson,
-                                        recital,
-                                    ),
+                                    conn.commit()
+                                else:
+                                    print("Error! cannot create the database connection.")
+                                    conn.close()
+                                ui.notify(
+                                    "Saved successfully!",
+                                    position="center",
+                                    type="positive",
+                                    close_button="OK",
                                 )
-                                conn.commit()
-                            else:
-                                print("Error! cannot create the database connection.")
-                                conn.close()
+
+                        except sqlite3.Error as e:
                             ui.notify(
-                                "Saved successfully!",
+                                f"SQLite error: {e}",
                                 position="center",
-                                type="positive",
+                                type="warning",
                                 close_button="OK",
                             )
-
                         data_entry()
 
                     with ui.row().classes("w-full no-wrap"):
