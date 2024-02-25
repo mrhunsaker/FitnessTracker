@@ -371,6 +371,20 @@ def create() -> None:
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     )
+                    u_sidelineSculptWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_abdominalsWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
                     u_sidelineSculpt = (
                         ui.number()
                         .classes("hidden")
@@ -469,7 +483,9 @@ def create() -> None:
                             u_longLeverCrunchesReps,
                             u_longLeverCrunchesSets,
                             u_sidelineSculpt,
+                            u_sidelineSculptWeight,
                             u_abdominals,
+                            u_abdominalsWeight,
                             u_walk,
                             u_walkDistance,
                         ]
@@ -565,7 +581,9 @@ def create() -> None:
                         longLeverCrunchesReps = int(u_longLeverCrunchesReps.value)
                         longLeverCrunchesSets = int(u_longLeverCrunchesSets.value)
                         sidelineSculpt = int(u_sidelineSculpt.value)
+                        sidelineSculptWeight = int(u_sidelineSculptWeight.value)
                         abdominals = int(u_abdominals.value)
+                        abdominalsWeight = int(u_abdominalsWeight.value)
                         walk = int(u_walk.value)
                         walkDistance = int(u_walkDistance.value)
 
@@ -640,14 +658,19 @@ def create() -> None:
                                             CYCLISTSQUAT_SETS,
                                             SINGLELEGCALFRAISE_REPS,
                                             SINGLELEGCALFRAISE_SETS,
+                                            SINGLELEGCALFRAISE_WEIGHT,
                                             LONGLEVERCRUNCHES_REPS,
                                             LONGLEVERCRUNCHES_SETS,
                                             SIDELINESCULPT,
+                                            SIDELINESCULPT_WEIGHT,
                                             ABDOMINALS,
+                                            ABDOMINALS_WEIGHT,
                                             WALK,
                                             WALK_DISTANCE
                                             )
                                             VALUES (
+                                            ?,
+                                            ?,
                                             ?,
                                             ?,
                                             ?,
@@ -744,26 +767,30 @@ def create() -> None:
                                                 cyclistSquatSets,
                                                 calfRaiseReps,
                                                 calfRaiseSets,
+                                                calfRaiseWeight,
                                                 longLeverCrunchesReps,
                                                 longLeverCrunchesSets,
                                                 sidelineSculpt,
+                                                sidelineSculptWeight,
                                                 abdominals,
+                                                abdominalsWeight,
                                                 walk,
                                                 walkDistance,
                                             ),
                                         )
+                                        conn.commit()
                                     except ValueError as e:
                                         ui.notify(
                                             str(e),  # Converting exception object to string for the error message
                                             position="center",
-                                            type="warning",
+                                            type="negative",
                                             close_button="OK",
                                         )
                             except sqlite3.Error as e:
                                 ui.notify(
                                     f"SQLite error: {e}",
                                     position="center",
-                                    type="warning",
+                                    type="negative",
                                     close_button="OK",
                                 )
                             conn.close()
@@ -1300,14 +1327,17 @@ def create() -> None:
                             value="",
                             on_change=lambda e: u_sidelineSculpt.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
-                            'aria-label="Long Lever Crunch Reps"'
+                            'aria-label="Sideline Sculpt"'
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-                        ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-family : "Atkinson Hyperlegible"'
-                        )
-                        ui.label(" ").classes("w-1/4 text-base").style(
+                        ui.number(
+                            label="Weight",
+                            value="",
+                            on_change=lambda e: u_sidelineSculptWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Sideline Sculpt Weight"'
+                        ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
@@ -1319,14 +1349,17 @@ def create() -> None:
                             value="",
                             on_change=lambda e: u_abdominals.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
-                            'aria-label="Long Lever Crunch Sets"'
+                            'aria-label="Abdominals"'
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-                        ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-family : "Atkinson Hyperlegible"'
-                        )
-                        ui.label(" ").classes("w-1/4 text-base").style(
+                        ui.number(
+                            label="Weight",
+                            value="",
+                            on_change=lambda e: u_abdominalsWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Abdominals Weight"'
+                        ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap py-4"):
