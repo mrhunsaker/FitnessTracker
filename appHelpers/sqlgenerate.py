@@ -69,11 +69,10 @@ def create_connection(db_file):
             type="negative",
             close_button="OK",
         )
+        raise
     finally:
-        if conn:
-            conn.close()
+        conn.close()
     return conn
-
 
 create_connection(dataBasePath)
 
@@ -106,6 +105,12 @@ def create_table(conn, sql_create_sql_table):
     try:
         c = conn.cursor()
         c.execute(sql_create_sql_table)
+        ui.notify(
+            f"Successful Database Connection",
+            position="center",
+            type="positive",
+            close_button="OK",
+            )
     except sqlite3.Error as e:
         ui.notify(
             f"SQLite error: {e}",
@@ -113,7 +118,8 @@ def create_table(conn, sql_create_sql_table):
             type="negative",
             close_button="OK",
         )
-    conn.close()
+    finally:
+        conn.close()
 
 
 def implement_tables():
@@ -141,9 +147,9 @@ def implement_tables():
         PIANO   INTEGER,
         LESSON  TEXT,
         RECITAL TEXT
-    );"""
+    )"""
     sql_create_workout_table = """CREATE TABLE IF NOT EXISTS WORKOUTS (
-                    "ID"	INTEGER,
+                    "ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
                     "DATE"	TEXT,
                     "FRONTLINE_REPS"	INTEGER,
                     "FRONTLINE_SETS"	INTEGER,
@@ -198,10 +204,8 @@ def implement_tables():
                     "ABDOMINALS_WEIGHT"	INTEGER,
                     "WALK_DISTANCE"	INTEGER,
                     "WALK"	INTEGER,
-                    "LONGLEVERCRUNCHES_WEIGHT"	INTEGER,
-                    PRIMARY KEY("ID" AUTOINCREMENT)
-                )
-            );"""
+                    "LONGLEVERCRUNCHES_WEIGHT"	INTEGER
+                )"""
 
     conn = sqlite3.connect(dataBasePath)
     try:
@@ -209,7 +213,6 @@ def implement_tables():
             create_table(conn, sql_create_workout_table)
         else:
             print("Error! cannot create the database connection.")
-        conn = sqlite3.connect(dataBasePath)
     except sqlite3.Error as e:
         ui.notify(
             f"SQLite error: {e}",
@@ -217,18 +220,20 @@ def implement_tables():
             type="negative",
             close_button="OK",
         )
+
     try:
         if conn is not None:
             create_table(conn, sql_create_piano_table)
         else:
             print('Error! cannot create the database connection.')
     except sqlite3.Error as e:
-            ui.notify(
-                f"SQLite error: {e}",
-                position="center",
-                type="negative",
-                close_button="OK",
-            )
+        ui.notify(
+            f"SQLite error: {e}",
+            position="center",
+            type="negative",
+            close_button="OK",
+        )
+
     conn.close()
     ui.notify(
         "SQL Tables Successfully Created",
@@ -236,4 +241,3 @@ def implement_tables():
         type="positive",
         close_button="OK",
     )
-

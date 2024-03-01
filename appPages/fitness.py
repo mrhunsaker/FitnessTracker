@@ -738,7 +738,7 @@ def create() -> None:
                                             )
                                             """,
                                             (
-                                                today_date,
+                                                today_date, 
                                                 frontlineRaiseReps,
                                                 frontlineRaiseSets,
                                                 frontlineRaiseWeight,
