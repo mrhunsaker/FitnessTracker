@@ -832,7 +832,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontlineRaiseReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Frontline Raise Reps"'
@@ -841,7 +841,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontlineRaiseSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Frontline Raise Sets"'
@@ -850,7 +850,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontlineRaiseWeight.set_value(
                                 e.value
                             ),
@@ -865,7 +865,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_shoulderPressReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Shoulder Press Reps"'
@@ -874,7 +874,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_shoulderPressSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Shoulder Press Sets"'
@@ -883,7 +883,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_shoulderPressWeight.set_value(
                                 e.value
                             ),
@@ -898,7 +898,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_elbowOutRowReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Elbow Out Row Reps"'
@@ -907,7 +907,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_elbowOutRowSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Elbow Out Row Sets"'
@@ -916,7 +916,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_elbowOutRowWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Elbow Out Row Weight"'
@@ -931,7 +931,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_bicepCurlReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Bicep Curls Reps"'
@@ -940,7 +940,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_bicepCurlSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Bicep Curls Sets"'
@@ -949,7 +949,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_bicepCurlWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Bicep Curls Weight"'
@@ -962,7 +962,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_closeGripPushupReps.set_value(
                                 e.value
                             ),
@@ -973,7 +973,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_closeGripPushupSets.set_value(
                                 e.value
                             ),
@@ -984,7 +984,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="STAIR",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_closeGripPushupWeight.set_value(
                                 e.value
                             ),
@@ -1001,7 +1001,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_rearDeltFlyReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Rear Delt Fly Reps"'
@@ -1010,7 +1010,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_rearDeltFlySets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Rear Delt Fly Sets"'
@@ -1019,7 +1019,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_rearDeltFlyWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Rear Delt Fly Weight"'
@@ -1032,7 +1032,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sideBendReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Side Bend Reps"'
@@ -1041,7 +1041,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sideBendSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Side Bend Sets"'
@@ -1050,7 +1050,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sideBendWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Side Bend Weight"'
@@ -1063,7 +1063,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_lateralRaiseReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Lateral Raise Reps"'
@@ -1072,7 +1072,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_lateralRaiseSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Lateral Raise Sets"'
@@ -1081,7 +1081,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_lateralRaiseWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Lateral Raise Weight"'
@@ -1098,7 +1098,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_stiffLegRDLReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Stiff Leg RDL Reps"'
@@ -1107,7 +1107,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_stiffLegRDLSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Stiff Leg RDL Sets"'
@@ -1116,7 +1116,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_stiffLegRDLWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Stiff Leg RDL Sets"'
@@ -1129,7 +1129,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_hamstringCurlReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hamstring Curl Reps"'
@@ -1138,7 +1138,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_hamstringCurlSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hamstring Curl Sets"'
@@ -1147,7 +1147,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_hamstringCurlWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hamstring Curl Weight"'
@@ -1160,7 +1160,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_hipThrusterReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hip Thruster Reps"'
@@ -1169,7 +1169,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_hipThrusterSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hip Thruster Sets"'
@@ -1178,7 +1178,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_hipThrusterWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hip Thruster Weight"'
@@ -1191,7 +1191,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontSquatReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Front Squat Reps"'
@@ -1200,7 +1200,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontSquatSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Front Squat Sets"'
@@ -1209,7 +1209,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontSquatWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Front Squat Weight"'
@@ -1222,7 +1222,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sumoSquatReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Forward Lunge Reps"'
@@ -1231,7 +1231,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sumoSquatSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Forward Lunge Sets"'
@@ -1240,7 +1240,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sumoSquatWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Forward Lunge Weight"'
@@ -1253,7 +1253,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_cyclistSquatReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Cyclist Squat Reps"'
@@ -1262,7 +1262,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_cyclistSquatSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Cyclist Squat Sets"'
@@ -1271,7 +1271,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_cyclistSquatWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Cyclist Squat Weight"'
@@ -1284,7 +1284,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_calfRaiseReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Calf Raise Reps"'
@@ -1293,7 +1293,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_calfRaiseSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Calf Raise Sets"'
@@ -1302,7 +1302,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_calfRaiseWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Cald Raise Weight"'
@@ -1317,7 +1317,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_longLeverCrunchesReps.set_value(
                                 e.value
                             ),
@@ -1328,7 +1328,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_longLeverCrunchesSets.set_value(
                                 e.value
                             ),
@@ -1350,7 +1350,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="DONE",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sidelineSculpt.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Sideline Sculpt"'
@@ -1359,7 +1359,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="Weight",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sidelineSculptWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Sideline Sculpt Weight"'
@@ -1372,7 +1372,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="DONE",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_abdominals.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Abdominals"'
@@ -1381,7 +1381,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="Weight",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_abdominalsWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Abdominals Weight"'
@@ -1398,7 +1398,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="Did I Walk",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_walk.set_value(e.value),
                         ).classes("w-1/4 text-base").style(
                             'font-family : "Atkinson Hyperlegible"'
@@ -1415,7 +1415,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="Distance",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_walkDistance.set_value(
                                 math.ceil(e.value)
                             ),
