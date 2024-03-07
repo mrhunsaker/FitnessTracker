@@ -190,7 +190,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="Practice",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_piano.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label=Practice'

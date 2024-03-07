@@ -1443,33 +1443,39 @@ def create() -> None:
                     df_last8 = df.drop(
                         columns=[
                             "FRONTLINE_SETS",
-                            "FRONTLINE_WEIGHT",
                             "SHOULDERZPRESS_SETS",
-                            "SHOULDERZPRESS_WEIGHT",
                             "ELBOWOUTROW_SETS",
-                            "ELBOWOUTROW_WEIGHT",
                             "SUPINEBICEPCURL_SETS",
-                            "SUPINEBICEPCURL_WEIGHT",
                             "CLOSEGRIPPUSHUP_SETS",
-                            "CLOSEGRIPPUSHUP_STAIR",
                             "REARDELTFLY_SETS",
-                            "REARDELTFLY_WEIGHT",
                             "SIDEBEND_SETS",
-                            "SIDEBEND_WEIGHT",
                             "LATERALRAISE_SETS",
-                            "LATERALRAISE_WEIGHT",
                             "STIFFLEGRDL_SETS",
-                            "STIFFLEGRDL_WEIGHT",
                             "SLIDERHAMSTRINGCURL_SETS",
                             "HIPTHRUSTER_SETS",
-                            "HIPTHRUSTER_WEIGHT",
                             "FORWARDSQUAT_SETS",
-                            "FORWARDSQUAT_WEIGHT",
                             "SUMOSQUAT_SETS",
-                            "SUMOSQUAT_WEIGHT",
                             "CYCLISTSQUAT_SETS",
                             "SINGLELEGCALFRAISE_SETS",
                             "LONGLEVERCRUNCHES_SETS",
+                            "FRONTLINE_WEIGHT",
+                            "SHOULDERZPRESS_WEIGHT",
+                            "ELBOWOUTROW_WEIGHT",
+                            "SUPINEBICEPCURL_WEIGHT",
+                            "CLOSEGRIPPUSHUP_STAIR",
+                            "REARDELTFLY_WEIGHT",
+                            "SIDEBEND_WEIGHT",
+                            "LATERALRAISE_WEIGHT",
+                            "STIFFLEGRDL_WEIGHT",
+                            "SLIDERHAMSTRINGCURL_WEIGHT",
+                            "HIPTHRUSTER_WEIGHT",
+                            "FORWARDSQUAT_WEIGHT",
+                            "SUMOSQUAT_WEIGHT",
+                            "CYCLISTSQUAT_WEIGHT",
+                            "SINGLELEGCALFRAISE_WEIGHT",
+                            "LONGLEVERCRUNCHES_WEIGHT",
+                            "SIDELINESCULPT_WEIGHT",
+                            "ABDOMINALS_WEIGHT",
                         ]
                     )
                     df_last8 = df_last8.rename(
@@ -1500,54 +1506,59 @@ def create() -> None:
                     df = df.rename(
                         columns={
                             "DATE": "Date",
-                            "FRONTLINE_REPS": "Frontline reps",
-                            "FRONTLINE_SETS": "Frontline sets",
-                            "FRONTLINE_WEIGHT": "Frontline weight",
+                            "FRONTLINE_REPS": "Frontline POW Raise reps",
+                            "FRONTLINE_SETS": "Frontline POW Raise sets",
+                            "FRONTLINE_WEIGHT": "Frontline POW Raise weight",
                             "DOWNDOGPUSHUP_REPS": "Downdog reps",
                             "DOWNDOGPUSHUP_SETS": "Downdog sets",
-                            "SHOULDERZPRESS_REPS": "Shoulder press reps",
-                            "SHOULDERZPRESS_SETS": "Shoulder press sets",
-                            "SHOULDERZPRESS_WEIGHT": "Shoulder press weight",
+                            "SHOULDERZPRESS_REPS": "Arnold press reps",
+                            "SHOULDERZPRESS_SETS": "Arnold press sets",
+                            "SHOULDERZPRESS_WEIGHT": "Arnold press weight",
                             "ELBOWOUTROW_REPS": "Elbow Out Row reps",
                             "ELBOWOUTROW_SETS": "Elbow Out Row sets",
                             "ELBOWOUTROW_WEIGHT": "Elbow Out Row weight",
-                            "SUPINEBICEPCURL_REPS": "Bicep Curl reps",
-                            "SUPINEBICEPCURL_SETS": "Bicep Curl sets",
-                            "SUPINEBICEPCURL_WEIGHT": "Bicep Curl weight",
+                            "SUPINEBICEPCURL_REPS": "Supinating Bicep Curl reps",
+                            "SUPINEBICEPCURL_SETS": "Supinating Bicep Curl sets",
+                            "SUPINEBICEPCURL_WEIGHT": "Supinting Bicep Curl weight",
                             "CLOSEGRIPPUSHUP_REPS": "Close Grip Pushup reps",
                             "CLOSEGRIPPUSHUP_SETS": "Close Grip Pshup sets",
-                            "CLOSEGRIPPUSHUP_STAIR": "Close Grip Pushup Stair",
+                            "CLOSEGRIPPUSHUP_STAIR": "Close Grip Pushup weight",
                             "REARDELTFLY_REPS": "Rear Delt Fly reps",
                             "REARDELTFLY_SETS": "Rear Delt Fly sets",
                             "REARDELTFLY_WEIGHT": "Rear Delt Fly weight",
                             "SIDEBEND_REPS": "Side Bend reps",
                             "SIDEBEND_SETS": "Side Bend sets",
                             "SIDEBEND_WEIGHT": "Side Bend weight",
-                            "LATERALRAISE_REPS": "Lateral Raise reps",
+                            "LATERALRAISE_REPS": "Lateral Raise repSliders",
                             "LATERALRAISE_SETS": "Lateral Raise sets",
                             "LATERALRAISE_WEIGHT": "Lateral Raise weight",
-                            "STIFFLEGRDL_REPS": "Stiff Leg RDL reps",
-                            "STIFFLEGRDL_SETS": "Stiff Leg RDL sets",
-                            "STIFFLEGRDL_WEIGHT": "Stiff Leg RDL weight",
-                            "SLIDERHAMSTRINGCURL_REPS": "Slider Hamstring Curls reps",
-                            "SLIDERHAMSTRINGCURL_SETS": "Slider Hamstring Curls sets",
-                            "HIPTHRUSTER_REPS": "Hip Thruster reps",
-                            "HIPTHRUSTER_SETS": "Hip thruster sets",
-                            "HIPTHRUSTER_WEIGHT": "Hip thruster weight",
-                            "FORWARDSQUAT_REPS": "Front Squat reps",
-                            "FORWARDSQUAT_SETS": "Front Squat sets",
-                            "FORWARDSQUAT_WEIGHT": "Front Squat weight",
+                            "STIFFLEGRDL_REPS": "Stiff Legged RDL reps",
+                            "STIFFLEGRDL_SETS": "Stiff Legged RDL sets",
+                            "STIFFLEGRDL_WEIGHT": "Stiff Legged RDL weight",
+                            "SLIDERHAMSTRINGCURL_REPS": "Hamstring Curls reps",
+                            "SLIDERHAMSTRINGCURL_SETS": "Hamstring Curls sets",
+                            "HIPTHRUSTER_REPS": "Hip Thrusters reps",
+                            "HIPTHRUSTER_SETS": "Hip Thrusters sets",
+                            "HIPTHRUSTER_WEIGHT": "Hip Thrusters weight",
+                            "FORWARDSQUAT_REPS": "Forward Squat reps",
+                            "FORWARDSQUAT_SETS": "Forward Squat sets",
+                            "FORWARDSQUAT_WEIGHT": "Forward Squat weight",
                             "SUMOSQUAT_REPS": "Sumo Squat reps",
                             "SUMOSQUAT_SETS": "Sumo Squat sets",
                             "SUMOSQUAT_WEIGHT": "Sumo Squat weight",
                             "CYCLISTSQUAT_REPS": "Cyclist Squat reps",
                             "CYCLISTSQUAT_SETS": "Cyclist Squat sets",
-                            "SINGLELEGCALFRAISE_REPS": "Single-Leg Calf Raise reps",
-                            "SINGLELEGCALFRAISE_SETS": "Single-Leg Calf Raise sets",
+                            "CYCLISTSQUAT_WEIGHT": "Cyclist Squat weight",
+                            "SINGLELEGCALFRAISE_REPS": "Single Leg Calf Raise reps",
+                            "SINGLELEGCALFRAISE_SETS": "Single Leg Calf Raise sets",
+                            "SINGLELEGCALFRAISE_WEIGHT": "Single Leg Calf Raise weight",
                             "LONGLEVERCRUNCHES_REPS": "Long Lever Crunches reps",
                             "LONGLEVERCRUNCHES_SETS": "Long Lever Crunches sets",
+                            "LONGLEVERCRUNCHES_WEIGHT": "Long Lever Crunches weight",
                             "SIDELINESCULPT": "Sideline Scupt",
                             "ABDOMINALS": "Abdominals",
+                            "SIDELINESCULPT_WEIGHT": "Sideline Scupt weight",
+                            "ABDOMINALS_WEIGHT": "Abdominals weight",
                             "WALK": "Walk",
                             "WALK_DISTANCE": "Distance Walked",
                         }
@@ -1679,26 +1690,38 @@ def create() -> None:
                             var_name="Exercises",
                             value_name="value",
                         )
-                        melted_df = melted_df[melted_df["value"] != 0]
-                        melted_df = melted_df[melted_df["value"].notna()]
+
+                        # Filter out rows with zero values and NaN values
+                        melted_df = melted_df[(melted_df["value"] != 0) & melted_df["value"].notna()]
+
+                        # Group by "Exercises" and find the most recent date for each
                         recent_df = (
-                            melted_df.groupby("Exercises")
+                            melted_df.groupby(["Exercises"])
                             .agg({"Date": "max"})
                             .reset_index()
                         )
                         recent_df.columns = ["Exercises", "Most_Recent"]
-                        reformed_df = pd.merge(melted_df, recent_df, on="Exercises")
-                        reformed_df = reformed_df.drop("Date", axis=1)
-                        reformed_df = reformed_df.drop("value", axis=1)
+
+                        # Merge melted_df with recent_df based on "Exercises" and "Weight"
+                        reformed_df = pd.merge(melted_df, recent_df, on=["Exercises"])
+
+                        # Drop unnecessary columns
+                        reformed_df = reformed_df.drop(["Date", "value"], axis=1)
+
+                        # Sort by "Most_Recent" column
                         reformed_df = reformed_df.sort_values(by=["Most_Recent"])
-                        reformed_df = reformed_df.drop_duplicates(
-                            subset=["Exercises"], keep="first"
-                        )
+
+                        # Drop duplicate rows, keeping only the first occurrence of each exercise
+                        reformed_df = reformed_df.drop_duplicates(subset=["Exercises"], keep="first")
+
+                        # Calculate "Days Since" based on the most recent date
                         reformed_df["Days_Since_Last"] = (
-                                datetime.now()
-                                - pd.to_datetime(reformed_df["Most_Recent"])
+                            datetime.now() - pd.to_datetime(reformed_df["Most_Recent"])
                         ).dt.days
+
+                        # Drop the "Most_Recent" column
                         reformed_df = reformed_df.drop("Most_Recent", axis=1)
+
                         return reformed_df
 
                     """Drop Rows for Easier Data Presentation"""
@@ -1724,8 +1747,8 @@ def create() -> None:
                             table_c = ui.table(
                                 columns=[
                                     {"name": col, "label": col, "field": col,
-                                     "headerClasses": "border-b border-secondary",
-                                     "align": 'left'}
+                                    "headerClasses": "border-b border-secondary",
+                                    "align": 'left'}
                                     for col in upper_df.columns
                                 ],
                                 rows=upper_df.to_dict("records"),
@@ -1749,8 +1772,8 @@ def create() -> None:
                             table_b = ui.table(
                                 columns=[
                                     {"name": col, "label": col, "field": col,
-                                     "headerClasses": "border-b border-secondary",
-                                     "align": 'left'}
+                                    "headerClasses": "border-b border-secondary",
+                                    "align": 'left'}
                                     for col in lower_df.columns
                                 ],
                                 rows=lower_df.to_dict("records"),
@@ -1775,8 +1798,8 @@ def create() -> None:
                                 table_a = ui.table(
                                     columns=[
                                         {"name": col, "label": col, "field": col,
-                                         "headerClasses": "border-b border-secondary",
-                                         "align": 'left'}
+                                        "headerClasses": "border-b border-secondary",
+                                        "align": 'left'}
                                         for col in abs_df.columns
                                     ],
                                     rows=abs_df.to_dict("records"),
@@ -1798,8 +1821,8 @@ def create() -> None:
                                 table_w = ui.table(
                                     columns=[
                                         {"name": col, "label": col, "field": col,
-                                         "headerClasses": "border-b border-secondary",
-                                         "align": 'left'}
+                                        "headerClasses": "border-b border-secondary",
+                                        "align": 'left'}
                                         for col in walk_df.columns
                                     ],
                                     rows=walk_df.to_dict("records"),
@@ -1824,10 +1847,10 @@ def create() -> None:
                         ui.table(
                             columns=[
                                 {"name": col,
-                                 "label": col,
-                                 "field": col,
-                                 "headerClasses": "border-b border-secondary",
-                                 "align": 'left'}
+                                "label": col,
+                                "field": col,
+                                "headerClasses": "border-b border-secondary",
+                                "align": 'left'}
                                 for col in df.columns
                             ],
                             rows=df.to_dict("records"), pagination={'rowsPerPage': 10}
