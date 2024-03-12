@@ -172,26 +172,6 @@ def fitness() -> None:
     conn.close()
     df = dfSQL.drop(columns=["ID"])
     df = df.sort_values(by=["DATE"])
-    df_test = df.drop(
-        columns=[
-            "FRONTLINE_SETS",
-            "SHOULDERZPRESS_SETS",
-            "ELBOWOUTROW_SETS",
-            "SUPINEBICEPCURL_SETS",
-            "CLOSEGRIPPUSHUP_SETS",
-            "REARDELTFLY_SETS",
-            "SIDEBEND_SETS",
-            "LATERALRAISE_SETS",
-            "STIFFLEGRDL_SETS",
-            "SLIDERHAMSTRINGCURL_SETS",
-            "HIPTHRUSTER_SETS",
-            "FORWARDSQUAT_SETS",
-            "SUMOSQUAT_SETS",
-            "CYCLISTSQUAT_SETS",
-            "SINGLELEGCALFRAISE_SETS",
-            "LONGLEVERCRUNCHES_SETS",
-        ]
-    )
     df_last8 = df.drop(
         columns=[
             "FRONTLINE_SETS",
@@ -252,51 +232,7 @@ def fitness() -> None:
             "SIDELINESCULPT": "Sideline Sculpt",
             "ABDOMINALS": "Abdominals",
             "WALK": "Walk",
-            "WALK_DISTANCE" : "Walk Distance",
-        }
-    )
-    
-    df_test = df_test.rename(
-        columns={
-            "DATE": "Date",
-            "FRONTLINE_REPS": "Frontline POW Raise",
-            "SHOULDERZPRESS_REPS": "Arnold Press",
-            "ELBOWOUTROW_REPS": "Elbow Out Row",
-            "SUPINEBICEPCURL_REPS": "Supinating Bicep Curl",
-            "CLOSEGRIPPUSHUP_REPS": "Close Grip Pushup",
-            "REARDELTFLY_REPS": "Rear Delt Fly",
-            "SIDEBEND_REPS": "Side Bend",
-            "LATERALRAISE_REPS": "Lateral Raise",
-            "STIFFLEGRDL_REPS": "Stiff Legged RDL",
-            "SLIDERHAMSTRINGCURL_REPS": "Hamstring Curls",
-            "HIPTHRUSTER_REPS": "Hip Thrusters",
-            "FORWARDSQUAT_REPS": "Forward Squat",
-            "SUMOSQUAT_REPS": "Sumo Squat",
-            "CYCLISTSQUAT_REPS": "Cyclist Squat",
-            "SINGLELEGCALFRAISE_REPS": "Single Leg Calf Raise",
-            "LONGLEVERCRUNCHES_REPS": "Long Lever Crunches",
-            "SIDELINESCULPT": "Sideline Sculpt",
-            "ABDOMINALS": "Abdominals",
-            "WALK": "Walk",
-            "WALK_DISTANCE": "Walk Distance",
-            "FRONTLINE_WEIGHT": "Frontline POW Raise Weight",
-            "SHOULDERZPRESS_WEIGHT": "Arnold Press Weight",
-            "ELBOWOUTROW_WEIGHT": "Elbow Out Row Weight",
-            "SUPINEBICEPCURL_WEIGHT": "Supinating Bicep Curl Weight",
-            "CLOSEGRIPPUSHUP_STAIR": "Close Grip Pushup Stair",
-            "REARDELTFLY_WEIGHT": "Rear Delt Fly Weight",
-            "SIDEBEND_WEIGHT": "Side Bend Weight",
-            "LATERALRAISE_WEIGHT": "Lateral Raise Weight",
-            "STIFFLEGRDL_WEIGHT": "Stiff Legged RDL Weight",
-            "SLIDERHAMSTRINGCURL_WEIGHT": "Hamstring Curls Weight",
-            "HIPTHRUSTER_WEIGHT": "Hip Thrusters Weight",
-            "FORWARDSQUAT_WEIGHT": "Forward Squat Weight",
-            "SUMOSQUAT_WEIGHT": "Sumo Squat Weight",
-            "CYCLISTSQUAT_WEIGHT": "Cyclist Squat Weight",
-            "SINGLELEGCALFRAISE_WEIGHT": "Single Leg Calf Raise Weight",
-            "LONGLEVERCRUNCHES_WEIGHT": "Long Lever Crunches Weight",
-            "SIDELINESCULPT_WEIGHT": "Sideline Sculpt Weight",
-            "ABDOMINALS_WEIGHT": "Abdominals Weight",
+            "WALK_DISTANCE": "Distance Walked",
         }
     )
     df = df.rename(
@@ -351,145 +287,13 @@ def fitness() -> None:
             "LONGLEVERCRUNCHES_REPS": "Long Lever Crunches reps",
             "LONGLEVERCRUNCHES_SETS": "Long Lever Crunches sets",
             "SIDELINESCULPT": "Sideline Scupt",
-            "SIDELINESCULPT_WEIGHT": "Sideline Sculpt Weight",
+            "SIDELINESCULPT_WEIGHT": "Sideline Scupt Weight",
             "ABDOMINALS": "Abdominals",
-            "ABDOMINALS_WEIGHT": "Abdominalsx Weight",
+            "ABDOMINALS_WEIGHT": "Abdominals Weight",
             "WALK": "Walk",
-            "WALK_DISTANCE": "Walk Distance",
+            "WALK_DISTANCE": "Distance Walked",
         }
     )
-    lower_df_test = df_test.drop(
-        columns=[
-            "Frontline POW Raise",
-            "Arnold Press",
-            "Elbow Out Row",
-            "Supinating Bicep Curl",
-            "Close Grip Pushup",
-            "Rear Delt Fly",
-            "Side Bend",
-            "Lateral Raise",
-            "Abdominals",
-            "Sideline Sculpt",
-            "Walk",
-            "Walk Distance",
-            "Frontline POW Raise Weight",
-            "Arnold Press Weight",
-            "Elbow Out Row Weight",
-            "Supinating Bicep Curl Weight",
-            "Close Grip Pushup Stair",
-            "Rear Delt Fly Weight",
-            "Side Bend Weight",
-            "Lateral Raise Weight",
-            "Abdominals Weight",
-            "Sideline Sculpt Weight",
-        ]
-    )
-    upper_df_test = df_test.drop(
-        columns=[
-            "Stiff Legged RDL",
-            "Hamstring Curls",
-            "Hip Thrusters",
-            "Forward Squat",
-            "Sumo Squat",
-            "Cyclist Squat",
-            "Single Leg Calf Raise",
-            "Long Lever Crunches",
-            "Abdominals",
-            "Sideline Sculpt",
-            "Stiff Legged RDL Weight",
-            "Hamstring Curls Weight",
-            "Hip Thrusters Weight",
-            "Forward Squat Weight",
-            "Sumo Squat Weight",
-            "Cyclist Squat Weight",
-            "Single Leg Calf Raise Weight",
-            "Long Lever Crunches Weight",
-            "Abdominals Weight",
-            "Sideline Sculpt Weight",
-            "Walk",
-            "Walk Distance",
-        ]
-    )
-    abs_df_test = df_test.drop(
-        columns=[
-            "Stiff Legged RDL",
-            "Hamstring Curls",
-            "Hip Thrusters",
-            "Forward Squat",
-            "Sumo Squat",
-            "Cyclist Squat",
-            "Single Leg Calf Raise",
-            "Long Lever Crunches",
-            "Frontline POW Raise",
-            "Arnold Press",
-            "Elbow Out Row",
-            "Supinating Bicep Curl",
-            "Close Grip Pushup",
-            "Rear Delt Fly",
-            "Side Bend",
-            "Lateral Raise",
-            "Walk",
-            "Walk Distance",
-            "Stiff Legged RDL Weight",
-            "Hamstring Curls Weight",
-            "Hip Thrusters Weight",
-            "Forward Squat Weight",
-            "Sumo Squat Weight",
-            "Cyclist Squat Weight",
-            "Single Leg Calf Raise Weight",
-            "Long Lever Crunches Weight",
-            "Frontline POW Raise Weight",
-            "Arnold Press Weight",
-            "Elbow Out Row Weight",
-            "Supinating Bicep Curl Weight",
-            "Close Grip Pushup Stair",
-            "Rear Delt Fly Weight",
-            "Side Bend Weight",
-            "Lateral Raise Weight",
-        ]
-    )
-    walk_df_test = df_test.drop(
-        columns=[
-            "Stiff Legged RDL",
-            "Hamstring Curls",
-            "Hip Thrusters",
-            "Forward Squat",
-            "Sumo Squat",
-            "Cyclist Squat",
-            "Single Leg Calf Raise",
-            "Long Lever Crunches",
-            "Frontline POW Raise",
-            "Arnold Press",
-            "Elbow Out Row",
-            "Supinating Bicep Curl",
-            "Close Grip Pushup",
-            "Rear Delt Fly",
-            "Side Bend",
-            "Lateral Raise",
-            "Abdominals",
-            "Sideline Sculpt",
-            "Stiff Legged RDL Weight",
-            "Hamstring Curls Weight",
-            "Hip Thrusters Weight",
-            "Forward Squat Weight",
-            "Sumo Squat Weight",
-            "Cyclist Squat Weight",
-            "Single Leg Calf Raise Weight",
-            "Long Lever Crunches Weight",
-            "Frontline POW Raise Weight",
-            "Arnold Press Weight",
-            "Elbow Out Row Weight",
-            "Supinating Bicep Curl Weight",
-            "Close Grip Pushup Stair",
-            "Rear Delt Fly Weight",
-            "Side Bend Weight",
-            "Lateral Raise Weight",
-            "Abdominals Weight",
-            "Sideline Sculpt Weight",
-            "Walk Distance",
-        ]
-    )
-    
     lower_df = df_last8.drop(
         columns=[
             "Frontline POW Raise",
@@ -503,7 +307,7 @@ def fitness() -> None:
             "Abdominals",
             "Sideline Sculpt",
             "Walk",
-            "Walk Distance",
+            "Distance Walked",
         ]
     )
     upper_df = df_last8.drop(
@@ -519,7 +323,7 @@ def fitness() -> None:
             "Abdominals",
             "Sideline Sculpt",
             "Walk",
-            "Walk Distance",
+            "Distance Walked",
         ]
     )
     abs_df = df_last8.drop(
@@ -541,7 +345,7 @@ def fitness() -> None:
             "Side Bend",
             "Lateral Raise",
             "Walk",
-            "Walk Distance",
+            "Distance Walked",
         ]
     )
     walk_df = df_last8.drop(
@@ -564,9 +368,10 @@ def fitness() -> None:
             "Lateral Raise",
             "Abdominals",
             "Sideline Sculpt",
-            "Walk Distance",
+            "Distance Walked",
         ]
     )
+
     def reshape_and_rename(input_df):
         """
         Reshape and rename a DataFrame containing exercise data.
@@ -610,29 +415,15 @@ def fitness() -> None:
         >>> result_df = reshape_and_rename(df)
         >>> print(result_df)
         """
-        non_weight_distance_stair_columns = [col for col in input_df.columns if not (col.endswith(" Weight") or col.endswith(" Distance") or col.endswith(" Stair"))]              
-        
+
         melted_df = pd.melt(
             input_df,
             id_vars=["Date"],
-            value_vars=non_weight_distance_stair_columns,
             var_name="Exercises",
             value_name="value",
         )
         melted_df = melted_df[melted_df["value"] != 0]
         melted_df = melted_df[melted_df["value"].notna()]
-        
-        def get_weight(row, df):
-            for suffix in [' Weight', ' Distance', ' Stair']:
-                col_name = row['Exercises'] + suffix
-                if col_name in df.columns:
-                    weight_row = df[df['Date'] == row['Date']]
-                    if not weight_row.empty:
-                        return weight_row[col_name].values[0]
-            return None     
-
-        melted_df['Weight'] = melted_df.apply(lambda row: get_weight(row, input_df), axis=1)
-
         recent_df = (
             melted_df.groupby("Exercises")
             .agg({"Date": "max"})
@@ -654,10 +445,10 @@ def fitness() -> None:
         return reformed_df
 
     """Drop Rows for Easier Data Presentation"""
-    upper_df = reshape_and_rename(upper_df_test)
-    lower_df = reshape_and_rename(lower_df_test)
-    abs_df = reshape_and_rename(abs_df_test)
-    walk_df = reshape_and_rename(walk_df_test)
+    upper_df = reshape_and_rename(upper_df)
+    lower_df = reshape_and_rename(lower_df)
+    abs_df = reshape_and_rename(abs_df)
+    walk_df = reshape_and_rename(walk_df)
     with ui.row().classes("w-full no-wrap"):
         ui.button("HOME", on_click=lambda: ui.open("/")).props('color=secondary')
         ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
