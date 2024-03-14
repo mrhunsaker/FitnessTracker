@@ -1508,59 +1508,59 @@ def create() -> None:
                             "DATE": "Date",
                             "FRONTLINE_REPS": "Frontline POW Raise reps",
                             "FRONTLINE_SETS": "Frontline POW Raise sets",
-                            "FRONTLINE_WEIGHT": "Frontline POW Raise weight",
+                            "FRONTLINE_WEIGHT": "Frontline POW Raise Weight",
                             "DOWNDOGPUSHUP_REPS": "Downdog reps",
                             "DOWNDOGPUSHUP_SETS": "Downdog sets",
                             "SHOULDERZPRESS_REPS": "Arnold press reps",
                             "SHOULDERZPRESS_SETS": "Arnold press sets",
-                            "SHOULDERZPRESS_WEIGHT": "Arnold press weight",
+                            "SHOULDERZPRESS_WEIGHT": "Arnold press Weight",
                             "ELBOWOUTROW_REPS": "Elbow Out Row reps",
                             "ELBOWOUTROW_SETS": "Elbow Out Row sets",
-                            "ELBOWOUTROW_WEIGHT": "Elbow Out Row weight",
+                            "ELBOWOUTROW_WEIGHT": "Elbow Out Row Weight",
                             "SUPINEBICEPCURL_REPS": "Supinating Bicep Curl reps",
                             "SUPINEBICEPCURL_SETS": "Supinating Bicep Curl sets",
-                            "SUPINEBICEPCURL_WEIGHT": "Supinting Bicep Curl weight",
+                            "SUPINEBICEPCURL_WEIGHT": "Supinting Bicep Curl Weight",
                             "CLOSEGRIPPUSHUP_REPS": "Close Grip Pushup reps",
                             "CLOSEGRIPPUSHUP_SETS": "Close Grip Pshup sets",
-                            "CLOSEGRIPPUSHUP_STAIR": "Close Grip Pushup weight",
+                            "CLOSEGRIPPUSHUP_STAIR": "Close Grip Pushup Stair",
                             "REARDELTFLY_REPS": "Rear Delt Fly reps",
                             "REARDELTFLY_SETS": "Rear Delt Fly sets",
-                            "REARDELTFLY_WEIGHT": "Rear Delt Fly weight",
+                            "REARDELTFLY_WEIGHT": "Rear Delt Fly Weight",
                             "SIDEBEND_REPS": "Side Bend reps",
                             "SIDEBEND_SETS": "Side Bend sets",
-                            "SIDEBEND_WEIGHT": "Side Bend weight",
-                            "LATERALRAISE_REPS": "Lateral Raise repSliders",
+                            "SIDEBEND_WEIGHT": "Side Bend Weight",
+                            "LATERALRAISE_REPS": "Lateral Raise reps",
                             "LATERALRAISE_SETS": "Lateral Raise sets",
-                            "LATERALRAISE_WEIGHT": "Lateral Raise weight",
+                            "LATERALRAISE_WEIGHT": "Lateral Raise Weight",
                             "STIFFLEGRDL_REPS": "Stiff Legged RDL reps",
                             "STIFFLEGRDL_SETS": "Stiff Legged RDL sets",
-                            "STIFFLEGRDL_WEIGHT": "Stiff Legged RDL weight",
+                            "STIFFLEGRDL_WEIGHT": "Stiff Legged RDL Weight",
                             "SLIDERHAMSTRINGCURL_REPS": "Hamstring Curls reps",
                             "SLIDERHAMSTRINGCURL_SETS": "Hamstring Curls sets",
                             "HIPTHRUSTER_REPS": "Hip Thrusters reps",
                             "HIPTHRUSTER_SETS": "Hip Thrusters sets",
-                            "HIPTHRUSTER_WEIGHT": "Hip Thrusters weight",
+                            "HIPTHRUSTER_WEIGHT": "Hip Thrusters Weight",
                             "FORWARDSQUAT_REPS": "Forward Squat reps",
                             "FORWARDSQUAT_SETS": "Forward Squat sets",
-                            "FORWARDSQUAT_WEIGHT": "Forward Squat weight",
+                            "FORWARDSQUAT_WEIGHT": "Forward Squat Weight",
                             "SUMOSQUAT_REPS": "Sumo Squat reps",
                             "SUMOSQUAT_SETS": "Sumo Squat sets",
-                            "SUMOSQUAT_WEIGHT": "Sumo Squat weight",
+                            "SUMOSQUAT_WEIGHT": "Sumo Squat Weight",
                             "CYCLISTSQUAT_REPS": "Cyclist Squat reps",
                             "CYCLISTSQUAT_SETS": "Cyclist Squat sets",
-                            "CYCLISTSQUAT_WEIGHT": "Cyclist Squat weight",
+                            "CYCLISTSQUAT_WEIGHT": "Cyclist Squat Weight",
                             "SINGLELEGCALFRAISE_REPS": "Single Leg Calf Raise reps",
                             "SINGLELEGCALFRAISE_SETS": "Single Leg Calf Raise sets",
-                            "SINGLELEGCALFRAISE_WEIGHT": "Single Leg Calf Raise weight",
+                            "SINGLELEGCALFRAISE_WEIGHT": "Single Leg Calf Raise Weight",
                             "LONGLEVERCRUNCHES_REPS": "Long Lever Crunches reps",
                             "LONGLEVERCRUNCHES_SETS": "Long Lever Crunches sets",
-                            "LONGLEVERCRUNCHES_WEIGHT": "Long Lever Crunches weight",
+                            "LONGLEVERCRUNCHES_WEIGHT": "Long Lever Crunches Weight",
                             "SIDELINESCULPT": "Sideline Scupt",
                             "ABDOMINALS": "Abdominals",
-                            "SIDELINESCULPT_WEIGHT": "Sideline Scupt weight",
-                            "ABDOMINALS_WEIGHT": "Abdominals weight",
+                            "SIDELINESCULPT_WEIGHT": "Sideline Scupt Weight",
+                            "ABDOMINALS_WEIGHT": "Abdominals Weight",
                             "WALK": "Walk",
-                            "WALK_DISTANCE": "Distance Walked",
+                            "WALK_DISTANCE": "Walk Distance",
                         }
                     )
                     lower_df = df_last8.drop(
@@ -1724,6 +1724,21 @@ def create() -> None:
 
                         return reformed_df
 
+                    # Filter the columns
+                    df_filtered = df[[col for col in df.columns if col.lower().endswith(('weight', 'distance', 'stair'))]]
+
+                    # Melt the dataframe
+                    melted_df = df_filtered.melt(var_name='Exercise', value_name='Level')
+
+                    # Remove NaN and null values
+                    melted_df = melted_df.dropna()
+
+                    # Remove 0 values
+                    melted_df = melted_df[melted_df['Level'] != 0]
+
+                    # Get the most recent 'Level' for each 'Exercise'
+                    previous_weight = melted_df.groupby('Exercise').last().reset_index()
+                    print(previous_weight)
                     """Drop Rows for Easier Data Presentation"""
                     upper_df = reshape_and_rename(upper_df)
                     lower_df = reshape_and_rename(lower_df)
@@ -1737,57 +1752,32 @@ def create() -> None:
                             "text-3xl text-bold"
                         ).style('font-family : "JetBrainsMono"')
                     with ui.row():
-                        with ui.card():
-                            ui.label("Upper Body Exercises").classes(
-                                "text-xl text-bold"
-                            ).style(
-                                'font-family : "Atkinson Hyperlegible"'
-                            )
-                            ui.separator().classes("w-full h-1").props("color=positive")
-                            table_c = ui.table(
-                                columns=[
-                                    {"name": col, "label": col, "field": col,
-                                    "headerClasses": "border-b border-secondary",
-                                    "align": 'left'}
-                                    for col in upper_df.columns
-                                ],
-                                rows=upper_df.to_dict("records"),
-                            ).style(
-                                "font-family: JetBrainsMono; background-color: #f5f5f5"
-                            ).classes("text-lg font-normal my-table")
-                            table_c.add_slot('body-cell-Days_Since_Last', '''
-                                <q-td key="Days_Since_Last" :props="props">
-                                <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
-                                    {{ props.value }}
-                                </q-badge>
-                                </q-td>
-                                ''')
-                        with ui.card():
-                            ui.label("Lower Body Exercises").classes(
-                                "text-xl text-bold"
-                            ).style(
-                                'font-family : "Atkinson Hyperlegible"'
-                            )
-                            ui.separator().classes("w-full h-1").props("color=positive")
-                            table_b = ui.table(
-                                columns=[
-                                    {"name": col, "label": col, "field": col,
-                                    "headerClasses": "border-b border-secondary",
-                                    "align": 'left'}
-                                    for col in lower_df.columns
-                                ],
-                                rows=lower_df.to_dict("records"),
-                            ).style(
-                                "font-family: JetBrainsMono; background-color: #f5f5f5"
-                            ).classes("text-lg font-normal my-table")
-                            table_b.add_slot('body-cell-Days_Since_Last', '''
-                                <q-td key="Days_Since_Last" :props="props">
-                                <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
-                                {{ props.value }}
-                                </q-badge>
-                                </q-td>
-                                ''')
                         with ui.column():
+                            with ui.card():
+                                ui.label("Upper Body Exercises").classes(
+                                    "text-xl text-bold"
+                                ).style(
+                                    'font-family : "Atkinson Hyperlegible"'
+                                )
+                                ui.separator().classes("w-full h-1").props("color=positive")
+                                table_c = ui.table(
+                                    columns=[
+                                        {"name": col, "label": col, "field": col,
+                                        "headerClasses": "border-b border-secondary",
+                                        "align": 'left'}
+                                        for col in upper_df.columns
+                                    ],
+                                    rows=upper_df.to_dict("records"),
+                                ).style(
+                                    "font-family: JetBrainsMono; background-color: #f5f5f5"
+                                ).classes("text-lg font-normal my-table")
+                                table_c.add_slot('body-cell-Days_Since_Last', '''
+                                    <q-td key="Days_Since_Last" :props="props">
+                                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
+                                        {{ props.value }}
+                                    </q-badge>
+                                    </q-td>
+                                    ''')
                             with ui.card():
                                 ui.label("Abdominal Exercises").classes(
                                     "text-xl text-bold"
@@ -1810,6 +1800,32 @@ def create() -> None:
                                     <q-td key="Days_Since_Last" :props="props">
                                     <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
                                         {{ props.value }}
+                                    </q-badge>
+                                    </q-td>
+                                    ''')
+                        with ui.column():
+                            with ui.card():
+                                ui.label("Lower Body Exercises").classes(
+                                    "text-xl text-bold"
+                                ).style(
+                                    'font-family : "Atkinson Hyperlegible"'
+                                )
+                                ui.separator().classes("w-full h-1").props("color=positive")
+                                table_b = ui.table(
+                                    columns=[
+                                        {"name": col, "label": col, "field": col,
+                                        "headerClasses": "border-b border-secondary",
+                                        "align": 'left'}
+                                        for col in lower_df.columns
+                                    ],
+                                    rows=lower_df.to_dict("records"),
+                                ).style(
+                                    "font-family: JetBrainsMono; background-color: #f5f5f5"
+                                ).classes("text-lg font-normal my-table")
+                                table_b.add_slot('body-cell-Days_Since_Last', '''
+                                    <q-td key="Days_Since_Last" :props="props">
+                                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
+                                    {{ props.value }}
                                     </q-badge>
                                     </q-td>
                                     ''')
@@ -1836,13 +1852,30 @@ def create() -> None:
                                     </q-badge>
                                     </q-td>
                                     ''')
+                        with ui.card():
+                            ui.label("Previous Weight").classes(
+                                "text-xl text-bold"
+                            ).style(
+                                'font-family : "Atkinson Hyperlegible"'
+                            )
+                            ui.separator().classes("w-full h-1").props("color=positive")
+                            table_b = ui.table(
+                                columns=[
+                                    {"name": col, "label": col, "field": col,
+                                    "headerClasses": "border-b border-secondary",
+                                    "align": 'left'}
+                                    for col in previous_weight.columns
+                                ],
+                                rows=previous_weight.to_dict("records"),
+                            ).style(
+                                "font-family: JetBrainsMono; background-color: #f5f5f5"
+                            ).classes("text-lg font-normal my-table") 
                     with ui.row():
                         ui.label("Cumulative Exercise Log").classes(
                             "text-3xl text-bold"
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-
                     table = (
                         ui.table(
                             columns=[
@@ -1856,3 +1889,5 @@ def create() -> None:
                             rows=df.to_dict("records"), pagination={'rowsPerPage': 10}
                         ).style("font-family: JetBrainsMono; background-color: #f5f5f5").classes('my-table')
                     )
+
+
