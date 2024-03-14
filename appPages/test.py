@@ -175,39 +175,39 @@ def fitness() -> None:
     df_last8 = df.drop(
         columns=[
             "FRONTLINE_SETS",
-            "SHOULDERZPRESS_SETS",
-            "ELBOWOUTROW_SETS",
-            "SUPINEBICEPCURL_SETS",
-            "CLOSEGRIPPUSHUP_SETS",
-            "REARDELTFLY_SETS",
-            "SIDEBEND_SETS",
-            "LATERALRAISE_SETS",
-            "STIFFLEGRDL_SETS",
-            "SLIDERHAMSTRINGCURL_SETS",
-            "HIPTHRUSTER_SETS",
-            "FORWARDSQUAT_SETS",
-            "SUMOSQUAT_SETS",
-            "CYCLISTSQUAT_SETS",
-            "SINGLELEGCALFRAISE_SETS",
-            "LONGLEVERCRUNCHES_SETS",
             "FRONTLINE_WEIGHT",
+            "SHOULDERZPRESS_SETS",
             "SHOULDERZPRESS_WEIGHT",
+            "ELBOWOUTROW_SETS",
             "ELBOWOUTROW_WEIGHT",
+            "SUPINEBICEPCURL_SETS",
             "SUPINEBICEPCURL_WEIGHT",
+            "CLOSEGRIPPUSHUP_SETS",
             "CLOSEGRIPPUSHUP_STAIR",
+            "REARDELTFLY_SETS",
             "REARDELTFLY_WEIGHT",
+            "SIDEBEND_SETS",
             "SIDEBEND_WEIGHT",
+            "LATERALRAISE_SETS",
             "LATERALRAISE_WEIGHT",
+            "STIFFLEGRDL_SETS",
             "STIFFLEGRDL_WEIGHT",
+            "SLIDERHAMSTRINGCURL_SETS",
             "SLIDERHAMSTRINGCURL_WEIGHT",
+            "HIPTHRUSTER_SETS",
             "HIPTHRUSTER_WEIGHT",
+            "FORWARDSQUAT_SETS",
             "FORWARDSQUAT_WEIGHT",
+            "SUMOSQUAT_SETS",
             "SUMOSQUAT_WEIGHT",
+            "CYCLISTSQUAT_SETS",
             "CYCLISTSQUAT_WEIGHT",
+            "SINGLELEGCALFRAISE_SETS",
             "SINGLELEGCALFRAISE_WEIGHT",
-            "LONGLEVERCRUNCHES_WEIGHT",
-            "SIDELINESCULPT_WEIGHT",
+            "LONGLEVERCRUNCHES_SETS",
             "ABDOMINALS_WEIGHT",
+            "SIDELINESCULPT_WEIGHT",
+            "LONGLEVERCRUNCHES_WEIGHT",
         ]
     )
     df_last8 = df_last8.rename(
@@ -238,59 +238,58 @@ def fitness() -> None:
     df = df.rename(
         columns={
             "DATE": "Date",
-            "FRONTLINE_REPS": "Frontline POW Raise reps",
-            "FRONTLINE_SETS": "Frontline POW Raise sets",
-            "FRONTLINE_WEIGHT": "Frontline POW Raise weight",
+            "FRONTLINE_REPS": "Frontline reps",
+            "FRONTLINE_SETS": "Frontline sets",
+            "FRONTLINE_WEIGHT": "Frontline Weight",
             "DOWNDOGPUSHUP_REPS": "Downdog reps",
             "DOWNDOGPUSHUP_SETS": "Downdog sets",
-            "SHOULDERZPRESS_REPS": "Arnold press reps",
-            "SHOULDERZPRESS_SETS": "Arnold press sets",
-            "SHOULDERZPRESS_WEIGHT": "Arnold press weight",
+            "SHOULDERZPRESS_REPS": "Shoulder press reps",
+            "SHOULDERZPRESS_SETS": "Shoulder press sets",
+            "SHOULDERZPRESS_WEIGHT": "Shoulder press Weight",
             "ELBOWOUTROW_REPS": "Elbow Out Row reps",
             "ELBOWOUTROW_SETS": "Elbow Out Row sets",
-            "ELBOWOUTROW_WEIGHT": "Elbow Out Row weight",
-            "SUPINEBICEPCURL_REPS": "Supinating Bicep Curl reps",
-            "SUPINEBICEPCURL_SETS": "Supinating Bicep Curl sets",
-            "SUPINEBICEPCURL_WEIGHT": "Supinting Bicep Curl weight",
+            "ELBOWOUTROW_WEIGHT": "Elbow Out Row Weight",
+            "SUPINEBICEPCURL_REPS": "Bicep Curl reps",
+            "SUPINEBICEPCURL_SETS": "Bicep Curl sets",
+            "SUPINEBICEPCURL_WEIGHT": "Bicep Curl Weight",
             "CLOSEGRIPPUSHUP_REPS": "Close Grip Pushup reps",
             "CLOSEGRIPPUSHUP_SETS": "Close Grip Pshup sets",
-            "CLOSEGRIPPUSHUP_STAIR": "Close Grip Pushup weight",
+            "CLOSEGRIPPUSHUP_STAIR": "Close Grip Pushup Stair",
             "REARDELTFLY_REPS": "Rear Delt Fly reps",
             "REARDELTFLY_SETS": "Rear Delt Fly sets",
-            "REARDELTFLY_WEIGHT": "Rear Delt Fly weight",
+            "REARDELTFLY_WEIGHT": "Rear Delt Fly Weight",
             "SIDEBEND_REPS": "Side Bend reps",
             "SIDEBEND_SETS": "Side Bend sets",
-            "SIDEBEND_WEIGHT": "Side Bend weight",
-            "LATERALRAISE_REPS": "Lateral Raise repSliders",
+            "SIDEBEND_WEIGHT": "Side Bend Weight",
+            "LATERALRAISE_REPS": "Lateral Raise reps",
             "LATERALRAISE_SETS": "Lateral Raise sets",
-            "LATERALRAISE_WEIGHT": "Lateral Raise weight",
-            "STIFFLEGRDL_REPS": "Stiff Legged RDL reps",
-            "STIFFLEGRDL_SETS": "Stiff Legged RDL sets",
-            "STIFFLEGRDL_WEIGHT": "Stiff Legged RDL weight",
-            "SLIDERHAMSTRINGCURL_REPS": "Hamstring Curls reps",
-            "SLIDERHAMSTRINGCURL_SETS": "Hamstring Curls sets",
-            "HIPTHRUSTER_REPS": "Hip Thrusters reps",
-            "HIPTHRUSTER_SETS": "Hip Thrusters sets",
-            "HIPTHRUSTER_WEIGHT": "Hip Thrusters weight",
-            "FORWARDSQUAT_REPS": "Forward Squat reps",
-            "FORWARDSQUAT_SETS": "Forward Squat sets",
-            "FORWARDSQUAT_WEIGHT": "Forward Squat weight",
+            "LATERALRAISE_WEIGHT": "Lateral Raise Weight",
+            "STIFFLEGRDL_REPS": "Stiff Leg RDL reps",
+            "STIFFLEGRDL_SETS": "Stiff Leg RDL sets",
+            "STIFFLEGRDL_WEIGHT": "Stiff Leg RDL Weight",
+            "SLIDERHAMSTRINGCURL_REPS": "Slider Hamstring Curls reps",
+            "SLIDERHAMSTRINGCURL_SETS": "Slider Hamstring Curls sets",
+            "SLIDERHAMSTRINGCURL_WEIGHT" : "Slider Hamstring Curls Weight",
+            "HIPTHRUSTER_REPS": "Hip Thruster reps",
+            "HIPTHRUSTER_SETS": "Hip thruster sets",
+            "HIPTHRUSTER_WEIGHT": "Hip thruster Weight",
+            "FORWARDSQUAT_REPS": "Front Squat reps",
+            "FORWARDSQUAT_SETS": "Front Squat sets",
+            "FORWARDSQUAT_WEIGHT": "Front Squat Weight",
             "SUMOSQUAT_REPS": "Sumo Squat reps",
             "SUMOSQUAT_SETS": "Sumo Squat sets",
-            "SUMOSQUAT_WEIGHT": "Sumo Squat weight",
+            "SUMOSQUAT_WEIGHT": "Sumo Squat Weight",
             "CYCLISTSQUAT_REPS": "Cyclist Squat reps",
             "CYCLISTSQUAT_SETS": "Cyclist Squat sets",
-            "CYCLISTSQUAT_WEIGHT": "Cyclist Squat weight",
-            "SINGLELEGCALFRAISE_REPS": "Single Leg Calf Raise reps",
-            "SINGLELEGCALFRAISE_SETS": "Single Leg Calf Raise sets",
-            "SINGLELEGCALFRAISE_WEIGHT": "Single Leg Calf Raise weight",
+            "CYCLISTSQUAT_WEIGHT": "Cyclist Squat Weight",
+            "SINGLELEGCALFRAISE_REPS": "Single-Leg Calf Raise reps",
+            "SINGLELEGCALFRAISE_SETS": "Single-Leg Calf Raise sets",
             "LONGLEVERCRUNCHES_REPS": "Long Lever Crunches reps",
             "LONGLEVERCRUNCHES_SETS": "Long Lever Crunches sets",
-            "LONGLEVERCRUNCHES_WEIGHT": "Long Lever Crunches weight",
             "SIDELINESCULPT": "Sideline Scupt",
+            "SIDELINESCULPT_WEIGHT": "Sideline Scupt Weight",
             "ABDOMINALS": "Abdominals",
-            "SIDELINESCULPT_WEIGHT": "Sideline Scupt weight",
-            "ABDOMINALS_WEIGHT": "Abdominals weight",
+            "ABDOMINALS_WEIGHT": "Abdominals Weight",
             "WALK": "Walk",
             "WALK_DISTANCE": "Distance Walked",
         }
@@ -416,44 +415,33 @@ def fitness() -> None:
         >>> result_df = reshape_and_rename(df)
         >>> print(result_df)
         """
+
         melted_df = pd.melt(
             input_df,
             id_vars=["Date"],
             var_name="Exercises",
             value_name="value",
         )
-
-        # Filter out rows with zero values and NaN values
-        melted_df = melted_df[(melted_df["value"] != 0) & melted_df["value"].notna()]
-
-        # Group by "Exercises" and find the most recent date for each
+        melted_df = melted_df[melted_df["value"] != 0]
+        melted_df = melted_df[melted_df["value"].notna()]
         recent_df = (
-            melted_df.groupby(["Exercises"])
+            melted_df.groupby("Exercises")
             .agg({"Date": "max"})
             .reset_index()
         )
         recent_df.columns = ["Exercises", "Most_Recent"]
-
-        # Merge melted_df with recent_df based on "Exercises" and "Weight"
-        reformed_df = pd.merge(melted_df, recent_df, on=["Exercises"])
-
-        # Drop unnecessary columns
-        reformed_df = reformed_df.drop(["Date", "value"], axis=1)
-
-        # Sort by "Most_Recent" column
+        reformed_df = pd.merge(melted_df, recent_df, on="Exercises")
+        reformed_df = reformed_df.drop("Date", axis=1)
+        reformed_df = reformed_df.drop("value", axis=1)
         reformed_df = reformed_df.sort_values(by=["Most_Recent"])
-
-        # Drop duplicate rows, keeping only the first occurrence of each exercise
-        reformed_df = reformed_df.drop_duplicates(subset=["Exercises"], keep="first")
-
-        # Calculate "Days Since" based on the most recent date
+        reformed_df = reformed_df.drop_duplicates(
+            subset=["Exercises"], keep="first"
+        )
         reformed_df["Days_Since_Last"] = (
-            datetime.datetime.now() - pd.to_datetime(reformed_df["Most_Recent"])
+                datetime.datetime.now()
+                - pd.to_datetime(reformed_df["Most_Recent"])
         ).dt.days
-
-        # Drop the "Most_Recent" column
         reformed_df = reformed_df.drop("Most_Recent", axis=1)
-
         return reformed_df
 
     """Drop Rows for Easier Data Presentation"""
@@ -478,9 +466,8 @@ def fitness() -> None:
             ui.separator().classes("w-full h-1").props("color=positive")
             table_c = ui.table(
                 columns=[
-                    {"name": col, "label": col, "field": col,
-                    "headerClasses": "border-b border-secondary",
-                    "align": 'left'}
+                    {"name": col, "label": col, "field": col, "headerClasses": "border-b border-secondary",
+                     "align": 'left'}
                     for col in upper_df.columns
                 ],
                 rows=upper_df.to_dict("records"),
@@ -489,7 +476,7 @@ def fitness() -> None:
             ).classes("text-lg font-normal my-table")
             table_c.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
-                <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
+                <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' : 'red'" text-color="black" outline>
                     {{ props.value }}
                 </q-badge>
                 </q-td>
@@ -503,9 +490,8 @@ def fitness() -> None:
             ui.separator().classes("w-full h-1").props("color=positive")
             table_b = ui.table(
                 columns=[
-                    {"name": col, "label": col, "field": col,
-                    "headerClasses": "border-b border-secondary",
-                    "align": 'left'}
+                    {"name": col, "label": col, "field": col, "headerClasses": "border-b border-secondary",
+                     "align": 'left'}
                     for col in lower_df.columns
                 ],
                 rows=lower_df.to_dict("records"),
@@ -515,7 +501,7 @@ def fitness() -> None:
             table_b.add_slot('body-cell-Days_Since_Last', '''
                 <q-td key="Days_Since_Last" :props="props">
                 <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
-                {{ props.value }}
+                    {{ props.value }}
                 </q-badge>
                 </q-td>
                 ''')
@@ -529,9 +515,8 @@ def fitness() -> None:
                 ui.separator().classes("w-full h-1").props("color=positive")
                 table_a = ui.table(
                     columns=[
-                        {"name": col, "label": col, "field": col,
-                        "headerClasses": "border-b border-secondary",
-                        "align": 'left'}
+                        {"name": col, "label": col, "field": col, "headerClasses": "border-b border-secondary",
+                         "align": 'left'}
                         for col in abs_df.columns
                     ],
                     rows=abs_df.to_dict("records"),
@@ -550,20 +535,19 @@ def fitness() -> None:
                     'font-family : "Atkinson Hyperlegible"'
                 )
                 ui.separator().classes("w-full h-1").props("color=positive")
-                table_w = ui.table(
+                table = ui.table(
                     columns=[
-                        {"name": col, "label": col, "field": col,
-                        "headerClasses": "border-b border-secondary",
-                        "align": 'left'}
+                        {"name": col, "label": col, "field": col, "headerClasses": "border-b border-secondary",
+                         "align": 'left'}
                         for col in walk_df.columns
                     ],
                     rows=walk_df.to_dict("records"),
                 ).style(
                     "font-family: JetBrainsMono; background-color: #f5f5f5"
                 ).classes("text-lg font-normal my-table")
-                table_w.add_slot('body-cell-Days_Since_Last', '''
+                table.add_slot('body-cell-Days_Since_Last', '''
                     <q-td key="Days_Since_Last" :props="props">
-                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
+                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' : 'red'" outline>
                         {{ props.value }}
                     </q-badge>
                     </q-td>

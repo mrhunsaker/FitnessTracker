@@ -259,6 +259,13 @@ def create() -> None:
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     )
+                    u_hamstringCurlWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
                     u_hipThrusterReps = (
                         ui.number()
                         .classes("hidden")
@@ -336,6 +343,13 @@ def create() -> None:
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     )
+                    u_cyclistSquatWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
                     u_calfRaiseReps = (
                         ui.number()
                         .classes("hidden")
@@ -371,6 +385,27 @@ def create() -> None:
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     )
+                    u_longLeverCrunchesWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_sidelineSculptWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_abdominalsWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
                     u_sidelineSculpt = (
                         ui.number()
                         .classes("hidden")
@@ -399,25 +434,25 @@ def create() -> None:
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     )
-
+                    
                     def save(event):
                         """
                         Save workout data to individual exercise variables.
-
+                        
                         This function extracts data from input fields representing different exercises,
                         converts them to integers, and assigns the values to corresponding variables.
                         If an exercise value is not provided, it defaults to 0. The function also
                         captures the current date.
-
+                        
                         Parameters
                         ----------
                         event : EventType
                             The event triggering the save operation.
-
+                            
                         Returns
                         -------
                         None
-
+                        
                         Examples
                         --------
                         >>> save(some_event)
@@ -468,29 +503,32 @@ def create() -> None:
                             u_calfRaiseWeight,
                             u_longLeverCrunchesReps,
                             u_longLeverCrunchesSets,
+                            u_longLeverCrunchesWeight,
                             u_sidelineSculpt,
+                            u_sidelineSculptWeight,
                             u_abdominals,
+                            u_abdominalsWeight,
                             u_walk,
                             u_walkDistance,
                         ]
                         for exercise in exercises:
                             """
                             Ensure exercise values are not None.
-
+                            
                             This loop iterates through a list of exercise objects and checks if the
                             'value' attribute of each exercise is None. If it is, the 'value' attribute
                             is set to 0. If the 'value' attribute is not None, the loop continues to the
                             next iteration.
-
+                            
                             Parameters
                             ----------
                             exercises : list
                                 A list of exercise objects with a 'value' attribute.
-
+                                
                             Returns
                             -------
                             None
-
+                            
                             Examples
                             --------
                             >>> exercises = [exercise1, exercise2, exercise3]
@@ -509,7 +547,15 @@ def create() -> None:
                             else:
                                 continue
                         today_date_str = str(u_today_date.value)
-                        today_date = datetime.strptime(today_date_str, "%Y-%m-%d")
+                        try:
+                            today_date = datetime.strptime(today_date_str, "%Y-%m-%d")
+                        except ValueError as e:
+                            ui.notify(
+                                str(e),  # Converting exception object to string for the error message
+                                position="center",
+                                type="warning",
+                                close_button="OK",
+                            )
                         today_date = today_date.strftime("%Y-%m-%d %H:%M:%S")
                         frontlineRaiseReps = int(u_frontlineRaiseReps.value)
                         frontlineRaiseSets = int(u_frontlineRaiseReps.value)
@@ -556,194 +602,223 @@ def create() -> None:
                         calfRaiseWeight = int(u_calfRaiseWeight.value)
                         longLeverCrunchesReps = int(u_longLeverCrunchesReps.value)
                         longLeverCrunchesSets = int(u_longLeverCrunchesSets.value)
+                        longLeverCrunchesWeight = int(u_longLeverCrunchesWeight.value)
                         sidelineSculpt = int(u_sidelineSculpt.value)
+                        sidelineSculptWeight = int(u_sidelineSculptWeight.value)
                         abdominals = int(u_abdominals.value)
+                        abdominalsWeight = int(u_abdominalsWeight.value)
                         walk = int(u_walk.value)
                         walkDistance = int(u_walkDistance.value)
-
+                        
                         def data_entry():
                             """
                             Insert workout data into the WORKOUTS table in the SQLite database.
-
+                            
                             This function connects to the SQLite database, creates a cursor, and executes
                             an SQL INSERT statement to add workout data to the WORKOUTS table. The data is
                             provided as parameters, including the current date and various exercise details.
                             After execution, the changes are committed, and the connection is closed.
-
+                            
                             Parameters
                             ----------
                             None
-
+                            
                             Returns
                             -------
                             None
-
+                            
                             Examples
                             --------
                             >>> data_entry()
                             """
-                            conn = sqlite3.connect(dataBasePath)
-                            if conn is not None:
-                                c = conn.cursor()
-                                c.execute(
-                                    """INSERT INTO WORKOUTS (
-                                    DATE,
-                                    FRONTLINE_REPS,
-                                    FRONTLINE_SETS,
-                                    FRONTLINE_WEIGHT,
-                                    SHOULDERZPRESS_REPS,
-                                    SHOULDERZPRESS_SETS,
-                                    SHOULDERZPRESS_WEIGHT,
-                                    ELBOWOUTROW_REPS,
-                                    ELBOWOUTROW_SETS,
-                                    ELBOWOUTROW_WEIGHT,
-                                    SUPINEBICEPCURL_REPS,
-                                    SUPINEBICEPCURL_SETS,
-                                    SUPINEBICEPCURL_WEIGHT,
-                                    CLOSEGRIPPUSHUP_REPS,
-                                    CLOSEGRIPPUSHUP_SETS,
-                                    CLOSEGRIPPUSHUP_STAIR,
-                                    REARDELTFLY_REPS,
-                                    REARDELTFLY_SETS,
-                                    REARDELTFLY_WEIGHT,
-                                    SIDEBEND_REPS,
-                                    SIDEBEND_SETS,
-                                    SIDEBEND_WEIGHT,
-                                    LATERALRAISE_REPS,
-                                    LATERALRAISE_SETS,
-                                    LATERALRAISE_WEIGHT,
-                                    STIFFLEGRDL_REPS,
-                                    STIFFLEGRDL_SETS,
-                                    STIFFLEGRDL_WEIGHT,
-                                    SLIDERHAMSTRINGCURL_REPS,
-                                    SLIDERHAMSTRINGCURL_SETS,
-                                    HIPTHRUSTER_REPS,
-                                    HIPTHRUSTER_SETS,
-                                    HIPTHRUSTER_WEIGHT,
-                                    FORWARDSQUAT_REPS,
-                                    FORWARDSQUAT_SETS,
-                                    FORWARDSQUAT_WEIGHT,
-                                    SUMOSQUAT_REPS,
-                                    SUMOSQUAT_SETS,
-                                    SUMOSQUAT_WEIGHT,
-                                    CYCLISTSQUAT_REPS,
-                                    CYCLISTSQUAT_SETS,
-                                    SINGLELEGCALFRAISE_REPS,
-                                    SINGLELEGCALFRAISE_SETS,
-                                    LONGLEVERCRUNCHES_REPS,
-                                    LONGLEVERCRUNCHES_SETS,
-                                    SIDELINESCULPT,
-                                    ABDOMINALS,
-                                    WALK,
-                                    WALK_DISTANCE
-                                    )
-                                    VALUES (
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?
-                                    )
-                                    """,
-                                    (
-                                        today_date,
-                                        frontlineRaiseReps,
-                                        frontlineRaiseSets,
-                                        frontlineRaiseWeight,
-                                        shoulderPressReps,
-                                        shoulderPressSets,
-                                        shoulderPressWeight,
-                                        elbowOutRowReps,
-                                        elbowOutRowSets,
-                                        elbowOutRowWeight,
-                                        bicepCurlReps,
-                                        bicepCurlSets,
-                                        bicepCurlWeight,
-                                        closeGripPushupReps,
-                                        closeGripPushupSets,
-                                        closeGripPushupWeight,
-                                        rearDeltFlyReps,
-                                        rearDeltFlySets,
-                                        rearDeltFlyWeight,
-                                        sideBendReps,
-                                        sideBendSets,
-                                        sideBendWeight,
-                                        lateralRaiseReps,
-                                        lateralRaiseSets,
-                                        lateralRaiseWeight,
-                                        stiffLegRDLReps,
-                                        stiffLegRDLSets,
-                                        stiffLegRDLWeight,
-                                        hamstringCurlReps,
-                                        hamstringCurlSets,
-                                        hipThrusterReps,
-                                        hipThrusterSets,
-                                        hipThrusterWeight,
-                                        frontSquatReps,
-                                        frontSquatSets,
-                                        frontSquatWeight,
-                                        sumoSquatReps,
-                                        sumoSquatSets,
-                                        sumoSquatWeight,
-                                        cyclistSquatReps,
-                                        cyclistSquatSets,
-                                        calfRaiseReps,
-                                        calfRaiseSets,
-                                        longLeverCrunchesReps,
-                                        longLeverCrunchesSets,
-                                        sidelineSculpt,
-                                        abdominals,
-                                        walk,
-                                        walkDistance,
-                                    ),
+                            try:
+                                conn = sqlite3.connect(dataBasePath)
+                                if conn is not None:
+                                    c = conn.cursor()
+                                    try:
+                                        c.execute(
+                                            """INSERT INTO WORKOUTS (
+                                            DATE,
+                                            FRONTLINE_REPS,
+                                            FRONTLINE_SETS,
+                                            FRONTLINE_WEIGHT,
+                                            SHOULDERZPRESS_REPS,
+                                            SHOULDERZPRESS_SETS,
+                                            SHOULDERZPRESS_WEIGHT,
+                                            ELBOWOUTROW_REPS,
+                                            ELBOWOUTROW_SETS,
+                                            ELBOWOUTROW_WEIGHT,
+                                            SUPINEBICEPCURL_REPS,
+                                            SUPINEBICEPCURL_SETS,
+                                            SUPINEBICEPCURL_WEIGHT,
+                                            CLOSEGRIPPUSHUP_REPS,
+                                            CLOSEGRIPPUSHUP_SETS,
+                                            CLOSEGRIPPUSHUP_STAIR,
+                                            REARDELTFLY_REPS,
+                                            REARDELTFLY_SETS,
+                                            REARDELTFLY_WEIGHT,
+                                            SIDEBEND_REPS,
+                                            SIDEBEND_SETS,
+                                            SIDEBEND_WEIGHT,
+                                            LATERALRAISE_REPS,
+                                            LATERALRAISE_SETS,
+                                            LATERALRAISE_WEIGHT,
+                                            STIFFLEGRDL_REPS,
+                                            STIFFLEGRDL_SETS,
+                                            STIFFLEGRDL_WEIGHT,
+                                            SLIDERHAMSTRINGCURL_REPS,
+                                            SLIDERHAMSTRINGCURL_SETS,
+                                            HIPTHRUSTER_REPS,
+                                            HIPTHRUSTER_SETS,
+                                            HIPTHRUSTER_WEIGHT,
+                                            FORWARDSQUAT_REPS,
+                                            FORWARDSQUAT_SETS,
+                                            FORWARDSQUAT_WEIGHT,
+                                            SUMOSQUAT_REPS,
+                                            SUMOSQUAT_SETS,
+                                            SUMOSQUAT_WEIGHT,
+                                            CYCLISTSQUAT_REPS,
+                                            CYCLISTSQUAT_SETS,
+                                            SINGLELEGCALFRAISE_REPS,
+                                            SINGLELEGCALFRAISE_SETS,
+                                            SINGLELEGCALFRAISE_WEIGHT,
+                                            LONGLEVERCRUNCHES_REPS,
+                                            LONGLEVERCRUNCHES_SETS,
+                                            LONGLEVERCRUNCHES_WEIGHT,
+                                            SIDELINESCULPT,
+                                            SIDELINESCULPT_WEIGHT,
+                                            ABDOMINALS,
+                                            ABDOMINALS_WEIGHT,
+                                            WALK,
+                                            WALK_DISTANCE
+                                            )
+                                            VALUES (
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?
+                                            )
+                                            """,
+                                            (
+                                                today_date, 
+                                                frontlineRaiseReps,
+                                                frontlineRaiseSets,
+                                                frontlineRaiseWeight,
+                                                shoulderPressReps,
+                                                shoulderPressSets,
+                                                shoulderPressWeight,
+                                                elbowOutRowReps,
+                                                elbowOutRowSets,
+                                                elbowOutRowWeight,
+                                                bicepCurlReps,
+                                                bicepCurlSets,
+                                                bicepCurlWeight,
+                                                closeGripPushupReps,
+                                                closeGripPushupSets,
+                                                closeGripPushupWeight,
+                                                rearDeltFlyReps,
+                                                rearDeltFlySets,
+                                                rearDeltFlyWeight,
+                                                sideBendReps,
+                                                sideBendSets,
+                                                sideBendWeight,
+                                                lateralRaiseReps,
+                                                lateralRaiseSets,
+                                                lateralRaiseWeight,
+                                                stiffLegRDLReps,
+                                                stiffLegRDLSets,
+                                                stiffLegRDLWeight,
+                                                hamstringCurlReps,
+                                                hamstringCurlSets,
+                                                hipThrusterReps,
+                                                hipThrusterSets,
+                                                hipThrusterWeight,
+                                                frontSquatReps,
+                                                frontSquatSets,
+                                                frontSquatWeight,
+                                                sumoSquatReps,
+                                                sumoSquatSets,
+                                                sumoSquatWeight,
+                                                cyclistSquatReps,
+                                                cyclistSquatSets,
+                                                calfRaiseReps,
+                                                calfRaiseSets,
+                                                calfRaiseWeight,
+                                                longLeverCrunchesReps,
+                                                longLeverCrunchesSets,
+                                                longLeverCrunchesWeight,
+                                                sidelineSculpt,
+                                                sidelineSculptWeight,
+                                                abdominals,
+                                                abdominalsWeight,
+                                                walk,
+                                                walkDistance,
+                                            ),
+                                        )
+                                        conn.commit()
+                                    except ValueError as e:
+                                        ui.notify(
+                                            str(e),  # Converting exception object to string for the error message
+                                            position="center",
+                                            type="negative",
+                                            close_button="OK",
+                                        )
+                            except sqlite3.Error as e:
+                                ui.notify(
+                                    f"SQLite error: {e}",
+                                    position="center",
+                                    type="negative",
+                                    close_button="OK",
                                 )
-                                conn.commit()
-                            else:
-                                print("Error! cannot create the database connection.")
                             conn.close()
                             ui.notify(
                                 "Saved successfully!",
@@ -751,9 +826,7 @@ def create() -> None:
                                 type="positive",
                                 close_button="OK",
                             )
-
                         data_entry()
-
                     with ui.row().classes("w-full no-wrap"):
                         ui.date(
                             value="f{datenow}",
@@ -769,7 +842,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontlineRaiseReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Frontline Raise Reps"'
@@ -778,7 +851,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontlineRaiseSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Frontline Raise Sets"'
@@ -787,7 +860,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontlineRaiseWeight.set_value(
                                 e.value
                             ),
@@ -802,7 +875,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_shoulderPressReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Shoulder Press Reps"'
@@ -811,7 +884,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_shoulderPressSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Shoulder Press Sets"'
@@ -820,7 +893,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_shoulderPressWeight.set_value(
                                 e.value
                             ),
@@ -835,7 +908,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_elbowOutRowReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Elbow Out Row Reps"'
@@ -844,7 +917,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_elbowOutRowSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Elbow Out Row Sets"'
@@ -853,7 +926,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_elbowOutRowWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Elbow Out Row Weight"'
@@ -868,7 +941,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_bicepCurlReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Bicep Curls Reps"'
@@ -877,7 +950,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_bicepCurlSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Bicep Curls Sets"'
@@ -886,7 +959,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_bicepCurlWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Bicep Curls Weight"'
@@ -899,7 +972,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_closeGripPushupReps.set_value(
                                 e.value
                             ),
@@ -910,7 +983,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_closeGripPushupSets.set_value(
                                 e.value
                             ),
@@ -921,7 +994,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="STAIR",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_closeGripPushupWeight.set_value(
                                 e.value
                             ),
@@ -938,7 +1011,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_rearDeltFlyReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Rear Delt Fly Reps"'
@@ -947,7 +1020,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_rearDeltFlySets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Rear Delt Fly Sets"'
@@ -956,7 +1029,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_rearDeltFlyWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Rear Delt Fly Weight"'
@@ -969,7 +1042,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sideBendReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Side Bend Reps"'
@@ -978,7 +1051,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sideBendSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Side Bend Sets"'
@@ -987,7 +1060,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sideBendWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Side Bend Weight"'
@@ -1000,7 +1073,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_lateralRaiseReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Lateral Raise Reps"'
@@ -1009,7 +1082,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_lateralRaiseSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Lateral Raise Sets"'
@@ -1018,7 +1091,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_lateralRaiseWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Lateral Raise Weight"'
@@ -1035,7 +1108,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_stiffLegRDLReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Stiff Leg RDL Reps"'
@@ -1044,7 +1117,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_stiffLegRDLSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Stiff Leg RDL Sets"'
@@ -1053,7 +1126,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_stiffLegRDLWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Stiff Leg RDL Sets"'
@@ -1066,7 +1139,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_hamstringCurlReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hamstring Curl Reps"'
@@ -1075,14 +1148,20 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_hamstringCurlSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hamstring Curl Sets"'
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-                        ui.label(" ").classes("w-1/4 text-base").style(
+                        ui.number(
+                            label="WEIGHT",
+                            value=0,
+                            on_change=lambda e: u_hamstringCurlWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Hamstring Curl Weight"'
+                        ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
@@ -1091,7 +1170,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_hipThrusterReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hip Thruster Reps"'
@@ -1100,7 +1179,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_hipThrusterSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hip Thruster Sets"'
@@ -1109,7 +1188,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_hipThrusterWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Hip Thruster Weight"'
@@ -1122,7 +1201,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontSquatReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Front Squat Reps"'
@@ -1131,7 +1210,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontSquatSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Front Squat Sets"'
@@ -1140,7 +1219,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_frontSquatWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Front Squat Weight"'
@@ -1153,7 +1232,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sumoSquatReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Forward Lunge Reps"'
@@ -1162,7 +1241,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sumoSquatSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Forward Lunge Sets"'
@@ -1171,7 +1250,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sumoSquatWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Forward Lunge Weight"'
@@ -1184,7 +1263,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_cyclistSquatReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Cyclist Squat Reps"'
@@ -1193,14 +1272,20 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_cyclistSquatSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Cyclist Squat Sets"'
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-                        ui.label(" ").classes("w-1/4 text-base").style(
+                        ui.number(
+                            label="WEIGHT",
+                            value=0,
+                            on_change=lambda e: u_cyclistSquatWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Cyclist Squat Weight"'
+                        ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
@@ -1209,7 +1294,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_calfRaiseReps.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Calf Raise Reps"'
@@ -1218,7 +1303,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_calfRaiseSets.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Calf Raise Sets"'
@@ -1227,7 +1312,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="WEIGHT",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_calfRaiseWeight.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label="Cald Raise Weight"'
@@ -1242,7 +1327,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="REPS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_longLeverCrunchesReps.set_value(
                                 e.value
                             ),
@@ -1253,7 +1338,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="SETS",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_longLeverCrunchesSets.set_value(
                                 e.value
                             ),
@@ -1262,7 +1347,15 @@ def create() -> None:
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-                        ui.label("").classes("w-1/4 text-base").style(
+                        ui.number(
+                            label="WEIGHT",
+                            value=0,
+                            on_change=lambda e: u_longLeverCrunchesWeight.set_value(
+                                e.value
+                            ),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Calf Raise Weight"'
+                        ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap py-4"):
@@ -1275,17 +1368,20 @@ def create() -> None:
                         )
                         ui.number(
                             label="DONE",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_sidelineSculpt.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
-                            'aria-label="Long Lever Crunch Reps"'
+                            'aria-label="Sideline Sculpt"'
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-                        ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-family : "Atkinson Hyperlegible"'
-                        )
-                        ui.label(" ").classes("w-1/4 text-base").style(
+                        ui.number(
+                            label="Weight",
+                            value=0,
+                            on_change=lambda e: u_sidelineSculptWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Sideline Sculpt Weight"'
+                        ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
@@ -1294,17 +1390,20 @@ def create() -> None:
                         )
                         ui.number(
                             label="DONE",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_abdominals.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
-                            'aria-label="Long Lever Crunch Sets"'
+                            'aria-label="Abdominals"'
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-                        ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-family : "Atkinson Hyperlegible"'
-                        )
-                        ui.label(" ").classes("w-1/4 text-base").style(
+                        ui.number(
+                            label="Weight",
+                            value=0,
+                            on_change=lambda e: u_abdominalsWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Abdominals Weight"'
+                        ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap py-4"):
@@ -1317,7 +1416,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="Did I Walk",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_walk.set_value(e.value),
                         ).classes("w-1/4 text-base").style(
                             'font-family : "Atkinson Hyperlegible"'
@@ -1334,7 +1433,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="Distance",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_walkDistance.set_value(
                                 math.ceil(e.value)
                             ),
@@ -1351,7 +1450,6 @@ def create() -> None:
                         ui.button("SAVE", on_click=save).props('color=secondary')
                         ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
                         ui.button("HOME", on_click=lambda: ui.open("/")).props('color=secondary')
-
             with ui.tab_panels(tabs, value="WORKOUT DATA"):
                 with ui.tab_panel("WORKOUT DATA"):
                     conn = sqlite3.connect(dataBasePath)
@@ -1362,33 +1460,39 @@ def create() -> None:
                     df_last8 = df.drop(
                         columns=[
                             "FRONTLINE_SETS",
-                            "FRONTLINE_WEIGHT",
                             "SHOULDERZPRESS_SETS",
-                            "SHOULDERZPRESS_WEIGHT",
                             "ELBOWOUTROW_SETS",
-                            "ELBOWOUTROW_WEIGHT",
                             "SUPINEBICEPCURL_SETS",
-                            "SUPINEBICEPCURL_WEIGHT",
                             "CLOSEGRIPPUSHUP_SETS",
-                            "CLOSEGRIPPUSHUP_STAIR",
                             "REARDELTFLY_SETS",
-                            "REARDELTFLY_WEIGHT",
                             "SIDEBEND_SETS",
-                            "SIDEBEND_WEIGHT",
                             "LATERALRAISE_SETS",
-                            "LATERALRAISE_WEIGHT",
                             "STIFFLEGRDL_SETS",
-                            "STIFFLEGRDL_WEIGHT",
                             "SLIDERHAMSTRINGCURL_SETS",
                             "HIPTHRUSTER_SETS",
-                            "HIPTHRUSTER_WEIGHT",
                             "FORWARDSQUAT_SETS",
-                            "FORWARDSQUAT_WEIGHT",
                             "SUMOSQUAT_SETS",
-                            "SUMOSQUAT_WEIGHT",
                             "CYCLISTSQUAT_SETS",
                             "SINGLELEGCALFRAISE_SETS",
                             "LONGLEVERCRUNCHES_SETS",
+                            "FRONTLINE_WEIGHT",
+                            "SHOULDERZPRESS_WEIGHT",
+                            "ELBOWOUTROW_WEIGHT",
+                            "SUPINEBICEPCURL_WEIGHT",
+                            "CLOSEGRIPPUSHUP_STAIR",
+                            "REARDELTFLY_WEIGHT",
+                            "SIDEBEND_WEIGHT",
+                            "LATERALRAISE_WEIGHT",
+                            "STIFFLEGRDL_WEIGHT",
+                            "SLIDERHAMSTRINGCURL_WEIGHT",
+                            "HIPTHRUSTER_WEIGHT",
+                            "FORWARDSQUAT_WEIGHT",
+                            "SUMOSQUAT_WEIGHT",
+                            "CYCLISTSQUAT_WEIGHT",
+                            "SINGLELEGCALFRAISE_WEIGHT",
+                            "LONGLEVERCRUNCHES_WEIGHT",
+                            "SIDELINESCULPT_WEIGHT",
+                            "ABDOMINALS_WEIGHT",
                         ]
                     )
                     df_last8 = df_last8.rename(
@@ -1419,56 +1523,61 @@ def create() -> None:
                     df = df.rename(
                         columns={
                             "DATE": "Date",
-                            "FRONTLINE_REPS": "Frontline reps",
-                            "FRONTLINE_SETS": "Frontline sets",
-                            "FRONTLINE_WEIGHT": "Frontline weight",
+                            "FRONTLINE_REPS": "Frontline POW Raise reps",
+                            "FRONTLINE_SETS": "Frontline POW Raise sets",
+                            "FRONTLINE_WEIGHT": "Frontline POW Raise Weight",
                             "DOWNDOGPUSHUP_REPS": "Downdog reps",
                             "DOWNDOGPUSHUP_SETS": "Downdog sets",
-                            "SHOULDERZPRESS_REPS": "Shoulder press reps",
-                            "SHOULDERZPRESS_SETS": "Shoulder press sets",
-                            "SHOULDERZPRESS_WEIGHT": "Shoulder press weight",
+                            "SHOULDERZPRESS_REPS": "Arnold press reps",
+                            "SHOULDERZPRESS_SETS": "Arnold press sets",
+                            "SHOULDERZPRESS_WEIGHT": "Arnold press Weight",
                             "ELBOWOUTROW_REPS": "Elbow Out Row reps",
                             "ELBOWOUTROW_SETS": "Elbow Out Row sets",
-                            "ELBOWOUTROW_WEIGHT": "Elbow Out Row weight",
-                            "SUPINEBICEPCURL_REPS": "Bicep Curl reps",
-                            "SUPINEBICEPCURL_SETS": "Bicep Curl sets",
-                            "SUPINEBICEPCURL_WEIGHT": "Bicep Curl weight",
+                            "ELBOWOUTROW_WEIGHT": "Elbow Out Row Weight",
+                            "SUPINEBICEPCURL_REPS": "Supinating Bicep Curl reps",
+                            "SUPINEBICEPCURL_SETS": "Supinating Bicep Curl sets",
+                            "SUPINEBICEPCURL_WEIGHT": "Supinting Bicep Curl Weight",
                             "CLOSEGRIPPUSHUP_REPS": "Close Grip Pushup reps",
                             "CLOSEGRIPPUSHUP_SETS": "Close Grip Pshup sets",
                             "CLOSEGRIPPUSHUP_STAIR": "Close Grip Pushup Stair",
                             "REARDELTFLY_REPS": "Rear Delt Fly reps",
                             "REARDELTFLY_SETS": "Rear Delt Fly sets",
-                            "REARDELTFLY_WEIGHT": "Rear Delt Fly weight",
+                            "REARDELTFLY_WEIGHT": "Rear Delt Fly Weight",
                             "SIDEBEND_REPS": "Side Bend reps",
                             "SIDEBEND_SETS": "Side Bend sets",
-                            "SIDEBEND_WEIGHT": "Side Bend weight",
+                            "SIDEBEND_WEIGHT": "Side Bend Weight",
                             "LATERALRAISE_REPS": "Lateral Raise reps",
                             "LATERALRAISE_SETS": "Lateral Raise sets",
-                            "LATERALRAISE_WEIGHT": "Lateral Raise weight",
-                            "STIFFLEGRDL_REPS": "Stiff Leg RDL reps",
-                            "STIFFLEGRDL_SETS": "Stiff Leg RDL sets",
-                            "STIFFLEGRDL_WEIGHT": "Stiff Leg RDL weight",
-                            "SLIDERHAMSTRINGCURL_REPS": "Slider Hamstring Curls reps",
-                            "SLIDERHAMSTRINGCURL_SETS": "Slider Hamstring Curls sets",
-                            "HIPTHRUSTER_REPS": "Hip Thruster reps",
-                            "HIPTHRUSTER_SETS": "Hip thruster sets",
-                            "HIPTHRUSTER_WEIGHT": "Hip thruster weight",
-                            "FORWARDSQUAT_REPS": "Front Squat reps",
-                            "FORWARDSQUAT_SETS": "Front Squat sets",
-                            "FORWARDSQUAT_WEIGHT": "Front Squat weight",
+                            "LATERALRAISE_WEIGHT": "Lateral Raise Weight",
+                            "STIFFLEGRDL_REPS": "Stiff Legged RDL reps",
+                            "STIFFLEGRDL_SETS": "Stiff Legged RDL sets",
+                            "STIFFLEGRDL_WEIGHT": "Stiff Legged RDL Weight",
+                            "SLIDERHAMSTRINGCURL_REPS": "Hamstring Curls reps",
+                            "SLIDERHAMSTRINGCURL_SETS": "Hamstring Curls sets",
+                            "HIPTHRUSTER_REPS": "Hip Thrusters reps",
+                            "HIPTHRUSTER_SETS": "Hip Thrusters sets",
+                            "HIPTHRUSTER_WEIGHT": "Hip Thrusters Weight",
+                            "FORWARDSQUAT_REPS": "Forward Squat reps",
+                            "FORWARDSQUAT_SETS": "Forward Squat sets",
+                            "FORWARDSQUAT_WEIGHT": "Forward Squat Weight",
                             "SUMOSQUAT_REPS": "Sumo Squat reps",
                             "SUMOSQUAT_SETS": "Sumo Squat sets",
-                            "SUMOSQUAT_WEIGHT": "Sumo Squat weight",
+                            "SUMOSQUAT_WEIGHT": "Sumo Squat Weight",
                             "CYCLISTSQUAT_REPS": "Cyclist Squat reps",
                             "CYCLISTSQUAT_SETS": "Cyclist Squat sets",
-                            "SINGLELEGCALFRAISE_REPS": "Single-Leg Calf Raise reps",
-                            "SINGLELEGCALFRAISE_SETS": "Single-Leg Calf Raise sets",
+                            "CYCLISTSQUAT_WEIGHT": "Cyclist Squat Weight",
+                            "SINGLELEGCALFRAISE_REPS": "Single Leg Calf Raise reps",
+                            "SINGLELEGCALFRAISE_SETS": "Single Leg Calf Raise sets",
+                            "SINGLELEGCALFRAISE_WEIGHT": "Single Leg Calf Raise Weight",
                             "LONGLEVERCRUNCHES_REPS": "Long Lever Crunches reps",
                             "LONGLEVERCRUNCHES_SETS": "Long Lever Crunches sets",
+                            "LONGLEVERCRUNCHES_WEIGHT": "Long Lever Crunches Weight",
                             "SIDELINESCULPT": "Sideline Scupt",
                             "ABDOMINALS": "Abdominals",
+                            "SIDELINESCULPT_WEIGHT": "Sideline Scupt Weight",
+                            "ABDOMINALS_WEIGHT": "Abdominals Weight",
                             "WALK": "Walk",
-                            "WALK_DISTANCE": "Distance Walked",
+                            "WALK_DISTANCE": "Walk Distance",
                         }
                     )
                     lower_df = df_last8.drop(
@@ -1548,17 +1657,17 @@ def create() -> None:
                             "Distance Walked",
                         ]
                     )
-
+                    
                     def reshape_and_rename(input_df):
                         """
                         Reshape and rename a DataFrame containing exercise data.
-
+                        
                         Parameters
                         ----------
                         input_df : pandas.DataFrame
                             Input DataFrame containing exercise data with columns 'Date', exercise names as columns,
                             and corresponding values representing exercise metrics.
-
+                            
                         Returns
                         -------
                         pandas.DataFrame
@@ -1566,7 +1675,7 @@ def create() -> None:
                             - 'Exercises': Exercise names.
                             - 'Most Recent': The most recent date for each exercise.
                             - 'Days Since Last': Number of days since the last exercise recorded.
-
+                            
                         Notes
                         -----
                         This function performs the following steps:
@@ -1577,7 +1686,7 @@ def create() -> None:
                         5. Drop unnecessary columns ('Date', 'value') and sort by the most recent date.
                         6. Keep only the first occurrence of each exercise, removing duplicates.
                         7. Calculate the 'Days Since Last' based on the time elapsed since the previous record.
-
+                        
                         Examples
                         --------
                         >>> import pandas as pd
@@ -1598,28 +1707,41 @@ def create() -> None:
                             var_name="Exercises",
                             value_name="value",
                         )
-                        melted_df = melted_df[melted_df["value"] != 0]
-                        melted_df = melted_df[melted_df["value"].notna()]
+                        # Filter out rows with zero values and NaN values
+                        melted_df = melted_df[(melted_df["value"] != 0) & melted_df["value"].notna()]
+                        # Group by "Exercises" and find the most recent date for each
                         recent_df = (
-                            melted_df.groupby("Exercises")
+                            melted_df.groupby(["Exercises"])
                             .agg({"Date": "max"})
                             .reset_index()
                         )
                         recent_df.columns = ["Exercises", "Most_Recent"]
-                        reformed_df = pd.merge(melted_df, recent_df, on="Exercises")
-                        reformed_df = reformed_df.drop("Date", axis=1)
-                        reformed_df = reformed_df.drop("value", axis=1)
+                        # Merge melted_df with recent_df based on "Exercises" and "Weight"
+                        reformed_df = pd.merge(melted_df, recent_df, on=["Exercises"])
+                        # Drop unnecessary columns
+                        reformed_df = reformed_df.drop(["Date", "value"], axis=1)
+                        # Sort by "Most_Recent" column
                         reformed_df = reformed_df.sort_values(by=["Most_Recent"])
-                        reformed_df = reformed_df.drop_duplicates(
-                            subset=["Exercises"], keep="first"
-                        )
+                        # Drop duplicate rows, keeping only the first occurrence of each exercise
+                        reformed_df = reformed_df.drop_duplicates(subset=["Exercises"], keep="first")
+                        # Calculate "Days Since" based on the most recent date
                         reformed_df["Days_Since_Last"] = (
-                                datetime.now()
-                                - pd.to_datetime(reformed_df["Most_Recent"])
+                            datetime.now() - pd.to_datetime(reformed_df["Most_Recent"])
                         ).dt.days
+                        # Drop the "Most_Recent" column
                         reformed_df = reformed_df.drop("Most_Recent", axis=1)
                         return reformed_df
-
+                    # Filter the columns
+                    df_filtered = df[[col for col in df.columns if col.lower().endswith(('weight', 'distance', 'stair'))]]
+                    # Melt the dataframe
+                    melted_df = df_filtered.melt(var_name='Exercise', value_name='Level')
+                    # Remove NaN and null values
+                    melted_df = melted_df.dropna()
+                    # Remove 0 values
+                    melted_df = melted_df[melted_df['Level'] != 0]
+                    # Get the most recent 'Level' for each 'Exercise'
+                    previous_weight = melted_df.groupby('Exercise').last().reset_index()
+                    print(previous_weight)
                     """Drop Rows for Easier Data Presentation"""
                     upper_df = reshape_and_rename(upper_df)
                     lower_df = reshape_and_rename(lower_df)
@@ -1633,57 +1755,32 @@ def create() -> None:
                             "text-3xl text-bold"
                         ).style('font-family : "JetBrainsMono"')
                     with ui.row():
-                        with ui.card():
-                            ui.label("Upper Body Exercises").classes(
-                                "text-xl text-bold"
-                            ).style(
-                                'font-family : "Atkinson Hyperlegible"'
-                            )
-                            ui.separator().classes("w-full h-1").props("color=positive")
-                            table_c = ui.table(
-                                columns=[
-                                    {"name": col, "label": col, "field": col,
-                                     "headerClasses": "border-b border-secondary",
-                                     "align": 'left'}
-                                    for col in upper_df.columns
-                                ],
-                                rows=upper_df.to_dict("records"),
-                            ).style(
-                                "font-family: JetBrainsMono; background-color: #f5f5f5"
-                            ).classes("text-lg font-normal my-table")
-                            table_c.add_slot('body-cell-Days_Since_Last', '''
-                                <q-td key="Days_Since_Last" :props="props">
-                                <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
-                                    {{ props.value }}
-                                </q-badge>
-                                </q-td>
-                                ''')
-                        with ui.card():
-                            ui.label("Lower Body Exercises").classes(
-                                "text-xl text-bold"
-                            ).style(
-                                'font-family : "Atkinson Hyperlegible"'
-                            )
-                            ui.separator().classes("w-full h-1").props("color=positive")
-                            table_b = ui.table(
-                                columns=[
-                                    {"name": col, "label": col, "field": col,
-                                     "headerClasses": "border-b border-secondary",
-                                     "align": 'left'}
-                                    for col in lower_df.columns
-                                ],
-                                rows=lower_df.to_dict("records"),
-                            ).style(
-                                "font-family: JetBrainsMono; background-color: #f5f5f5"
-                            ).classes("text-lg font-normal my-table")
-                            table_b.add_slot('body-cell-Days_Since_Last', '''
-                                <q-td key="Days_Since_Last" :props="props">
-                                <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
-                                {{ props.value }}
-                                </q-badge>
-                                </q-td>
-                                ''')
                         with ui.column():
+                            with ui.card():
+                                ui.label("Upper Body Exercises").classes(
+                                    "text-xl text-bold"
+                                ).style(
+                                    'font-family : "Atkinson Hyperlegible"'
+                                )
+                                ui.separator().classes("w-full h-1").props("color=positive")
+                                table_c = ui.table(
+                                    columns=[
+                                        {"name": col, "label": col, "field": col,
+                                        "headerClasses": "border-b border-secondary",
+                                        "align": 'left'}
+                                        for col in upper_df.columns
+                                    ],
+                                    rows=upper_df.to_dict("records"),
+                                ).style(
+                                    "font-family: JetBrainsMono; background-color: #f5f5f5"
+                                ).classes("text-lg font-normal my-table")
+                                table_c.add_slot('body-cell-Days_Since_Last', '''
+                                    <q-td key="Days_Since_Last" :props="props">
+                                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
+                                        {{ props.value }}
+                                    </q-badge>
+                                    </q-td>
+                                    ''')
                             with ui.card():
                                 ui.label("Abdominal Exercises").classes(
                                     "text-xl text-bold"
@@ -1694,8 +1791,8 @@ def create() -> None:
                                 table_a = ui.table(
                                     columns=[
                                         {"name": col, "label": col, "field": col,
-                                         "headerClasses": "border-b border-secondary",
-                                         "align": 'left'}
+                                        "headerClasses": "border-b border-secondary",
+                                        "align": 'left'}
                                         for col in abs_df.columns
                                     ],
                                     rows=abs_df.to_dict("records"),
@@ -1709,6 +1806,32 @@ def create() -> None:
                                     </q-badge>
                                     </q-td>
                                     ''')
+                        with ui.column():
+                            with ui.card():
+                                ui.label("Lower Body Exercises").classes(
+                                    "text-xl text-bold"
+                                ).style(
+                                    'font-family : "Atkinson Hyperlegible"'
+                                )
+                                ui.separator().classes("w-full h-1").props("color=positive")
+                                table_b = ui.table(
+                                    columns=[
+                                        {"name": col, "label": col, "field": col,
+                                        "headerClasses": "border-b border-secondary",
+                                        "align": 'left'}
+                                        for col in lower_df.columns
+                                    ],
+                                    rows=lower_df.to_dict("records"),
+                                ).style(
+                                    "font-family: JetBrainsMono; background-color: #f5f5f5"
+                                ).classes("text-lg font-normal my-table")
+                                table_b.add_slot('body-cell-Days_Since_Last', '''
+                                    <q-td key="Days_Since_Last" :props="props">
+                                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
+                                    {{ props.value }}
+                                    </q-badge>
+                                    </q-td>
+                                    ''')
                             with ui.card():
                                 ui.label("Walking").classes("text-xl text-bold").style(
                                     'font-family : "Atkinson Hyperlegible"'
@@ -1717,8 +1840,8 @@ def create() -> None:
                                 table_w = ui.table(
                                     columns=[
                                         {"name": col, "label": col, "field": col,
-                                         "headerClasses": "border-b border-secondary",
-                                         "align": 'left'}
+                                        "headerClasses": "border-b border-secondary",
+                                        "align": 'left'}
                                         for col in walk_df.columns
                                     ],
                                     rows=walk_df.to_dict("records"),
@@ -1732,23 +1855,42 @@ def create() -> None:
                                     </q-badge>
                                     </q-td>
                                     ''')
+                        with ui.card():
+                            ui.label("Previous Weight").classes(
+                                "text-xl text-bold"
+                            ).style(
+                                'font-family : "Atkinson Hyperlegible"'
+                            )
+                            ui.separator().classes("w-full h-1").props("color=positive")
+                            table_b = ui.table(
+                                columns=[
+                                    {"name": col, "label": col, "field": col,
+                                    "headerClasses": "border-b border-secondary",
+                                    "align": 'left'}
+                                    for col in previous_weight.columns
+                                ],
+                                rows=previous_weight.to_dict("records"),
+                            ).style(
+                                "font-family: JetBrainsMono; background-color: #f5f5f5"
+                            ).classes("text-lg font-normal my-table") 
                     with ui.row():
                         ui.label("Cumulative Exercise Log").classes(
                             "text-3xl text-bold"
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-
                     table = (
                         ui.table(
                             columns=[
                                 {"name": col,
-                                 "label": col,
-                                 "field": col,
-                                 "headerClasses": "border-b border-secondary",
-                                 "align": 'left'}
+                                "label": col,
+                                "field": col,
+                                "headerClasses": "border-b border-secondary",
+                                "align": 'left'}
                                 for col in df.columns
                             ],
                             rows=df.to_dict("records"), pagination={'rowsPerPage': 10}
                         ).style("font-family: JetBrainsMono; background-color: #f5f5f5").classes('my-table')
                     )
+
+

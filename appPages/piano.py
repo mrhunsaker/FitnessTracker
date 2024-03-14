@@ -22,10 +22,11 @@ Program designed to be a data collection and instructional tool for
 teachers of students with Visual Impairments
 """
 
-import datetime
+
 import os
 import sqlite3
 import sys
+from datetime import datetime
 
 import pandas as pd
 from nicegui import ui, app
@@ -93,7 +94,18 @@ def create() -> None:
                         >>> save(some_event)
                         """
 
-                        today_date = u_today_date.value
+                        today_date_str = str(u_today_date.value)
+                        try:
+                            today_date = datetime.strptime(today_date_str, "%Y-%m-%d")
+                        except ValueError as e:
+                            ui.notify(
+                                f"{e}. \n\n Please click a valid date in the date picker above",
+                                position="center",
+                                type="negative",
+                                close_button="OK",
+                                multi_line=True,
+                                classes='multi-line-notification',
+                            )
                         piano = int(u_piano.value)
                         lesson = str(u_lesson.value)
                         recital = str(u_recital.value)
@@ -119,41 +131,48 @@ def create() -> None:
                             --------
                             >>> data_entry()
                             """
-                            conn = sqlite3.connect(dataBasePath)
-                            if conn is not None:
-                                c = conn.cursor()
-                                c.execute(
-                                    """INSERT INTO PIANO (
-                                    DATE,
-                                    PIANO,
-                                    LESSON,
-                                    RECITAL
+                            try:
+                                conn = sqlite3.connect(dataBasePath)
+                                if conn is not None:
+                                    c = conn.cursor()
+                                    c.execute(
+                                        """INSERT INTO PIANO (
+                                        DATE,
+                                        PIANO,
+                                        LESSON,
+                                        RECITAL
+                                        )
+                                        VALUES (
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?
+                                        )
+                                        """,
+                                        (
+                                            today_date,
+                                            piano,
+                                            lesson,
+                                            recital,
+                                        ),
                                     )
-                                    VALUES (
-                                    ?,
-                                    ?,
-                                    ?,
-                                    ?
-                                    )
-                                    """,
-                                    (
-                                        today_date,
-                                        piano,
-                                        lesson,
-                                        recital,
-                                    ),
+                                    conn.commit()
+                                else:
+                                    print("Error! cannot create the database connection.")
+                                    conn.close()
+                                ui.notify(
+                                    "Saved successfully!",
+                                    position="center",
+                                    type="positive",
+                                    close_button="OK",
                                 )
-                                conn.commit()
-                            else:
-                                print("Error! cannot create the database connection.")
-                                conn.close()
-                            ui.notify(
-                                "Saved successfully!",
-                                position="center",
-                                type="positive",
-                                close_button="OK",
-                            )
-
+                            except sqlite3.Error as e:
+                                ui.notify(
+                                    f"SQLite error: {e}",
+                                    position="center",
+                                    type="negative",
+                                    close_button="OK",
+                                )
                         data_entry()
 
                     with ui.row().classes("w-full no-wrap"):
@@ -171,7 +190,7 @@ def create() -> None:
                         )
                         ui.number(
                             label="Practice",
-                            value="",
+                            value=0,
                             on_change=lambda e: u_piano.set_value(e.value),
                         ).classes("w-1/4 text-base").props(
                             'aria-label=Practice'
@@ -292,7 +311,7 @@ def create() -> None:
                             subset=["Exercises"], keep="first"
                         )
                         reformed_df["Days_Since_Last"] = (
-                                datetime.datetime.now()
+                                datetime.now()
                                 - pd.to_datetime(reformed_df["Most_Recent"])
                         ).dt.days
                         reformed_df = reformed_df.drop("Most_Recent", axis=1)
