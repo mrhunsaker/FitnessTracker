@@ -385,6 +385,13 @@ def create() -> None:
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     )
+                    u_longLeverCrunchesWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
                     u_sidelineSculptWeight = (
                         ui.number()
                         .classes("hidden")
@@ -427,25 +434,25 @@ def create() -> None:
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     )
-
+                    
                     def save(event):
                         """
                         Save workout data to individual exercise variables.
-
+                        
                         This function extracts data from input fields representing different exercises,
                         converts them to integers, and assigns the values to corresponding variables.
                         If an exercise value is not provided, it defaults to 0. The function also
                         captures the current date.
-
+                        
                         Parameters
                         ----------
                         event : EventType
                             The event triggering the save operation.
-
+                            
                         Returns
                         -------
                         None
-
+                        
                         Examples
                         --------
                         >>> save(some_event)
@@ -496,6 +503,7 @@ def create() -> None:
                             u_calfRaiseWeight,
                             u_longLeverCrunchesReps,
                             u_longLeverCrunchesSets,
+                            u_longLeverCrunchesWeight,
                             u_sidelineSculpt,
                             u_sidelineSculptWeight,
                             u_abdominals,
@@ -506,21 +514,21 @@ def create() -> None:
                         for exercise in exercises:
                             """
                             Ensure exercise values are not None.
-
+                            
                             This loop iterates through a list of exercise objects and checks if the
                             'value' attribute of each exercise is None. If it is, the 'value' attribute
                             is set to 0. If the 'value' attribute is not None, the loop continues to the
                             next iteration.
-
+                            
                             Parameters
                             ----------
                             exercises : list
                                 A list of exercise objects with a 'value' attribute.
-
+                                
                             Returns
                             -------
                             None
-
+                            
                             Examples
                             --------
                             >>> exercises = [exercise1, exercise2, exercise3]
@@ -594,30 +602,31 @@ def create() -> None:
                         calfRaiseWeight = int(u_calfRaiseWeight.value)
                         longLeverCrunchesReps = int(u_longLeverCrunchesReps.value)
                         longLeverCrunchesSets = int(u_longLeverCrunchesSets.value)
+                        longLeverCrunchesWeight = int(u_longLeverCrunchesWeight.value)
                         sidelineSculpt = int(u_sidelineSculpt.value)
                         sidelineSculptWeight = int(u_sidelineSculptWeight.value)
                         abdominals = int(u_abdominals.value)
                         abdominalsWeight = int(u_abdominalsWeight.value)
                         walk = int(u_walk.value)
                         walkDistance = int(u_walkDistance.value)
-
+                        
                         def data_entry():
                             """
                             Insert workout data into the WORKOUTS table in the SQLite database.
-
+                            
                             This function connects to the SQLite database, creates a cursor, and executes
                             an SQL INSERT statement to add workout data to the WORKOUTS table. The data is
                             provided as parameters, including the current date and various exercise details.
                             After execution, the changes are committed, and the connection is closed.
-
+                            
                             Parameters
                             ----------
                             None
-
+                            
                             Returns
                             -------
                             None
-
+                            
                             Examples
                             --------
                             >>> data_entry()
@@ -675,6 +684,7 @@ def create() -> None:
                                             SINGLELEGCALFRAISE_WEIGHT,
                                             LONGLEVERCRUNCHES_REPS,
                                             LONGLEVERCRUNCHES_SETS,
+                                            LONGLEVERCRUNCHES_WEIGHT,
                                             SIDELINESCULPT,
                                             SIDELINESCULPT_WEIGHT,
                                             ABDOMINALS,
@@ -683,6 +693,7 @@ def create() -> None:
                                             WALK_DISTANCE
                                             )
                                             VALUES (
+                                            ?,
                                             ?,
                                             ?,
                                             ?,
@@ -784,6 +795,7 @@ def create() -> None:
                                                 calfRaiseWeight,
                                                 longLeverCrunchesReps,
                                                 longLeverCrunchesSets,
+                                                longLeverCrunchesWeight,
                                                 sidelineSculpt,
                                                 sidelineSculptWeight,
                                                 abdominals,
@@ -814,9 +826,7 @@ def create() -> None:
                                 type="positive",
                                 close_button="OK",
                             )
-
                         data_entry()
-
                     with ui.row().classes("w-full no-wrap"):
                         ui.date(
                             value="f{datenow}",
@@ -1337,7 +1347,15 @@ def create() -> None:
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-                        ui.label("").classes("w-1/4 text-base").style(
+                        ui.number(
+                            label="WEIGHT",
+                            value=0,
+                            on_change=lambda e: u_longLeverCrunchesWeight.set_value(
+                                e.value
+                            ),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Calf Raise Weight"'
+                        ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap py-4"):
@@ -1432,7 +1450,6 @@ def create() -> None:
                         ui.button("SAVE", on_click=save).props('color=secondary')
                         ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
                         ui.button("HOME", on_click=lambda: ui.open("/")).props('color=secondary')
-
             with ui.tab_panels(tabs, value="WORKOUT DATA"):
                 with ui.tab_panel("WORKOUT DATA"):
                     conn = sqlite3.connect(dataBasePath)
@@ -1640,17 +1657,17 @@ def create() -> None:
                             "Distance Walked",
                         ]
                     )
-
+                    
                     def reshape_and_rename(input_df):
                         """
                         Reshape and rename a DataFrame containing exercise data.
-
+                        
                         Parameters
                         ----------
                         input_df : pandas.DataFrame
                             Input DataFrame containing exercise data with columns 'Date', exercise names as columns,
                             and corresponding values representing exercise metrics.
-
+                            
                         Returns
                         -------
                         pandas.DataFrame
@@ -1658,7 +1675,7 @@ def create() -> None:
                             - 'Exercises': Exercise names.
                             - 'Most Recent': The most recent date for each exercise.
                             - 'Days Since Last': Number of days since the last exercise recorded.
-
+                            
                         Notes
                         -----
                         This function performs the following steps:
@@ -1669,7 +1686,7 @@ def create() -> None:
                         5. Drop unnecessary columns ('Date', 'value') and sort by the most recent date.
                         6. Keep only the first occurrence of each exercise, removing duplicates.
                         7. Calculate the 'Days Since Last' based on the time elapsed since the previous record.
-
+                        
                         Examples
                         --------
                         >>> import pandas as pd
@@ -1690,10 +1707,8 @@ def create() -> None:
                             var_name="Exercises",
                             value_name="value",
                         )
-
                         # Filter out rows with zero values and NaN values
                         melted_df = melted_df[(melted_df["value"] != 0) & melted_df["value"].notna()]
-
                         # Group by "Exercises" and find the most recent date for each
                         recent_df = (
                             melted_df.groupby(["Exercises"])
@@ -1701,41 +1716,29 @@ def create() -> None:
                             .reset_index()
                         )
                         recent_df.columns = ["Exercises", "Most_Recent"]
-
                         # Merge melted_df with recent_df based on "Exercises" and "Weight"
                         reformed_df = pd.merge(melted_df, recent_df, on=["Exercises"])
-
                         # Drop unnecessary columns
                         reformed_df = reformed_df.drop(["Date", "value"], axis=1)
-
                         # Sort by "Most_Recent" column
                         reformed_df = reformed_df.sort_values(by=["Most_Recent"])
-
                         # Drop duplicate rows, keeping only the first occurrence of each exercise
                         reformed_df = reformed_df.drop_duplicates(subset=["Exercises"], keep="first")
-
                         # Calculate "Days Since" based on the most recent date
                         reformed_df["Days_Since_Last"] = (
                             datetime.now() - pd.to_datetime(reformed_df["Most_Recent"])
                         ).dt.days
-
                         # Drop the "Most_Recent" column
                         reformed_df = reformed_df.drop("Most_Recent", axis=1)
-
                         return reformed_df
-
                     # Filter the columns
                     df_filtered = df[[col for col in df.columns if col.lower().endswith(('weight', 'distance', 'stair'))]]
-
                     # Melt the dataframe
                     melted_df = df_filtered.melt(var_name='Exercise', value_name='Level')
-
                     # Remove NaN and null values
                     melted_df = melted_df.dropna()
-
                     # Remove 0 values
                     melted_df = melted_df[melted_df['Level'] != 0]
-
                     # Get the most recent 'Level' for each 'Exercise'
                     previous_weight = melted_df.groupby('Exercise').last().reset_index()
                     print(previous_weight)

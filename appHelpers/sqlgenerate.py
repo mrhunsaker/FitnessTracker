@@ -33,27 +33,27 @@ from appHelpers.helpers import dataBasePath
 def create_connection(db_file):
     """
     Create a SQLite database connection.
-
+    
     Parameters
     ----------
     db_file : str
         The path to the SQLite database file.
-
+        
     Returns
     -------
     None
-
+    
     Raises
     ------
     Error
         If an error occurs while connecting to the database.
-
+        
     Examples
     --------
     >>> create_connection("example.db")
     >>> # Use db_connection for database operations
     >>> # ...
-
+    
     Note
     ----
     It is recommended to close the database connection after usage by calling the `close` method
@@ -80,23 +80,23 @@ create_connection(dataBasePath)
 def create_table(conn, sql_create_sql_table):
     """
     Create a table in the SQLite database using the provided SQL statement.
-
+    
     Parameters
     ----------
     conn : sqlite3.Connection
         The SQLite database connection.
     sql_create_sql_table : str
         The SQL statement for creating the table
-
+        
     Returns
     -------
     None
-
+    
     Raises
     ------
     Error
         If an error occurs while executing the SQL statement.
-
+        
     Examples
     --------
     >>> conn = sqlite3.connect("example.db")
@@ -120,23 +120,23 @@ def create_table(conn, sql_create_sql_table):
         )
     finally:
         conn.close()
-
-
+        
+        
 def implement_tables():
     """
     Create or initialize the WORKOUTS table in the SQLite database.
-
+    
     This function establishes a connection to the SQLite database, creates a table
     named WORKOUTS with specified columns, and closes the connection.
-
+    
     Parameters
     ----------
     None
-
+    
     Returns
     -------
     None
-
+    
     Examples
     --------
     >>> implement_tables()
@@ -198,15 +198,15 @@ def implement_tables():
                     "SINGLELEGCALFRAISE_WEIGHT"	INTEGER,
                     "LONGLEVERCRUNCHES_REPS"	INTEGER,
                     "LONGLEVERCRUNCHES_SETS"	INTEGER,
+                    "LONGLEVERCRUNCHES_WEIGHT"	INTEGER,
                     "SIDELINESCULPT"	INTEGER,
                     "SIDELINESCULPT_WEIGHT"	INTEGER,
                     "ABDOMINALS"	INTEGER,
                     "ABDOMINALS_WEIGHT"	INTEGER,
                     "WALK_DISTANCE"	INTEGER,
                     "WALK"	INTEGER,
-                    "LONGLEVERCRUNCHES_WEIGHT"	INTEGER
                 )"""
-
+                
     conn = sqlite3.connect(dataBasePath)
     try:
         if conn is not None:
@@ -220,7 +220,7 @@ def implement_tables():
             type="negative",
             close_button="OK",
         )
-
+        
     try:
         if conn is not None:
             create_table(conn, sql_create_piano_table)
@@ -233,7 +233,7 @@ def implement_tables():
             type="negative",
             close_button="OK",
         )
-
+        
     conn.close()
     ui.notify(
         "SQL Tables Successfully Created",
