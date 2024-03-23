@@ -1732,28 +1732,20 @@ def create() -> None:
                         # Drop the "Most_Recent" column
                         reformed_df = reformed_df.drop("Most_Recent", axis=1)
                         return reformed_df
-                    # Filter the columns
-                    df_filtered = df[[col for col in df.columns if col.lower().endswith(('weight', 'distance', 'stair'))]]
-                    # Melt the dataframe
+
+                    df_filtered = df[[col for col in df.columns if col.lower().endswith(('weight', 'stair'))]]
                     melted_df = df_filtered.melt(var_name='Exercises', value_name='Level')
-                    # Remove NaN and null values
                     melted_df = melted_df.dropna()
-                    # Create a copy of melted_df before removing 0 values
                     melted_df_copy = melted_df.copy()
-                    # Remove 0 values
                     melted_df = melted_df[melted_df['Level'] != 0]
-                    # Get the most recent 'Level' for each 'Exercise'
+                    melted_df = melted_df.sort_values('Exercises', ascending=True)
                     previous_weight = melted_df.groupby('Exercises')[['Level']].last().reset_index()
-                    # Find exercises that only have 0 values in melted_df_copy
                     zero_level_df = melted_df_copy[melted_df_copy.groupby('Exercises')['Level'].transform('max') == 0]
-                    # Sort zero_level_df by 'Level' and drop duplicates in 'Exercise', keeping only the last occurrence
                     zero_level_df = zero_level_df.sort_values('Level').drop_duplicates('Exercises', keep='last')
-                    # Set their 'Level' to 'None'
                     zero_level_df['Level'] = 'None'
-                    # Append these exercises to previous_weight
                     previous_weight = pd.concat([previous_weight, zero_level_df], ignore_index=True)
                     previous_weight=previous_weight.sort_values(by=['Exercises'])
-                    #print(previous_weight)
+
                     """Drop Rows for Easier Data Presentation"""
                     upper_df = reshape_and_rename(upper_df)
                     lower_df = reshape_and_rename(lower_df)
