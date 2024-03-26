@@ -191,10 +191,10 @@ def frame(navtitle: str) -> None:
         font-size: 1.25em;
         align: left;
         }
-        .my-table thead th {
+        .my-table th {
         font-size: 1.25em;
+        align: left;  
         font-weight: bold;
-        align: left;
         }
         </style>
     ''')

@@ -434,7 +434,111 @@ def create() -> None:
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     )
-                    
+                    u_plyoStepupReps = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoStepupSets = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoStepupWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoLateralStepupReps = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoLateralStepupSets = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoLateralStepupWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoPistolSquatReps = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoPistolSquatSets = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoPistolSquatWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoSplitSquatReps = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoSplitSquatSets = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoSplitSquatWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoSidePlankReps = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoSidePlankSets = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )
+                    u_plyoSidePlankWeight = (
+                        ui.number()
+                        .classes("hidden")
+                        .style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    )                                                                                                                        
                     def save(event):
                         """
                         Save workout data to individual exercise variables.
@@ -510,6 +614,21 @@ def create() -> None:
                             u_abdominalsWeight,
                             u_walk,
                             u_walkDistance,
+                            u_plyoStepupReps,
+                            u_plyoStepupSets,
+                            u_plyoStepupWeight,
+                            u_plyoLateralStepupReps,
+                            u_plyoLateralStepupSets,
+                            u_plyoLateralStepupWeight,
+                            u_plyoPistolSquatReps,
+                            u_plyoPistolSquatSets,
+                            u_plyoPistolSquatWeight,
+                            u_plyoSplitSquatReps,
+                            u_plyoSplitSquatSets,
+                            u_plyoSplitSquatWeight,
+                            u_plyoSidePlankReps,
+                            u_plyoSidePlankSets,
+                            u_plyoSidePlankWeight,
                         ]
                         for exercise in exercises:
                             """
@@ -538,6 +657,7 @@ def create() -> None:
                             ...     else:
                             ...         continue
                             """
+                            
                             if exercise.value is None:
                                 exercise.value = 0
                             else:
@@ -546,6 +666,7 @@ def create() -> None:
                                 exercise.value = int(math.ciel(num))
                             else:
                                 continue
+                            
                         today_date_str = str(u_today_date.value)
                         try:
                             today_date = datetime.strptime(today_date_str, "%Y-%m-%d")
@@ -556,6 +677,7 @@ def create() -> None:
                                 type="warning",
                                 close_button="OK",
                             )
+                            
                         today_date = today_date.strftime("%Y-%m-%d %H:%M:%S")
                         frontlineRaiseReps = int(u_frontlineRaiseReps.value)
                         frontlineRaiseSets = int(u_frontlineRaiseReps.value)
@@ -609,6 +731,21 @@ def create() -> None:
                         abdominalsWeight = int(u_abdominalsWeight.value)
                         walk = int(u_walk.value)
                         walkDistance = int(u_walkDistance.value)
+                        plyoStepupReps =int(u_plyoStepupReps.value)
+                        plyoStepupSets = int(u_plyoStepupSets.value)
+                        plyoStepupWeight = int(u_plyoStepupWeight.value)
+                        plyoLateralStepupReps = int(u_plyoLateralStepupReps.value)
+                        plyoLateralStepupSets = int(u_plyoLateralStepupSets.value)
+                        plyoLateralStepupWeight = int(u_plyoLateralStepupWeight.value)
+                        plyoPistolSquatReps = int(u_plyoPistolSquatReps.value)
+                        plyoPistolSquatSets = int(u_plyoPistolSquatSets.value)
+                        plyoPistolSquatWeight = int(u_plyoPistolSquatWeight.value)
+                        plyoSplitSquatReps = int(u_plyoSplitSquatReps.value)
+                        plyoSplitSquatSets = int(u_plyoSplitSquatSets.value)
+                        plyoSplitSquatWeight = int(u_plyoSplitSquatWeight.value)
+                        plyoSidePlankReps = int(u_plyoSidePlankReps.value)
+                        plyoSidePlankSets = int(u_plyoSidePlankSets.value)
+                        plyoSidePlankWeight = int(u_plyoSidePlankWeight.value)
                         
                         def data_entry():
                             """
@@ -690,9 +827,39 @@ def create() -> None:
                                             ABDOMINALS,
                                             ABDOMINALS_WEIGHT,
                                             WALK,
-                                            WALK_DISTANCE
+                                            WALK_DISTANCE,
+                                            PLYOSTEPUP_REPS,
+                                            PLUOSTEUPUP_SETS,
+                                            PLYOSTEPUP_WEIGHT,
+                                            PLYOLATERALSTEPUP_REPS,
+                                            PLYOLATERALSTEPUP_SETS,
+                                            PLYOLATERALSTEPUP_WEIGHT,
+                                            PLYOPISTOLSQUAT_REPS,
+                                            PLYOPISTOLSQUAT_SETS,
+                                            PLYOPISTOLSQUAT_WEIGHT
+                                            PLYOSIDEPLANK_REPS,
+                                            PLYOSIDEPLANK_SETS,
+                                            PLYOSIDEPLANK_WEIGHT,
+                                            PLYOSPLITSQUAT_REPS,
+                                            PLYOSPLITSQUAT_SETS,
+                                            PLYOSPLITSQUAT_WEIGHT
                                             )
                                             VALUES (
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
+                                            ?,
                                             ?,
                                             ?,
                                             ?,
@@ -802,6 +969,21 @@ def create() -> None:
                                                 abdominalsWeight,
                                                 walk,
                                                 walkDistance,
+                                                plyoStepupReps,
+                                                plyoStepupSets,
+                                                plyoStepupWeight,
+                                                plyoLateralStepupReps,
+                                                plyoLateralStepupSets,
+                                                plyoLateralStepupWeight,
+                                                plyoPistolSquatReps,
+                                                plyoPistolSquatSets,
+                                                plyoPistolSquatWeight,
+                                                plyoSidePlankReps,
+                                                plyoSidePlankSets,
+                                                plyoSidePlankWeight,
+                                                plyoSplitSquatReps,
+                                                plyoSplitSquatSets,
+                                                plyoSplitSquatWeight
                                             ),
                                         )
                                         conn.commit()
@@ -1332,7 +1514,7 @@ def create() -> None:
                                 e.value
                             ),
                         ).classes("w-1/4 text-base").props(
-                            'aria-label="Calf Raise Reps"'
+                            'aria-label="Long Lever Crunches Reps"'
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
@@ -1343,7 +1525,7 @@ def create() -> None:
                                 e.value
                             ),
                         ).classes("w-1/4 text-base").props(
-                            'aria-label="Calf Raise Sets"'
+                            'aria-label="Long Lever Crunches Sets"'
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
@@ -1354,10 +1536,170 @@ def create() -> None:
                                 e.value
                             ),
                         ).classes("w-1/4 text-base").props(
-                            'aria-label="Calf Raise Weight"'
+                            'aria-label="Long Lever Crunches Weight"'
                         ).style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
+                    with ui.row().classes("w-full no-wrap py-4"):
+                        ui.label("PLYO BOX EXERCISES").classes("text-2xl").style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    with ui.row().classes("w-full no-wrap"):
+                        ui.label("Plyo Box Step-Up").classes("w-1/4 text-base").style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="REPS",
+                            value=0,
+                            on_change=lambda e: u_plyoStepupReps.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Step-Up Reps"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="SETS",
+                            value=0,
+                            on_change=lambda e: u_plyoStepupSets.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Step-Up Sets"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="WEIGHT",
+                            value=0,
+                            on_change=lambda e: u_plyoStepupWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Step-Up Weight"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    with ui.row().classes("w-full no-wrap"):
+                        ui.label("Plyo Box Lateral Step-Up").classes("w-1/4 text-base").style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="REPS",
+                            value=0,
+                            on_change=lambda e: u_plyoLateralStepupReps.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Lateral Step-Up Reps"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="SETS",
+                            value=0,
+                            on_change=lambda e: u_plyoLateralStepupSets.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Lateral Step-Up Sets"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="WEIGHT",
+                            value=0,
+                            on_change=lambda e: u_plyoLateralStepupWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Lateral Step-Up Weight"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    with ui.row().classes("w-full no-wrap"):
+                        ui.label("Plyo Box Pistol Squat").classes("w-1/4 text-base").style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="REPS",
+                            value=0,
+                            on_change=lambda e: u_plyoPistolSquatReps.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Pistol Squat Reps"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="SETS",
+                            value=0,
+                            on_change=lambda e: u_plyoPistolSquatSets.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Pistol Squat Sets"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="WEIGHT",
+                            value=0,
+                            on_change=lambda e: u_plyoPistolSquatWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Pistol Squat Weight"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    with ui.row().classes("w-full no-wrap"):
+                        ui.label("Plyo Box Pistol Squat").classes("w-1/4 text-base").style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="REPS",
+                            value=0,
+                            on_change=lambda e: u_plyoSplitSquatReps.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box  Bulgarian Split Squat Reps"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="SETS",
+                            value=0,
+                            on_change=lambda e: u_plyoSplitSquatSets.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box  Bulgarian Split Squat Sets"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="WEIGHT",
+                            value=0,
+                            on_change=lambda e: u_plyoSplitSquatWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Bulgarian Split Squat Weight"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                    with ui.row().classes("w-full no-wrap"):
+                        ui.label("Plyo Box Side Plank").classes("w-1/4 text-base").style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="REPS",
+                            value=0,
+                            on_change=lambda e: u_plyoSidePlankReps.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Side Plank Reps"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="SETS",
+                            value=0,
+                            on_change=lambda e: u_plyoSidePlankSets.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box  Side Plank Sets"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+                        ui.number(
+                            label="WEIGHT",
+                            value=0,
+                            on_change=lambda e: u_plyoSidePlankWeight.set_value(e.value),
+                        ).classes("w-1/4 text-base").props(
+                            'aria-label="Plyo Box Side Plank Weight"'
+                        ).style(
+                            'font-family : "Atkinson Hyperlegible"'
+                        )
+
                     with ui.row().classes("w-full no-wrap py-4"):
                         ui.label("CORE WORK").classes("text-2xl").style(
                             'font-family : "Atkinson Hyperlegible"'
@@ -1421,29 +1763,13 @@ def create() -> None:
                         ).classes("w-1/4 text-base").style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
-                        ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-family : "Atkinson Hyperlegible"'
-                        )
-                        ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-family : "Atkinson Hyperlegible"'
-                        )
-                    with ui.row().classes("w-full no-wrap"):
-                        ui.label("Distance Walked").classes("w-1/4").style(
-                            'font-family : "Atkinson Hyperlegible"'
-                        )
                         ui.number(
-                            label="Distance",
+                            label="Distance Walked",
                             value=0,
                             on_change=lambda e: u_walkDistance.set_value(
                                 math.ceil(e.value)
                             ),
                         ).classes("w-1/4 text-base").style(
-                            'font-family : "Atkinson Hyperlegible"'
-                        )
-                        ui.label(" ").classes("w-1/4 text-base").style(
-                            'font-family : "Atkinson Hyperlegible"'
-                        )
-                        ui.label(" ").classes("w-1/4 text-base").style(
                             'font-family : "Atkinson Hyperlegible"'
                         )
                     with ui.row().classes("w-full no-wrap"):
@@ -1493,6 +1819,16 @@ def create() -> None:
                             "LONGLEVERCRUNCHES_WEIGHT",
                             "SIDELINESCULPT_WEIGHT",
                             "ABDOMINALS_WEIGHT",
+                            "PLYOSTEPUP_SETS",
+                            "PLYOSTEPUP_WEIGHT",
+                            "PLYOLATERALSTEPUP_SETS",
+                            "PLYOLATERALSTEPUP_WEIGHT",
+                            "PLYOPISTOLSQUAT_SETS",
+                            "PLYOPISTOLSQUAT_WEIGHT",
+                            "PLYOSPLITSQUAT_SETS",
+                            "PLYOSPLITSQUAT_WEIGHT",
+                            "PLYOSIDEPLANK_SETS",
+                            "PLYOSIDEPLANK_WEIGHT"
                         ]
                     )
                     df_last8 = df_last8.rename(
@@ -1518,6 +1854,11 @@ def create() -> None:
                             "ABDOMINALS": "Abdominals",
                             "WALK": "Walk",
                             "WALK_DISTANCE": "Distance Walked",
+                            "PLYOSTEPUP_REPS": "Plyo Step-Up",
+                            "PLYOLATERALSTEPUP_REPS": "Plyo Lateral Step-Up",
+                            "PLYOPISTOLSQUAT_REPS":  "Plyo Pistol Squat",
+                            "PLYOSPLITSQUAT_REPS": "Plyo Bulgarian Split Squat",
+                            "PLYOSIDEPLANK_REPS": "Plyo Side Plank",
                         }
                     )
                     df = df.rename(
@@ -1536,7 +1877,7 @@ def create() -> None:
                             "ELBOWOUTROW_WEIGHT": "Elbow Out Row Weight",
                             "SUPINEBICEPCURL_REPS": "Supinating Bicep Curl reps",
                             "SUPINEBICEPCURL_SETS": "Supinating Bicep Curl sets",
-                            "SUPINEBICEPCURL_WEIGHT": "Supinting Bicep Curl Weight",
+                            "SUPINEBICEPCURL_WEIGHT": "Supinating Bicep Curl Weight",
                             "CLOSEGRIPPUSHUP_REPS": "Close Grip Pushup reps",
                             "CLOSEGRIPPUSHUP_SETS": "Close Grip Pshup sets",
                             "CLOSEGRIPPUSHUP_STAIR": "Close Grip Pushup Stair",
@@ -1579,6 +1920,21 @@ def create() -> None:
                             "ABDOMINALS_WEIGHT": "Abdominals Weight",
                             "WALK": "Walk",
                             "WALK_DISTANCE": "Walk Distance",
+                            "PLYOSTEPUP_REPS": "Plyo Step-Up reps",
+                            "PLYOLATERALSTEPUP_REPS": "Plyo Lateral Step-Up reps",
+                            "PLYOPISTOLSQUAT_REPS":  "Plyo Pistol Squat reps",
+                            "PLYOSPLITSQUAT_REPS": "Plyo Bulgarian Split Squat reps",
+                            "PLYOSIDEPLANK_REPS": "Plyo Side Plank reps",
+                            "PLYOSTEPUP_SETS": "Plyo Step-Up sets",
+                            "PLYOLATERALSTEPUP_SETS": "Plyo Lateral Step-Up sets",
+                            "PLYOPISTOLSQUAT_SETS":  "Plyo Pistol Squat sets",
+                            "PLYOSPLITSQUAT_SETS": "Plyo Bulgarian Split Squat sets",
+                            "PLYOSIDEPLANK_SETS": "Plyo Side Plank sets",
+                            "PLYOSTEPUP_WEIGHT": "Plyo Step-Up Weight",
+                            "PLYOLATERALSTEPUP_WEIGHT": "Plyo Lateral Step-Up Weight",
+                            "PLYOPISTOLSQUAT_WEIGHT":  "Plyo Pistol Squat Weight",
+                            "PLYOSPLITSQUAT_WEIGHT": "Plyo Bulgarian Split Squat Weight",
+                            "PLYOSIDEPLANK_WEIGHT": "Plyo Side Plank Weight",
                         }
                     )
                     lower_df = df_last8.drop(
@@ -1595,6 +1951,11 @@ def create() -> None:
                             "Sideline Sculpt",
                             "Walk",
                             "Distance Walked",
+                            "Plyo Step-Up",
+                            "Plyo Lateral Step-Up",
+                            "Plyo Pistol Squat",
+                            "Plyo Bulgarian Split Squat",
+                            "Plyo Side Plank",
                         ]
                     )
                     upper_df = df_last8.drop(
@@ -1611,6 +1972,11 @@ def create() -> None:
                             "Sideline Sculpt",
                             "Walk",
                             "Distance Walked",
+                            "Plyo Step-Up",
+                            "Plyo Lateral Step-Up",
+                            "Plyo Pistol Squat",
+                            "Plyo Bulgarian Split Squat",
+                            "Plyo Side Plank",
                         ]
                     )
                     abs_df = df_last8.drop(
@@ -1633,6 +1999,11 @@ def create() -> None:
                             "Lateral Raise",
                             "Walk",
                             "Distance Walked",
+                            "Plyo Step-Up",
+                            "Plyo Lateral Step-Up",
+                            "Plyo Pistol Squat",
+                            "Plyo Bulgarian Split Squat",
+                            "Plyo Side Plank",
                         ]
                     )
                     walk_df = df_last8.drop(
@@ -1656,6 +2027,36 @@ def create() -> None:
                             "Abdominals",
                             "Sideline Sculpt",
                             "Distance Walked",
+                            "Plyo Step-Up",
+                            "Plyo Lateral Step-Up",
+                            "Plyo Pistol Squat",
+                            "Plyo Bulgarian Split Squat",
+                            "Plyo Side Plank",
+                        ]
+                    )
+                    plyo_df = df_last8.drop(
+                        columns=[
+                            "Stiff Legged RDL",
+                            "Hamstring Curls",
+                            "Hip Thrusters",
+                            "Forward Squat",
+                            "Sumo Squat",
+                            "Cyclist Squat",
+                            "Single Leg Calf Raise",
+                            "Long Lever Crunches",
+                            "Frontline POW Raise",
+                            "Arnold Press",
+                            "Elbow Out Row",
+                            "Supinating Bicep Curl",
+                            "Close Grip Pushup",
+                            "Rear Delt Fly",
+                            "Side Bend",
+                            "Lateral Raise",
+                            "Abdominals",
+                            "Sideline Sculpt",
+                            "Distance Walked",
+                            "Walk",
+                            "Abdominals"
                         ]
                     )
                     
@@ -1726,31 +2127,77 @@ def create() -> None:
                         # Drop duplicate rows, keeping only the first occurrence of each exercise
                         reformed_df = reformed_df.drop_duplicates(subset=["Exercises"], keep="first")
                         # Calculate "Days Since" based on the most recent date
-                        reformed_df["Days_Since_Last"] = (
+                        reformed_df["Days_Ago"] = (
                             datetime.now() - pd.to_datetime(reformed_df["Most_Recent"])
                         ).dt.days
                         # Drop the "Most_Recent" column
                         reformed_df = reformed_df.drop("Most_Recent", axis=1)
                         return reformed_df
+                    def process_exercise_data(df):
+                        """
+                        Filter and process exercise data DataFrame.
 
-                    df_filtered = df[[col for col in df.columns if col.lower().endswith(('weight', 'stair'))]]
-                    melted_df = df_filtered.melt(var_name='Exercises', value_name='Level')
-                    melted_df = melted_df.dropna()
-                    melted_df_copy = melted_df.copy()
-                    melted_df = melted_df[melted_df['Level'] != 0]
-                    melted_df = melted_df.sort_values('Exercises', ascending=True)
-                    previous_weight = melted_df.groupby('Exercises')[['Level']].last().reset_index()
-                    zero_level_df = melted_df_copy[melted_df_copy.groupby('Exercises')['Level'].transform('max') == 0]
-                    zero_level_df = zero_level_df.sort_values('Level').drop_duplicates('Exercises', keep='last')
-                    zero_level_df['Level'] = 'None'
-                    previous_weight = pd.concat([previous_weight, zero_level_df], ignore_index=True)
-                    previous_weight=previous_weight.sort_values(by=['Exercises'])
+                        Parameters
+                        ----------
+                        df : pandas.DataFrame
+                            Input DataFrame containing exercise data.
+
+                        Returns
+                        -------
+                        pandas.DataFrame
+                            Processed DataFrame with exercise data.
+
+                        Notes
+                        -----
+                        This function filters columns ending with 'weight' or 'stair', melts the DataFrame, 
+                        drops NaN values, removes rows with zero level, sorts values, extracts the last 
+                        level for each exercise, identifies exercises with zero level, sets their level 
+                        as 'None', and concatenates the previous levels with zero level exercises. 
+                        Finally, sorts the resulting DataFrame by exercise names.
+                        """
+                        # Filter columns ending with 'weight' or 'stair'
+                        df_filtered = df[[col for col in df.columns if col.lower().endswith(('weight', 'stair'))]]
+                        
+                        # Melt the DataFrame
+                        melted_df = df_filtered.melt(var_name='Exercises', value_name='Level')
+                        
+                        # Drop NaN values
+                        melted_df = melted_df.dropna()
+                        
+                        # Create a copy of the melted DataFrame
+                        melted_df_copy = melted_df.copy()
+                        
+                        # Remove rows with zero level
+                        melted_df = melted_df[melted_df['Level'] != 0]
+                        
+                        # Sort values by exercise names
+                        melted_df = melted_df.sort_values('Exercises', ascending=True)
+                        
+                        # Extract the last level for each exercise
+                        previous_weight = melted_df.groupby('Exercises')[['Level']].last().reset_index()
+                        
+                        # Identify exercises with zero level
+                        zero_level_df = melted_df_copy[melted_df_copy.groupby('Exercises')['Level'].transform('max') == 0]
+                        
+                        # Sort zero level exercises and drop duplicates, set level as 'None'
+                        zero_level_df = zero_level_df.sort_values('Level').drop_duplicates('Exercises', keep='last')
+                        zero_level_df['Level'] = 'None'
+                        
+                        # Concatenate previous levels with zero level exercises
+                        previous_weight = pd.concat([previous_weight, zero_level_df], ignore_index=True)
+                        
+                        # Sort resulting DataFrame by exercise names
+                        previous_weight = previous_weight.sort_values(by=['Exercises'])
+                        
+                        return previous_weight
+                    previous_weight = process_exercise_data(df)
 
                     """Drop Rows for Easier Data Presentation"""
                     upper_df = reshape_and_rename(upper_df)
                     lower_df = reshape_and_rename(lower_df)
                     abs_df = reshape_and_rename(abs_df)
                     walk_df = reshape_and_rename(walk_df)
+                    plyo_df = reshape_and_rename(plyo_df)
                     with ui.row().classes("w-full no-wrap"):
                         ui.button("HOME", on_click=lambda: ui.open("/")).props('color=secondary')
                         ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
@@ -1778,8 +2225,8 @@ def create() -> None:
                                 ).style(
                                     "font-family: JetBrainsMono; background-color: #f5f5f5"
                                 ).classes("text-lg font-normal my-table")
-                                table_c.add_slot('body-cell-Days_Since_Last', '''
-                                    <q-td key="Days_Since_Last" :props="props">
+                                table_c.add_slot('body-cell-Days_Ago', '''
+                                    <q-td key="Days_Ago" :props="props">
                                     <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
                                         {{ props.value }}
                                     </q-badge>
@@ -1803,62 +2250,87 @@ def create() -> None:
                                 ).style(
                                     "font-family: JetBrainsMono; background-color: #f5f5f5"
                                 ).classes("text-lg font-normal my-table")
-                                table_a.add_slot('body-cell-Days_Since_Last', '''
-                                    <q-td key="Days_Since_Last" :props="props">
+                                table_a.add_slot('body-cell-Days_Ago', '''
+                                    <q-td key="Days_Ago" :props="props">
                                     <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
                                         {{ props.value }}
                                     </q-badge>
                                     </q-td>
                                     ''')
+                            with ui.card():
+                                        ui.label("Plyo Exercises").classes("text-xl text-bold").style(
+                                            'font-family : "Atkinson Hyperlegible"'
+                                        )
+                                        ui.separator().classes("w-full h-1").props("color=positive")
+                                        table_w = ui.table(
+                                            columns=[
+                                                {"name": col, "label": col, "field": col,
+                                                "headerClasses": "border-b border-secondary",
+                                                "align": 'left'}
+                                                for col in plyo_df.columns
+                                            ],
+                                            rows=plyo_df.to_dict("records"),
+                                        ).style(
+                                            "font-family: JetBrainsMono; background-color: #f5f5f5"
+                                        ).classes("text-lg font-normal my-table")
+                                        table_w.add_slot('body-cell-Days_Ago', '''
+                                            <q-td key="Days_Ago" :props="props">
+                                            <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
+                                                {{ props.value }}
+                                            </q-badge>
+                                            </q-td>
+                                            ''')
                         with ui.column():
                             with ui.card():
-                                ui.label("Lower Body Exercises").classes(
-                                    "text-xl text-bold"
-                                ).style(
-                                    'font-family : "Atkinson Hyperlegible"'
-                                )
-                                ui.separator().classes("w-full h-1").props("color=positive")
-                                table_b = ui.table(
-                                    columns=[
-                                        {"name": col, "label": col, "field": col,
-                                        "headerClasses": "border-b border-secondary",
-                                        "align": 'left'}
-                                        for col in lower_df.columns
-                                    ],
-                                    rows=lower_df.to_dict("records"),
-                                ).style(
-                                    "font-family: JetBrainsMono; background-color: #f5f5f5"
-                                ).classes("text-lg font-normal my-table")
-                                table_b.add_slot('body-cell-Days_Since_Last', '''
-                                    <q-td key="Days_Since_Last" :props="props">
-                                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
-                                    {{ props.value }}
-                                    </q-badge>
-                                    </q-td>
-                                    ''')
-                            with ui.card():
-                                ui.label("Walking").classes("text-xl text-bold").style(
-                                    'font-family : "Atkinson Hyperlegible"'
-                                )
-                                ui.separator().classes("w-full h-1").props("color=positive")
-                                table_w = ui.table(
-                                    columns=[
-                                        {"name": col, "label": col, "field": col,
-                                        "headerClasses": "border-b border-secondary",
-                                        "align": 'left'}
-                                        for col in walk_df.columns
-                                    ],
-                                    rows=walk_df.to_dict("records"),
-                                ).style(
-                                    "font-family: JetBrainsMono; background-color: #f5f5f5"
-                                ).classes("text-lg font-normal my-table")
-                                table_w.add_slot('body-cell-Days_Since_Last', '''
-                                    <q-td key="Days_Since_Last" :props="props">
-                                    <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
+                                    ui.label("Lower Body Exercises").classes(
+                                        "text-xl text-bold"
+                                    ).style(
+                                        'font-family : "Atkinson Hyperlegible"'
+                                    )
+                                    ui.separator().classes("w-full h-1").props("color=positive")
+                                    table_b = ui.table(
+                                        columns=[
+                                            {"name": col, "label": col, "field": col,
+                                            "headerClasses": "border-b border-secondary",
+                                            "align": 'left'}
+                                            for col in lower_df.columns
+                                        ],
+                                        rows=lower_df.to_dict("records"),
+                                    ).style(
+                                        "font-family: JetBrainsMono; background-color: #f5f5f5"
+                                    ).classes("text-lg font-normal my-table")
+                                    table_b.add_slot('body-cell-Days_Ago', '''
+                                        <q-td key="Days_Ago" :props="props">
+                                        <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
                                         {{ props.value }}
-                                    </q-badge>
-                                    </q-td>
-                                    ''')
+                                        </q-badge>
+                                        </q-td>
+                                        ''')
+                            with ui.row():
+                                with ui.card():
+                                    ui.label("Walking").classes("text-xl text-bold").style(
+                                        'font-family : "Atkinson Hyperlegible"'
+                                    )
+                                    ui.separator().classes("w-full h-1").props("color=positive")
+                                    table_w = ui.table(
+                                        columns=[
+                                            {"name": col, "label": col, "field": col,
+                                            "headerClasses": "border-b border-secondary",
+                                            "align": 'left'}
+                                            for col in walk_df.columns
+                                        ],
+                                        rows=walk_df.to_dict("records"),
+                                    ).style(
+                                        "font-family: JetBrainsMono; background-color: #f5f5f5"
+                                    ).classes("text-lg font-normal my-table")
+                                    table_w.add_slot('body-cell-Days_Ago', '''
+                                        <q-td key="Days_Ago" :props="props">
+                                        <q-badge :color="props.value  <= 8 ? 'blue' : props.value <= 14 ? 'green' : props.value <= 21 ? 'orange' :  'red'" text-color="black" outline>
+                                            {{ props.value }}
+                                        </q-badge>
+                                        </q-td>
+                                        ''')
+                                
                         with ui.card():
                             ui.label("Previous Weight").classes(
                                 "text-xl text-bold"
@@ -1877,6 +2349,7 @@ def create() -> None:
                             ).style(
                                 "font-family: JetBrainsMono; background-color: #f5f5f5"
                             ).classes("text-lg font-normal my-table") 
+                            
                     with ui.row():
                         ui.label("Cumulative Exercise Log").classes(
                             "text-3xl text-bold"
@@ -1890,11 +2363,13 @@ def create() -> None:
                                 "label": col,
                                 "field": col,
                                 "headerClasses": "border-b border-secondary",
-                                "align": 'left'}
+                                "align": 'left'}  
                                 for col in df.columns
                             ],
                             rows=df.to_dict("records"), pagination={'rowsPerPage': 10}
                         ).style("font-family: JetBrainsMono; background-color: #f5f5f5").classes('my-table')
                     )
+
+
 
 

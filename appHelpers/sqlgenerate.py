@@ -205,6 +205,21 @@ def implement_tables():
                     "ABDOMINALS_WEIGHT"	INTEGER,
                     "WALK_DISTANCE"	INTEGER,
                     "WALK"	INTEGER,
+                    "PLYOSTEPUP_REPS"	INTEGER,
+                    "PLUOSTEPUP_SETS"	INTEGER,
+                    "PLYOSTEPUP_WEIGHT"	INTEGER,
+                    "PLYOLATERALSTEPUP_REPS"	INTEGER,
+                    "PLYOLATERALSTEPUP_SETS"	INTEGER,
+                    "PLYOLATERALSTEPUP_WEIGHT"	INTEGER,
+                    "PLYOPISTOLSQUAT_REPS"	INTEGER,
+                    "PLYOPISTOLSQUAT_SETS"	INTEGER,
+                    "PLYOPISTOLSQUAT_WEIGHT"	INTEGER,
+                    "PLYOSPLITSQUAT_REPS"	INTEGER,
+                    "PLYOSPLITSQUAT_SETS"	INTEGER,
+                    "PLYOSPLITSQUAT_WEIGHT"	INTEGER,
+                    "PLYOSIDEPLANK_REPS"	INTEGER,
+                    "PLYOSIDEPLANK_SETS"	INTEGER,
+                    "PLYOSIDEPLANK_WEIGHT"	INTEGER,
                 )"""
                 
     conn = sqlite3.connect(dataBasePath)
