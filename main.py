@@ -149,10 +149,10 @@ MONITOR = getresolution()
 print(f"Monitor: \nwidth = {MONITOR.width} \nheight = {MONITOR.height}")
 
 ui.run(
-    native=False,
+    native=True,
     reload=False,
     dark=False,
     title="Habit and Fitness Tracker",
     fullscreen=False,
-    # window_size=(MONITOR.width, MONITOR.height - 72) # only relevant if native=True
+    window_size=(MONITOR.width, MONITOR.height - 72) # only relevant if native=True
 )

@@ -829,14 +829,14 @@ def create() -> None:
                                             WALK,
                                             WALK_DISTANCE,
                                             PLYOSTEPUP_REPS,
-                                            PLUOSTEUPUP_SETS,
+                                            PLYOSTEPUP_SETS,
                                             PLYOSTEPUP_WEIGHT,
                                             PLYOLATERALSTEPUP_REPS,
                                             PLYOLATERALSTEPUP_SETS,
                                             PLYOLATERALSTEPUP_WEIGHT,
                                             PLYOPISTOLSQUAT_REPS,
                                             PLYOPISTOLSQUAT_SETS,
-                                            PLYOPISTOLSQUAT_WEIGHT
+                                            PLYOPISTOLSQUAT_WEIGHT,
                                             PLYOSIDEPLANK_REPS,
                                             PLYOSIDEPLANK_SETS,
                                             PLYOSIDEPLANK_WEIGHT,
@@ -1858,7 +1858,7 @@ def create() -> None:
                             "PLYOLATERALSTEPUP_REPS": "Plyo Lateral Step-Up",
                             "PLYOPISTOLSQUAT_REPS":  "Plyo Pistol Squat",
                             "PLYOSPLITSQUAT_REPS": "Plyo Bulgarian Split Squat",
-                            "PLYOSIDEPLANK_REPS": "Plyo Side Plank",
+                            "PLYOSIDEPLANK_REPS": "Plyo Side Plank"
                         }
                     )
                     df = df.rename(
@@ -1955,7 +1955,7 @@ def create() -> None:
                             "Plyo Lateral Step-Up",
                             "Plyo Pistol Squat",
                             "Plyo Bulgarian Split Squat",
-                            "Plyo Side Plank",
+                            "Long Lever Crunches"
                         ]
                     )
                     upper_df = df_last8.drop(
@@ -2059,7 +2059,110 @@ def create() -> None:
                             "Abdominals"
                         ]
                     )
-                    
+                    def weights():
+                        conn = sqlite3.connect(dataBasePath)
+                        dfSQL = pd.read_sql_query("SELECT * FROM WORKOUTS", conn)
+                        conn.close()
+                        df = dfSQL.drop(columns=["ID"])
+                        df = df.sort_values(by=["DATE"], ascending=False)
+                        df = df.rename(
+                            columns={
+                                "DATE": "Date",
+                                "FRONTLINE_REPS": "Frontline POW Raise reps",
+                                "FRONTLINE_SETS": "Frontline POW Raise sets",
+                                "FRONTLINE_WEIGHT": "Frontline POW Raise Weight",
+                                "DOWNDOGPUSHUP_REPS": "Downdog reps",
+                                "DOWNDOGPUSHUP_SETS": "Downdog sets",
+                                "SHOULDERZPRESS_REPS": "Arnold press reps",
+                                "SHOULDERZPRESS_SETS": "Arnold press sets",
+                                "SHOULDERZPRESS_WEIGHT": "Arnold press Weight",
+                                "ELBOWOUTROW_REPS": "Elbow Out Row reps",
+                                "ELBOWOUTROW_SETS": "Elbow Out Row sets",
+                                "ELBOWOUTROW_WEIGHT": "Elbow Out Row Weight",
+                                "SUPINEBICEPCURL_REPS": "Supinating Bicep Curl reps",
+                                "SUPINEBICEPCURL_SETS": "Supinating Bicep Curl sets",
+                                "SUPINEBICEPCURL_WEIGHT": "Supinating Bicep Curl Weight",
+                                "CLOSEGRIPPUSHUP_REPS": "Close Grip Pushup reps",
+                                "CLOSEGRIPPUSHUP_SETS": "Close Grip Pshup sets",
+                                "CLOSEGRIPPUSHUP_STAIR": "Close Grip Pushup Stair",
+                                "REARDELTFLY_REPS": "Rear Delt Fly reps",
+                                "REARDELTFLY_SETS": "Rear Delt Fly sets",
+                                "REARDELTFLY_WEIGHT": "Rear Delt Fly Weight",
+                                "SIDEBEND_REPS": "Side Bend reps",
+                                "SIDEBEND_SETS": "Side Bend sets",
+                                "SIDEBEND_WEIGHT": "Side Bend Weight",
+                                "LATERALRAISE_REPS": "Lateral Raise reps",
+                                "LATERALRAISE_SETS": "Lateral Raise sets",
+                                "LATERALRAISE_WEIGHT": "Lateral Raise Weight",
+                                "STIFFLEGRDL_REPS": "Stiff Legged RDL reps",
+                                "STIFFLEGRDL_SETS": "Stiff Legged RDL sets",
+                                "STIFFLEGRDL_WEIGHT": "Stiff Legged RDL Weight",
+                                "SLIDERHAMSTRINGCURL_REPS": "Hamstring Curls reps",
+                                "SLIDERHAMSTRINGCURL_SETS": "Hamstring Curls sets",
+                                "SLIDERHAMSTRINGCURL_WEIGHT": "Hamstring Curls Weight",
+                                "HIPTHRUSTER_REPS": "Hip Thrusters reps",
+                                "HIPTHRUSTER_SETS": "Hip Thrusters sets",
+                                "HIPTHRUSTER_WEIGHT": "Hip Thrusters Weight",
+                                "FORWARDSQUAT_REPS": "Forward Squat reps",
+                                "FORWARDSQUAT_SETS": "Forward Squat sets",
+                                "FORWARDSQUAT_WEIGHT": "Forward Squat Weight",
+                                "SUMOSQUAT_REPS": "Sumo Squat reps",
+                                "SUMOSQUAT_SETS": "Sumo Squat sets",
+                                "SUMOSQUAT_WEIGHT": "Sumo Squat Weight",
+                                "CYCLISTSQUAT_REPS": "Cyclist Squat reps",
+                                "CYCLISTSQUAT_SETS": "Cyclist Squat sets",
+                                "CYCLISTSQUAT_WEIGHT": "Cyclist Squat Weight",
+                                "SINGLELEGCALFRAISE_REPS": "Single Leg Calf Raise reps",
+                                "SINGLELEGCALFRAISE_SETS": "Single Leg Calf Raise sets",
+                                "SINGLELEGCALFRAISE_WEIGHT": "Single Leg Calf Raise Weight",
+                                "LONGLEVERCRUNCHES_REPS": "Long Lever Crunches reps",
+                                "LONGLEVERCRUNCHES_SETS": "Long Lever Crunches sets",
+                                "LONGLEVERCRUNCHES_WEIGHT": "Long Lever Crunches Weight",
+                                "SIDELINESCULPT": "Sideline Scupt",
+                                "ABDOMINALS": "Abdominals",
+                                "SIDELINESCULPT_WEIGHT": "Sideline Scupt Weight",
+                                "ABDOMINALS_WEIGHT": "Abdominals Weight",
+                                "WALK": "Walk",
+                                "WALK_DISTANCE": "Walk Distance",
+                                "PLYOSTEPUP_REPS": "Plyo Step-Up reps",
+                                "PLYOLATERALSTEPUP_REPS": "Plyo Lateral Step-Up reps",
+                                "PLYOPISTOLSQUAT_REPS":  "Plyo Pistol Squat reps",
+                                "PLYOSPLITSQUAT_REPS": "Plyo Bulgarian Split Squat reps",
+                                "PLYOSIDEPLANK_REPS": "Plyo Side Plank reps",
+                                "PLYOSTEPUP_SETS": "Plyo Step-Up sets",
+                                "PLYOLATERALSTEPUP_SETS": "Plyo Lateral Step-Up sets",
+                                "PLYOPISTOLSQUAT_SETS":  "Plyo Pistol Squat sets",
+                                "PLYOSPLITSQUAT_SETS": "Plyo Bulgarian Split Squat sets",
+                                "PLYOSIDEPLANK_SETS": "Plyo Side Plank sets",
+                                "PLYOSTEPUP_WEIGHT": "Plyo Step-Up Weight",
+                                "PLYOLATERALSTEPUP_WEIGHT": "Plyo Lateral Step-Up Weight",
+                                "PLYOPISTOLSQUAT_WEIGHT":  "Plyo Pistol Squat Weight",
+                                "PLYOSPLITSQUAT_WEIGHT": "Plyo Bulgarian Split Squat Weight",
+                                "PLYOSIDEPLANK_WEIGHT": "Plyo Side Plank Weight",
+                            }
+                        )  
+                        with ui.dialog() as dialog:
+                            with dialog, ui.card().classes('w-full'):
+                                ui.label("Previous Weight").classes(
+                                    "text-xl text-bold"
+                                ).style(
+                                    'font-family : "Atkinson Hyperlegible"'
+                                )
+                                ui.separator().classes("w-full h-1").props("color=positive")
+                                table_b = ui.table(
+                                    columns=[
+                                        {"name": col, "label": col, "field": col,
+                                        "headerClasses": "border-b border-secondary",
+                                        "align": 'left'}
+                                        for col in previous_weight.columns
+                                    ],
+                                    rows=previous_weight.to_dict("records"),
+                                ).style(
+                                    "font-family: JetBrainsMono; background-color: #f5f5f5"
+                                ).classes("text-lg font-normal my-table") 
+                                ui.button('Close', on_click=dialog.close)
+                        dialog.open()
+                        
                     def reshape_and_rename(input_df):
                         """
                         Reshape and rename a DataFrame containing exercise data.
@@ -2201,6 +2304,7 @@ def create() -> None:
                     with ui.row().classes("w-full no-wrap"):
                         ui.button("HOME", on_click=lambda: ui.open("/")).props('color=secondary')
                         ui.button("EXIT", on_click=app.shutdown).props('color=secondary')
+                        ui.button("WEIGHTS", on_click=weights).props('color=secondary')
                     with ui.row():
                         ui.label("Most Recent Exercises").classes(
                             "text-3xl text-bold"
@@ -2330,26 +2434,6 @@ def create() -> None:
                                         </q-badge>
                                         </q-td>
                                         ''')
-                                
-                        with ui.card():
-                            ui.label("Previous Weight").classes(
-                                "text-xl text-bold"
-                            ).style(
-                                'font-family : "Atkinson Hyperlegible"'
-                            )
-                            ui.separator().classes("w-full h-1").props("color=positive")
-                            table_b = ui.table(
-                                columns=[
-                                    {"name": col, "label": col, "field": col,
-                                    "headerClasses": "border-b border-secondary",
-                                    "align": 'left'}
-                                    for col in previous_weight.columns
-                                ],
-                                rows=previous_weight.to_dict("records"),
-                            ).style(
-                                "font-family: JetBrainsMono; background-color: #f5f5f5"
-                            ).classes("text-lg font-normal my-table") 
-                            
                     with ui.row():
                         ui.label("Cumulative Exercise Log").classes(
                             "text-3xl text-bold"
@@ -2369,7 +2453,3 @@ def create() -> None:
                             rows=df.to_dict("records"), pagination={'rowsPerPage': 10}
                         ).style("font-family: JetBrainsMono; background-color: #f5f5f5").classes('my-table')
                     )
-
-
-
-

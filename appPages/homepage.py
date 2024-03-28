@@ -344,7 +344,7 @@ def fitness() -> None:
             "Plyo Lateral Step-Up",
             "Plyo Pistol Squat",
             "Plyo Bulgarian Split Squat",
-            "Plyo Side Plank",
+            "Long Lever Crunches",
         ]
     )
     upper_df = df_last8.drop(
@@ -570,7 +570,7 @@ def fitness() -> None:
         
         # Sort zero level exercises and drop duplicates, set level as 'None'
         zero_level_df = zero_level_df.sort_values('Level').drop_duplicates('Exercises', keep='last')
-        zero_level_df['Level'] = 'None'
+        zero_level_df['Level'] = '<i>None</i>'
         
         # Concatenate previous levels with zero level exercises
         previous_weight = pd.concat([previous_weight, zero_level_df], ignore_index=True)
